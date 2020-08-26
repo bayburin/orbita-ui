@@ -17,6 +17,7 @@
       "dom"
     ],
     "paths": {
+      "@core/*": ["app/core/*"],
       "@modules/*": ["app/modules/*"],
       "@shared/*": ["app/shared/*"],
       "@store/*": ["app/store/*"]
