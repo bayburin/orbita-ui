@@ -14,13 +14,10 @@
       </mat-list-item>
      </mat-list>
   </mat-sidenav>
-  <mat-sidenav-content class="sidenav-content">
+  <mat-sidenav-content>
     <app-header></app-header>
-    <h1>Page content</h1>
-    <div fxLayout="row" fxLayoutAlign="space-between">
-      <p>Hello 1</p>
-      <p>Hello 2</p>
-    </div>
-    <router-outlet></router-outlet>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
   </mat-sidenav-content>
 </mat-sidenav-container>

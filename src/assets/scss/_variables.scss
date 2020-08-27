@@ -1,0 +1,107 @@
+// Text
+$text-color: #2c2c2c;
+$light-text-color: #ffffff;
+
+$mat-main-primary: (
+  50: #e6eaf5,
+  100: #c2cbe7,
+  200: #99a8d7,
+  300: #7085c6,
+  400: #516bba,
+  500: #3251ae,
+  600: #2d4aa7,
+  700: #26409d,
+  800: #1f3794,
+  900: #132784,
+  A100: #b8c3ff,
+  A200: #8597ff,
+  A400: #526cff,
+  A700: #3956ff,
+  contrast: (
+    50 : $text-color,
+    100 : $text-color,
+    200 : $text-color,
+    300 : $text-color,
+    400 : $light-text-color,
+    500 : $light-text-color,
+    600 : $light-text-color,
+    700 : $light-text-color,
+    800 : $light-text-color,
+    900 : $light-text-color,
+    A100 : $text-color,
+    A200 : $text-color,
+    A400 : $light-text-color,
+    A700 : $light-text-color
+  )
+);
+
+$mat-main-accent: (
+  50: #edfcfe,
+  100: #d2f9fd,
+  200: #b4f5fc,
+  300: #95f0fa,
+  400: #7fedf9,
+  500: #68eaf8,
+  600: #60e7f7,
+  700: #55e4f6,
+  800: #4be1f5,
+  900: #3adbf3,
+  A100: #ffffff,
+  A200: #ffffff,
+  A400: #d7faff,
+  A700: #bef6ff,
+  contrast: (
+    50 : $text-color,
+    100 : $text-color,
+    200 : $text-color,
+    300 : $text-color,
+    400 : $text-color,
+    500 : $text-color,
+    600 : $text-color,
+    700 : $text-color,
+    800 : $text-color,
+    900 : $text-color,
+    A100 : $text-color,
+    A200 : $text-color,
+    A400 : $text-color,
+    A700 : $text-color
+  )
+);
+
+$mat-main-warn: (
+  50: #fde2e2,
+  100: #fab7b7,
+  200: #f68888,
+  300: #f25858,
+  400: #f03434,
+  500: #ed1010,
+  600: #eb0e0e,
+  700: #e80c0c,
+  800: #e50909,
+  900: #e00505,
+  A100: #ffffff,
+  A200: #ffd5d5,
+  A400: #ffa2a2,
+  A700: #ff8989,
+  contrast: (
+    50 : $text-color,
+    100 : $text-color,
+    200 : $text-color,
+    300 : $text-color,
+    400 : $light-text-color,
+    500 : $light-text-color,
+    600 : $light-text-color,
+    700 : $light-text-color,
+    800 : $light-text-color,
+    900 : $light-text-color,
+    A100 : $text-color,
+    A200 : $text-color,
+    A400 : $text-color,
+    A700 : $text-color
+  )
+);
+
+// Links
+$link-color: map-get($map: $mat-main-primary, $key: 500);
+$link-hover-color: map-get($map: $mat-main-primary, $key: 800);
+$link-hover-decoration: none;
