@@ -1,4 +1,7 @@
-@import "font.scss";
+@import "font";
+
+// Испорт стилей компонентов
+@import "components/sidenav";
 
 .material-icons {
   font-family: 'Material Icons';
