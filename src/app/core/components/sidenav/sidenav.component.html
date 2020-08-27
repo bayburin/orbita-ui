@@ -6,11 +6,12 @@
       </mat-toolbar-row>
     </mat-toolbar>
     <mat-list>
-      <mat-list-item>Сводка</mat-list-item>
-      <mat-list-item>Заявки</mat-list-item>
-      <mat-list-item>Инциденты</mat-list-item>
-      <mat-list-item>Работники</mat-list-item>
-      <mat-list-item>Хосты</mat-list-item>
+      <mat-list-item>
+        <a [routerLink]="['/']">Сводка</a>
+      </mat-list-item>
+      <mat-list-item>
+        <a [routerLink]="['/claims']">Заявки</a>
+      </mat-list-item>
      </mat-list>
   </mat-sidenav>
   <mat-sidenav-content class="sidenav-content">
