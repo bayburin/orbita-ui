@@ -2,7 +2,7 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { SharedModule } from '@shared/shared.module';
 
@@ -19,7 +19,8 @@ import { FakeBackendInterceptor } from './interceptors/fake-backend.interceptor'
     BrowserAnimationsModule,
     RouterModule,
     FlexLayoutModule,
-    SharedModule
+    SharedModule,
+    HttpClientModule
   ],
   exports: [
     HeaderComponent,

@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
+import { IClaim } from '@modules/claim/interfaces/claim.interface';
+
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const claims = [
+    const claims: IClaim[] = [
       {
         id: 1,
         service_id: 1,
