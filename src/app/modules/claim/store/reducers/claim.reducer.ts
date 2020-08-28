@@ -3,6 +3,8 @@ import { createReducer, on, Action } from '@ngrx/store';
 import { Claim } from '@modules/claim/models/claim/claim.model';
 import * as claimActions from '@modules/claim/store/actions/claim.actions';
 
+export const CLAIM_FEATURE_KEY = 'claims';
+
 export interface State {
   ids: number[];
   claims: { [id: number]: Claim };
