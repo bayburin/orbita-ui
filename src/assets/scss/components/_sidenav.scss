@@ -1,10 +1,16 @@
 .sidenav-container {
-  .sidenav {
-    background-color: #ededed;
-    padding-right: 10px;
+  height: 100%;
+
+  .sidenav-bar {
+    width: 200px;
+    background-color: $background-color;
 
     .mat-toolbar-row {
-      background-color: #ededed;
+      background-color: $background-color;
     }
+  }
+
+  .sidenav-content {
+    background-color: $background-color;
   }
 }
