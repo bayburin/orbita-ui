@@ -4,6 +4,7 @@
 @import "variables";
 // Испорт стилей компонентов
 @import "components/sidenav";
+@import "components/navigation-bar";
 // Испорт цветовой схемы
 @import "custom-theme";
 
@@ -34,6 +35,7 @@
 
 a {
   color: $link-color;
+  text-decoration: $link-hover-decoration;
 
   &:hover {
     color: $link-hover-color;

@@ -1,12 +1,48 @@
-<mat-toolbar color="primary">
+<mat-toolbar class="navigation-bar" color="primary">
   <mat-toolbar-row>
     <button mat-icon-button>
-      <mat-icon>menu</mat-icon>
+      <mat-icon (click)="toggleSidenav.emit()">menu</mat-icon>
     </button>
-    <span class="example-spacer"></span>
-    <button mat-button>
-      <mat-icon>person</mat-icon>
-      Байбурин Равиль
-    </button>
+    <div fxFlex fxLayout fxLayoutAlign="end">
+      <ul fxLayout fxLayoutAlign="center center" class="navigation-items">
+        <!-- TODO: Тестовые элементы. Необходимо исправить -->
+        <li>
+          <button mat-button>
+            <mat-icon>schedule</mat-icon>
+            15
+          </button>
+        </li>
+        <li>
+          <button mat-button>
+            <mat-icon>event_available</mat-icon>
+            287
+          </button>
+        </li>
+        <li>
+          <button mat-icon-button>
+            <mat-icon matBadge="15" matBadgeColor="warn">warning</mat-icon>
+          </button>
+        </li>
+        <li>
+          <button mat-icon-button>
+            <mat-icon matBadge="2" color="accent">notifications_active</mat-icon>
+          </button>
+        </li>
+        <li>
+          <button mat-button>
+            <mat-icon>person</mat-icon>
+            <span fxHide.lt-md>Байбурин Равиль</span>
+          </button>
+        </li>
+        <li>
+          <mat-divider [vertical]="true"></mat-divider>
+        </li>
+        <li>
+          <button mat-icon-button>
+            <mat-icon>security</mat-icon>
+          </button>
+        </li>
+      </ul>
+    </div>
   </mat-toolbar-row>
 </mat-toolbar>

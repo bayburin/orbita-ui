@@ -6,16 +6,22 @@
       </mat-toolbar-row>
     </mat-toolbar>
     <mat-list>
-      <mat-list-item>
-        <a [routerLink]="['/']">Сводка</a>
+      <mat-list-item class="list-item">
+        <mat-icon mat-list-icon>dashboard</mat-icon>
+        <div mat-line>
+          <a [routerLink]="['/']">Сводка</a>
+        </div>
       </mat-list-item>
-      <mat-list-item>
-        <a [routerLink]="['/claims']">Заявки</a>
+      <mat-list-item class="list-item">
+        <mat-icon mat-list-icon>email</mat-icon>
+        <div mat-line>
+          <a [routerLink]="['/claims']">Заявки</a>
+        </div>
       </mat-list-item>
      </mat-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <app-header></app-header>
+    <app-header (toggleSidenav)="resizeSidenav()"></app-header>
     <main>
       <router-outlet></router-outlet>
     </main>

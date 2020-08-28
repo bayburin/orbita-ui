@@ -7,4 +7,11 @@ import { Component } from '@angular/core';
 })
 export class SidenavComponent {
   constructor() { }
+
+  /**
+   * Изменяет размер sidenav.
+   */
+  resizeSidenav(): void {
+    console.log('toogle');
+  }
 }
