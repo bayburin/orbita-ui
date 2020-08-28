@@ -19,6 +19,15 @@ import { MatBadgeModule } from '@angular/material/badge';
  */
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatCardModule } from '@angular/material/card';
+
+//
+// Data Table
+//
+
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 const modules: any[] = [
   MatToolbarModule,
@@ -27,7 +36,11 @@ const modules: any[] = [
   MatSidenavModule,
   MatListModule,
   MatBadgeModule,
-  MatDividerModule
+  MatDividerModule,
+  MatCardModule,
+  MatTableModule,
+  MatSortModule,
+  MatPaginatorModule
 ];
 
 @NgModule({
