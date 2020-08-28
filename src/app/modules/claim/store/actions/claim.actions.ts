@@ -1,35 +1,20 @@
-import { Action } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 
 import { Claim } from '@modules/claim/models/claim/claim.model';
 
-export enum ActionTypes {
-  Select = '[Claim] Select',
-  LoadAll = '[Claim] Load All',
-  LoadAllSuccess = '[Claim] Load All Success',
-  LoadAllFailure = '[Claim] Load All Failure'
-}
+export const select  = createAction(
+  '[Claim] Select',
+  props<{ id: number }>()
+);
 
-export class Select implements Action {
-  readonly type = ActionTypes.Select;
+export const loadAll = createAction('[Claim] Load All');
 
-  constructor(public payload: number) { }
-}
+export const loadAllSuccess = createAction(
+  '[Claim] Load All Success',
+  props<{ claims: Claim[] }>()
+);
 
-export class LoadAll implements Action {
-  readonly type = ActionTypes.LoadAll;
-}
-
-export class LoadAllSuccess implements Action {
-  readonly type = ActionTypes.LoadAllSuccess;
-
-  // ? TODO: Нужно написать адаптер, так как с сервера данные придут в виде массива заявок, а не объекта
-  constructor(public payload: { ids: number[], claims: Claim[] }) { }
-}
-
-export class LoadAllFailure implements Action {
-  readonly type = ActionTypes.LoadAllFailure;
-
-  constructor(public payload: any) { }
-}
-
-export type Actions = Select | LoadAll | LoadAllSuccess | LoadAllFailure;
+export const loadAllFailure = createAction(
+  '[Claim] Load All Failure',
+  props<{ error: any }>()
+);

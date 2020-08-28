@@ -4,7 +4,7 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { environment } from 'environments/environment';
-import { appReducers } from './store/reducers/app.reducers';
+import { appReducers } from './store/reducers/app.reducer';
 
 import { CoreModule } from './core/core.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
