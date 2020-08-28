@@ -1,26 +1,26 @@
-import { ActionReducerMap, createSelector, createFeatureSelector, ActionReducer } from '@ngrx/store';
+import { createSelector, createFeatureSelector } from '@ngrx/store';
 
-import { IClaimState } from '@modules/claim/store/state/claim.state';
+import * as fromClaims from '@modules/claim/store/reducers/claim.reducers';
 
-export const selectClaims = createFeatureSelector<IClaimState>('claims');
+export const selectClaims = createFeatureSelector<fromClaims.State>('claims');
 
 export const getIds = createSelector(
   selectClaims,
-  (state: IClaimState) => state.ids
+  fromClaims.getIds
 );
 
 export const getClaims = createSelector(
   selectClaims,
-  (state: IClaimState) => state.claims
+  fromClaims.getClaims
 );
 
 export const setSelected = createSelector(
   selectClaims,
-  (state: IClaimState) => state.selected
+  fromClaims.getSelected
 );
 
 export const getAllClaims = createSelector(
   getIds,
   getClaims,
-  (ids, claims) => ids.map(id => claims[id])
+  (ids, claims) => ids.map((id: number) => claims[id])
 );
