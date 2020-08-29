@@ -19,7 +19,7 @@ export const setSelected = createSelector(
   fromClaims.getSelected
 );
 
-export const getAllClaims = createSelector(
+export const getClaimsArray = createSelector(
   getIds,
   getClaims,
   (ids, claims) => ids.map((id: number) => claims[id])

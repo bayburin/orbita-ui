@@ -1,28 +1,26 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
-import { ClaimService } from '@modules/claim/services/claim/claim.service';
-import { IClaim } from '@modules/claim/interfaces/claim.interface';
-import { Claim } from '@modules/claim/models/claim/claim.model';
-// import { ClaimState } from '@modules/claim/store/state/claim.state';
-import { getAllClaims } from '@modules/claim/store/selectors/claim.selectors';
+import * as fromClaims from '@modules/claim/store/reducers/claim.reducer';
+import * as ClaimActions from '@modules/claim/store/actions/claim.actions';
+import * as ClaimSelectors from '@modules/claim/store/selectors/claim.selectors';
+import { Claim } from '../models/claim/claim.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ClaimFacade {
-  // allClaims$ = this.store.select(getAllClaims)
+  claims$: Observable<Claim[]>;
 
-  constructor(
-    // private store: Store<ClaimState>,
-    // private claimService: ClaimService
-  ) {}
+  constructor(private store: Store<fromClaims.State>) {
+    this.claims$ = store.select(ClaimSelectors.getClaimsArray);
+  }
 
   /**
    * Загрузить список заявок.
    */
-  // loadClaims(): Observable<Claim[]> {
-  //   return this.claimService.getClaims()
-  //     .pipe(map((iClaims: IClaim[]) => iClaims.map(iClaim => new Claim(iClaim))));
-  // }
+  loadClaims(): void {
+    this.store.dispatch(ClaimActions.loadAll());
+  }
 }
