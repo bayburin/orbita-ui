@@ -11,6 +11,7 @@ export interface State {
   selected: number;
   loading: boolean;
   loaded: boolean;
+  error?: string | null;
 }
 
 export const initialState: State = {
@@ -18,13 +19,13 @@ export const initialState: State = {
   claims: null,
   selected: null,
   loading: false,
-  loaded: false
+  loaded: false,
 };
 
 const claimReducer = createReducer(
   initialState,
   on(claimActions.select, (state, { id }) => ({ ...state, selected: id })),
-  on(claimActions.loadAll, state => ({ ...state, loading: true, loaded: false })),
+  on(claimActions.loadAll, state => ({ ...state, loading: true, loaded: false, error: null })),
   on(claimActions.loadAllSuccess, (state, { claims }) => ({
     ...state,
     claims: claims.reduce((map: any, obj: Claim) => {
@@ -35,7 +36,8 @@ const claimReducer = createReducer(
     ids: claims.map((claim: Claim) => claim.id),
     loading: false,
     loaded: true
-  }))
+  })),
+  on(claimActions.loadAllFailure, (state, { error }) => ({ ...state, error }))
 );
 
 export function reducer(state: State | undefined, action: Action): State {

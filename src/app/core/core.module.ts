@@ -3,8 +3,13 @@ import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { SharedModule } from '@shared/shared.module';
+import { appReducers, effects } from '../store/reducers/app.reducer';
+import { environment } from 'environments/environment';
 
 import { HeaderComponent } from './components/header/header.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
@@ -20,7 +25,10 @@ import { FakeBackendInterceptor } from './interceptors/fake-backend.interceptor'
     RouterModule,
     FlexLayoutModule,
     SharedModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forRoot(appReducers),
+    EffectsModule.forRoot([...effects]),
+    environment.production ? [] : StoreDevtoolsModule.instrument({ maxAge: 25 })
   ],
   exports: [
     HeaderComponent,
