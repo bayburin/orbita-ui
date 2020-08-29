@@ -1,7 +1,7 @@
 import { createReducer, on, Action } from '@ngrx/store';
 
 import { Claim } from '@modules/claim/models/claim/claim.model';
-import * as claimActions from '@modules/claim/store/actions/claim.actions';
+import * as ClaimActions from '@modules/claim/store/actions/claim.actions';
 
 export const CLAIM_FEATURE_KEY = 'claims';
 
@@ -24,9 +24,9 @@ export const initialState: State = {
 
 const claimReducer = createReducer(
   initialState,
-  on(claimActions.select, (state, { id }) => ({ ...state, selected: id })),
-  on(claimActions.loadAll, state => ({ ...state, loading: true, loaded: false, error: null })),
-  on(claimActions.loadAllSuccess, (state, { claims }) => ({
+  on(ClaimActions.select, (state, { id }) => ({ ...state, selected: id })),
+  on(ClaimActions.loadAll, state => ({ ...state, loading: true, loaded: false, error: null })),
+  on(ClaimActions.loadAllSuccess, (state, { claims }) => ({
     ...state,
     claims: claims.reduce((map: any, obj: Claim) => {
       map[obj.id] = obj;
@@ -37,7 +37,7 @@ const claimReducer = createReducer(
     loading: false,
     loaded: true
   })),
-  on(claimActions.loadAllFailure, (state, { error }) => ({ ...state, error }))
+  on(ClaimActions.loadAllFailure, (state, { error }) => ({ ...state, error }))
 );
 
 export function reducer(state: State | undefined, action: Action): State {
