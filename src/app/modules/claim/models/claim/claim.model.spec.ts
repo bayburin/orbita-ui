@@ -1,6 +1,6 @@
 import { Claim } from './claim.model';
 
-fdescribe('Claim', () => {
+describe('Claim', () => {
   let iClaim: any;
 
   beforeEach(() => {

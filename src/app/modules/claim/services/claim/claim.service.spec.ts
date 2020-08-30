@@ -5,7 +5,7 @@ import { environment } from 'environments/environment';
 import { ClaimService } from './claim.service';
 import { IClaim } from '@modules/claim/interfaces/claim.interface';
 
-fdescribe('ClaimService', () => {
+describe('ClaimService', () => {
   let service: ClaimService;
   let httpTestingController: HttpTestingController;
 

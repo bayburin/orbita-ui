@@ -14,7 +14,7 @@ export const getClaims = createSelector(
   fromClaims.getClaims
 );
 
-export const setSelected = createSelector(
+export const getSelected = createSelector(
   selectClaims,
   fromClaims.getSelected
 );
