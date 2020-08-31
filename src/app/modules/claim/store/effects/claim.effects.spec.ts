@@ -1,4 +1,3 @@
-import { ClaimServiceStub } from './../../services/claim/claim.service.stub';
 import { TestBed } from '@angular/core/testing';
 import { Observable, throwError, of } from 'rxjs';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
@@ -6,23 +5,27 @@ import { provideMockActions } from '@ngrx/effects/testing';
 
 import { ClaimEffects } from '@modules/claim/store/effects/claim.effects';
 import { ClaimService } from '@modules/claim/services/claim/claim.service';
+import { ClaimServiceStub } from '@modules/claim/services/claim/claim.service.stub';
 import * as fromClaims from '@modules/claim/store/reducers/claim.reducer';
 import * as ClaimActions from '@modules/claim/store/actions/claim.actions';
+import * as ClaimSelectors from '@modules/claim/store/selectors/claim.selectors';
 import { IClaim } from '@modules/claim/interfaces/claim.interface';
 import { Claim } from '@modules/claim/models/claim/claim.model';
 
-fdescribe('ClaimEffects', () => {
+describe('ClaimEffects', () => {
   let actions$: Observable<any>;
   let effects: ClaimEffects;
   let store: MockStore<fromClaims.State>;
   let claimService: ClaimService;
   const initialState = {
-    ids: [],
-    claims: null,
-    selected: null,
-    loading: false,
-    loaded: false,
-    error: null
+    [fromClaims.CLAIM_FEATURE_KEY]: {
+      ids: [],
+      claims: null,
+      selected: null,
+      loading: false,
+      loaded: false,
+      error: null
+    }
   };
 
   beforeEach(() => {
@@ -58,11 +61,12 @@ fdescribe('ClaimEffects', () => {
     });
 
     it('should not call ClaimService.getClaims API if claims is not null', () => {
-      // spyOn(claimService, 'getClaims').and.callThrough();
+      spyOn(claimService, 'getClaims').and.callThrough();
+      store.overrideSelector(ClaimSelectors.getClaims, []);
 
-      // effects.loadClaims$.subscribe(() => {
-      //   expect(claimService.getClaims).toHaveBeenCalled();
-      // });
+      effects.loadClaims$.subscribe(() => {
+        expect(claimService.getClaims).not.toHaveBeenCalled();
+      });
     });
 
     it('should call ClaimActions.loadAllSuccess action if API respond with success status', () => {
@@ -78,7 +82,7 @@ fdescribe('ClaimEffects', () => {
       });
     });
 
-    it('should call ClaimActions.loadAllFailure action if API respond with success status', () => {
+    it('should call ClaimActions.loadAllFailure action if API respond with failure status', () => {
       spyOn(claimService, 'getClaims').and.callFake(() => {
         return throwError({ error: 'Error message' });
       });
