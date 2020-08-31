@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ClaimsBlockComponent } from './claims-block.component';
+import { ClaimFacade } from '@modules/claim/facades/claim.facade';
+import { ClaimFacadeStub } from '@modules/claim/facades/claim.facade.stub';
 
 describe('ClaimsBlockComponent', () => {
   let component: ClaimsBlockComponent;
@@ -8,7 +10,8 @@ describe('ClaimsBlockComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ClaimsBlockComponent ]
+      declarations: [ClaimsBlockComponent],
+      providers: [{ provide: ClaimFacade, useClass: ClaimFacadeStub }]
     })
     .compileComponents();
   }));
