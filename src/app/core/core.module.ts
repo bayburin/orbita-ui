@@ -8,7 +8,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { SharedModule } from '@shared/shared.module';
-import { appReducers, effects } from '../store/reducers/app.reducer';
 import { environment } from 'environments/environment';
 
 import { HeaderComponent } from './components/header/header.component';
@@ -26,8 +25,8 @@ import { FakeBackendInterceptor } from './interceptors/fake-backend.interceptor'
     FlexLayoutModule,
     SharedModule,
     HttpClientModule,
-    StoreModule.forRoot(appReducers),
-    EffectsModule.forRoot([...effects]),
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot(),
     environment.production ? [] : StoreDevtoolsModule.instrument({ maxAge: 25 })
   ],
   exports: [
