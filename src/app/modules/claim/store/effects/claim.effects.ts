@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 import { mergeMap, catchError, map, withLatestFrom, filter } from 'rxjs/operators';
 
 import { ClaimService } from '@modules/claim/services/claim/claim.service';
-import * as fromClaims from '@modules/claim/store/reducers/claim.reducer';
+import { State } from '@modules/claim/store/reducers/claim.reducer';
 import * as ClaimActions from '@modules/claim/store/actions/claim.actions';
 import * as ClaimSelectors from '@modules/claim/store/selectors/claim.selectors';
 import { Claim } from '@modules/claim/models/claim/claim.model';
@@ -15,7 +15,7 @@ export class ClaimEffects {
   constructor(
     private actions$: Actions,
     private claimService: ClaimService,
-    private store: Store<fromClaims.State>
+    private store: Store<State>
   ) { }
 
   loadClaims$ = createEffect(() =>

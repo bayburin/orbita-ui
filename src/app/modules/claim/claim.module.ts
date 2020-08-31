@@ -5,7 +5,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { SharedModule } from '@shared/shared.module';
 import { ClaimRoutingModule } from './claim-routing.module';
 
-import * as fromClaims from './store/reducers/claim.reducer';
+import { CLAIM_FEATURE_KEY, reducer } from './store/reducers/claim.reducer';
 import { ClaimEffects } from './store/effects/claim.effects';
 
 import { ClaimsPageComponent } from './pages/claims-page/claims-page.component';
@@ -21,7 +21,7 @@ import { ClaimsTableComponent } from './components/claims-table/claims-table.com
   imports: [
     SharedModule,
     ClaimRoutingModule,
-    StoreModule.forFeature(fromClaims.CLAIM_FEATURE_KEY, fromClaims.reducer),
+    StoreModule.forFeature(CLAIM_FEATURE_KEY, reducer),
     EffectsModule.forFeature([ClaimEffects])
   ]
 })

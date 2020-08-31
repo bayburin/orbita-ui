@@ -6,7 +6,7 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { ClaimEffects } from '@modules/claim/store/effects/claim.effects';
 import { ClaimService } from '@modules/claim/services/claim/claim.service';
 import { ClaimServiceStub } from '@modules/claim/services/claim/claim.service.stub';
-import * as fromClaims from '@modules/claim/store/reducers/claim.reducer';
+import { CLAIM_FEATURE_KEY, State } from '@modules/claim/store/reducers/claim.reducer';
 import * as ClaimActions from '@modules/claim/store/actions/claim.actions';
 import * as ClaimSelectors from '@modules/claim/store/selectors/claim.selectors';
 import { IClaim } from '@modules/claim/interfaces/claim.interface';
@@ -15,10 +15,10 @@ import { Claim } from '@modules/claim/models/claim/claim.model';
 describe('ClaimEffects', () => {
   let actions$: Observable<any>;
   let effects: ClaimEffects;
-  let store: MockStore<fromClaims.State>;
+  let store: MockStore<State>;
   let claimService: ClaimService;
   const initialState = {
-    [fromClaims.CLAIM_FEATURE_KEY]: {
+    [CLAIM_FEATURE_KEY]: {
       ids: [],
       claims: null,
       selected: null,
