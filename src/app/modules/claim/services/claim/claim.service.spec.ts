@@ -32,7 +32,6 @@ describe('ClaimService', () => {
 
     it('should return Observable with array of claims', () => {
       service.getClaims().subscribe(result => {
-        console.log(result);
         expect(result).toEqual(claims);
       });
 

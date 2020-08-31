@@ -1,5 +1,5 @@
 import { Claim } from '@modules/claim/models/claim/claim.model';
-import { reducer, State, initialState } from './claim.reducer';
+import { reducer, State, initialState, adapter } from './claim.reducer';
 import * as ClaimActions from '@modules/claim/store/actions/claim.actions';
 
 describe('claimReducer', () => {
@@ -35,17 +35,12 @@ describe('claimReducer', () => {
   describe('loadAllSuccess', () => {
     it('should set ids and claims values with paylod value', () => {
       const claims = [new Claim({ id: 1, service_name: 'Test 1' }), new Claim({ id: 2, service_name: 2 })];
-      const ClaimsObj = claims.reduce((map: any, obj: Claim) => {
-        map[obj.id] = obj;
-
-        return map;
-      }, {});
       payload = { claims };
       action = ClaimActions.loadAllSuccess(payload);
+      spyOn(adapter, 'upsertMany');
       state = reducer(initialState, action);
 
-      expect(state.ids).toEqual(claims.map(val => val.id));
-      expect(state.claims).toEqual(ClaimsObj);
+      expect(adapter.upsertMany).toHaveBeenCalledWith(claims, initialState);
     });
   });
 

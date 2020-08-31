@@ -62,7 +62,7 @@ describe('ClaimEffects', () => {
 
     it('should not call ClaimService.getClaims API if claims is not null', () => {
       spyOn(claimService, 'getClaims').and.callThrough();
-      store.overrideSelector(ClaimSelectors.getClaims, []);
+      store.overrideSelector(ClaimSelectors.getEntities, { 1: new Claim({ id: 1 }) });
 
       effects.loadClaims$.subscribe(() => {
         expect(claimService.getClaims).not.toHaveBeenCalled();

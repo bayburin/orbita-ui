@@ -14,7 +14,7 @@ export class ClaimFacade {
   claims$: Observable<Claim[]>;
 
   constructor(private store: Store<fromClaims.State>) {
-    this.claims$ = store.select(ClaimSelectors.getClaimsArray);
+    this.claims$ = store.select(ClaimSelectors.getAll);
   }
 
   /**

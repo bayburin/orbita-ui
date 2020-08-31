@@ -1,4 +1,4 @@
-import { createSelector, createFeatureSelector } from '@ngrx/store';
+import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
 
 import * as fromClaims from '@modules/claim/store/reducers/claim.reducer';
 
@@ -9,18 +9,22 @@ export const getIds = createSelector(
   fromClaims.getIds
 );
 
-export const getClaims = createSelector(
+export const getEntities = createSelector(
   selectClaims,
-  fromClaims.getClaims
+  fromClaims.getEntities
+);
+
+export const getAll = createSelector(
+  selectClaims,
+  fromClaims.getAll
+);
+
+export const getTotalCount = createSelector(
+  selectClaims,
+  fromClaims.getTotalCount
 );
 
 export const getSelected = createSelector(
   selectClaims,
   fromClaims.getSelected
-);
-
-export const getClaimsArray = createSelector(
-  getIds,
-  getClaims,
-  (ids, claims) => ids.map((id: number) => claims[id])
 );

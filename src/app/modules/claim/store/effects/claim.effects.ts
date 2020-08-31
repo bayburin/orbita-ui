@@ -21,7 +21,7 @@ export class ClaimEffects {
   loadClaims$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ClaimActions.loadAll),
-      withLatestFrom(this.store.select(ClaimSelectors.getClaims)),
+      withLatestFrom(this.store.select(ClaimSelectors.getEntities)),
       filter(([action, claims]) => claims === null),
       mergeMap(() => this.claimService.getClaims()
         .pipe(

@@ -7,7 +7,7 @@ describe('ClaimSelectors', () => {
   const selected = 1;
   const initialState = {
     ids,
-    claims,
+    entities: claims,
     selected,
     loading: false,
     loaded: false,
@@ -18,17 +18,21 @@ describe('ClaimSelectors', () => {
     expect(ClaimSelectors.getIds.projector(initialState)).toEqual(ids);
   });
 
-  it('should return claims if call getClaims', () => {
-    expect(ClaimSelectors.getClaims.projector(initialState)).toEqual(claims);
+  it('should return claims if call getEntities', () => {
+    expect(ClaimSelectors.getEntities.projector(initialState)).toEqual(claims);
   });
 
-  it('should return selected id if call selected', () => {
-    expect(ClaimSelectors.getSelected.projector(initialState)).toEqual(selected);
-  });
-
-  it('should return claims array if call getClaimsArray', () => {
+  it('should return claims array if call getAll', () => {
     const result = Object.values(claims).map(val => val);
 
-    expect(ClaimSelectors.getClaimsArray.projector(ids, claims)).toEqual(result);
+    expect(ClaimSelectors.getAll.projector(initialState)).toEqual(result);
+  });
+
+  it('should return total count of entities if call getTotalCount', () => {
+    expect(ClaimSelectors.getTotalCount.projector(initialState)).toEqual(ids.length);
+  });
+
+  it('should return selected id if call getSelected', () => {
+    expect(ClaimSelectors.getSelected.projector(initialState)).toEqual(selected);
   });
 });
