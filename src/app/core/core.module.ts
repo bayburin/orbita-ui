@@ -7,8 +7,9 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { SharedModule } from '@shared/shared.module';
 import { environment } from '@env/environment';
+import { SharedModule } from '@shared/shared.module';
+import { AuthCenterModule } from 'auth-center';
 
 import { HeaderComponent } from './components/header/header.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
@@ -27,7 +28,8 @@ import { FakeBackendInterceptor } from './interceptors/fake-backend.interceptor'
     HttpClientModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot(),
-    environment.production ? [] : StoreDevtoolsModule.instrument({ maxAge: 25 })
+    environment.production ? [] : StoreDevtoolsModule.instrument({ maxAge: 25 }),
+    AuthCenterModule
   ],
   exports: [
     HeaderComponent,
