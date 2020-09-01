@@ -1,6 +1,7 @@
-import { Observable, of } from 'rxjs';
-import { IClaim } from '@modules/claim/interfaces/claim.interface';
 import { Component, Input } from '@angular/core';
+
+import { Claim } from '@modules/claim/models/claim/claim.model';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-claims-table',
@@ -8,8 +9,8 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./claims-table.component.scss']
 })
 export class ClaimsTableComponent {
-  displayedColumns = ['id', 'status', 'service_name'];
-  @Input() dataSource: Observable<IClaim[]> = of([{ id: 1, status: 'Новая', service_name: 'Служба печати' } as IClaim]);
+  displayedColumns = ['id', 'createdAt', 'finishedAtPlan', 'priority', 'status', 'serviceName', 'description', 'workers'];
+  @Input() dataSource: MatTableDataSource<Claim>;
 
   constructor() { }
 }

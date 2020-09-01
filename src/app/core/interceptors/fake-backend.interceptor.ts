@@ -3,6 +3,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse } fr
 import { Observable, of } from 'rxjs';
 
 import { IClaim } from '@modules/claim/interfaces/claim.interface';
+import { materialize, dematerialize, delay } from 'rxjs/operators';
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -40,9 +41,17 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     ];
 
     if (req.url.endsWith('claims') && req.method === 'GET') {
-      return of(new HttpResponse({ body: claims, status: 200 }));
+      return of(new HttpResponse({ body: claims, status: 200 })).pipe(
+        materialize(),
+        delay(1500),
+        dematerialize()
+      );
     }
 
-    return next.handle(req);
+    return next.handle(req).pipe(
+      materialize(),
+      delay(1500),
+      dematerialize()
+    );
   }
 }
