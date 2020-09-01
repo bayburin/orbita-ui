@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
-import { environment } from 'environments/environment';
+import { environment } from '@env/environment';
 import { ClaimService } from './claim.service';
 import { IClaim } from '@modules/claim/interfaces/claim.interface';
 
