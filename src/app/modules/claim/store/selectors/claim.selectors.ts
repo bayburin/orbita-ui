@@ -1,4 +1,4 @@
-import { createSelector, createFeatureSelector, MemoizedSelector } from '@ngrx/store';
+import { createSelector, createFeatureSelector } from '@ngrx/store';
 
 import * as fromClaims from '@modules/claim/store/reducers/claim.reducer';
 
