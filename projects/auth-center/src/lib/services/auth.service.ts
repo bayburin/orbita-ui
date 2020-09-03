@@ -1,21 +1,32 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { IAuthData } from './../interfaces/auth-data.interface';
+import { CONFIG } from '../auth-center.config';
+import { IConfig } from './../interfaces/config.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    @Inject(CONFIG) private config: IConfig
+  ) { }
 
-  redirectToAuthorizePage(): void {
-    const authCenterUri = 'https://auth-center.iss-reshetnev.ru/oauth/authorize';
-    const queryParams = `?client_id=83&response_type=code&state=''&redirect_uri=https://localhost.iss-reshetnev.ru:4200/oauth2/callback&scope=`;
-    const authorizeUri = authCenterUri + queryParams;
+  redirectToAuthorizationServer(): void {
+    const queryParams = {
+      client_id: this.config.clientId,
+      response_type: this.config.responseType,
+      state: this.config.state,
+      redirect_uri: this.config.redirectUri,
+      scope: this.config.scope
+    };
+    const params = Object.entries(queryParams).map(([key, val]) => `${key}=${val}`).join('&');
+    const url = `${this.config.authorizationServer}?${params}`;
 
-    window.open(authorizeUri, '_self');
+    window.open(url, '_self');
   }
 
   getAuthData(): Observable<IAuthData> {

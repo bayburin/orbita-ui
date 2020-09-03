@@ -29,7 +29,7 @@ import { FakeBackendInterceptor } from './interceptors/fake-backend.interceptor'
     StoreModule.forRoot({}),
     EffectsModule.forRoot(),
     environment.production ? [] : StoreDevtoolsModule.instrument({ maxAge: 25 }),
-    AuthCenterModule
+    AuthCenterModule.forRoot(environment.auth)
   ],
   exports: [
     HeaderComponent,
