@@ -10,6 +10,7 @@ export interface State {
   isAuthenticated: boolean;
   currentUser: CurrentUser;
   authData: IAuthData;
+  error?: string | null;
 }
 
 export const initialState: State = {
@@ -20,9 +21,12 @@ export const initialState: State = {
 
 const authReducer = createReducer(
   initialState,
-  on(AuthActions.setIsAuthenticateed, (state, { isAuth }) => ({ ...state, isAuth })),
+  on(AuthActions.setIsAuthenticated, (state, { isAuth }) => ({ ...state, isAuth })),
   on(AuthActions.setCurrentUser, (state, { currentUser }) => ({ ...state, currentUser })),
-  on(AuthActions.setAuthData, (state, { authData }) => ({ ...state, authData }))
+  on(AuthActions.setAuthData, (state, { authData }) => ({ ...state, authData })),
+  on(AuthActions.loadAuthData, state => ({ ...state, error: null })),
+  on(AuthActions.loadAuthDataSuccess, (state, { authData }) => ({ ...state, authData })),
+  on(AuthActions.loadAuthDataFailure, (state, { error }) => ({ ...state, error }))
 );
 
 export function reducer(state: State | undefined, action: Action): State {
