@@ -17,9 +17,9 @@ export class AuthFacade {
   ) { }
 
   loginWithRedirect(): void {
-    const state = RequestState.generateCode();
+    const state = new RequestState();
 
-    this.authState.setAuthState(state);
+    this.authState.setAuthState(state.value);
     this.authService.redirectToAuthorizationServer(state);
   }
 

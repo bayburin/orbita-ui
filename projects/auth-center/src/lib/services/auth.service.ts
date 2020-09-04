@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { IAuthData } from './../interfaces/auth-data.interface';
 import { CONFIG } from '../auth-center.config';
 import { IConfig } from './../interfaces/config.interface';
+import { RequestState } from '../request_state';
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +16,11 @@ export class AuthService {
     @Inject(CONFIG) private config: IConfig
   ) { }
 
-  redirectToAuthorizationServer(state: string): void {
+  redirectToAuthorizationServer(state: RequestState): void {
     const paramsObject = {
       client_id: this.config.clientId,
       response_type: this.config.responseType,
-      state,
+      state: state.value,
       redirect_uri: this.config.redirectUri,
       scope: this.config.scope
     };
