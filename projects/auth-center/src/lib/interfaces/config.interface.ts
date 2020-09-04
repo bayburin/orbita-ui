@@ -6,6 +6,7 @@ export interface IStorageNaming {
 
 export interface IConfig {
   authorizationServer?: string;
+  apiServer: string;
   clientId: string;
   responseType?: string;
   state?: string;

@@ -31,6 +31,10 @@ export class AuthService {
   }
 
   getAuthData(): Observable<IAuthData> {
-    return this.http.get<IAuthData>('test');
+    return this.http.get<IAuthData>(this.config.apiServer);
   }
+
+  // getUserData(): Observable<IAuthData> {
+  //   return this.http.get(this.);
+  // }
 }

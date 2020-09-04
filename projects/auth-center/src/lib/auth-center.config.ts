@@ -4,6 +4,7 @@ import { IConfig } from './interfaces/config.interface';
 
 export const defaultConfig: IConfig = {
   authorizationServer: 'https://auth-center.iss-reshetnev.ru/oauth/authorize',
+  apiServer: '',
   clientId: '',
   responseType: 'code',
   state: '',
