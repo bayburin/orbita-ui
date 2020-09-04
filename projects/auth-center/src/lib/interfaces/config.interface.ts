@@ -1,3 +1,9 @@
+export interface IStorageNaming {
+  currentUser: string;
+  authData: string;
+  state: string;
+}
+
 export interface IConfig {
   authorizationServer?: string;
   clientId: string;
@@ -5,4 +11,5 @@ export interface IConfig {
   state?: string;
   redirectUri: string;
   scope?: string;
+  storageNaming?: IStorageNaming;
 }

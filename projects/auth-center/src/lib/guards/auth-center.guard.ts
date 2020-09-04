@@ -3,9 +3,6 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } fro
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { State } from './../store/auth.reducers';
-import * as AuthSelectors from './../store/auth.selectors';
-
 @Injectable({
   providedIn: 'root'
 })

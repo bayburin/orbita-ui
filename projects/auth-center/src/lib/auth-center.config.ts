@@ -8,7 +8,12 @@ export const defaultConfig: IConfig = {
   responseType: 'code',
   state: '',
   redirectUri: '',
-  scope: ''
+  scope: '',
+  storageNaming: {
+    currentUser: 'currentUser',
+    authData: 'authData',
+    state: 'state'
+  }
 };
 
 export const CONFIG = new InjectionToken<IConfig>('config of module');
