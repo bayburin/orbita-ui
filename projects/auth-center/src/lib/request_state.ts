@@ -1,5 +1,5 @@
 export class RequestState {
-  static generateCode(limit: number = 30): string {
+  static generateCode(length: number = 30): string {
     let result = '';
     const dictionary = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 

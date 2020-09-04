@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { IAuthData } from './../interfaces/auth-data.interface';
 import { CONFIG } from '../auth-center.config';
 import { IConfig } from './../interfaces/config.interface';
+import { RequestState } from './../request_state';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class AuthService {
     const queryParams = {
       client_id: this.config.clientId,
       response_type: this.config.responseType,
-      state: this.config.state,
+      state: RequestState.generateCode(),
       redirect_uri: this.config.redirectUri,
       scope: this.config.scope
     };
