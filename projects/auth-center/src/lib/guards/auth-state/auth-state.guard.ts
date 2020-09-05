@@ -20,6 +20,7 @@ export class AuthStateGuard implements CanActivate {
     return this.authState.getAuthState$().pipe(
       map(authState => {
         if (authState.isValid(state.root.queryParams.state)) {
+          this.authState.removeAuthState();
           return true;
         }
 

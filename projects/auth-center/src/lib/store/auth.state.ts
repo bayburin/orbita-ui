@@ -51,4 +51,9 @@ export class AuthState {
     localStorage.setItem(this.config.storageNaming.state, authState.value);
     this.authState$.next(authState.value);
   }
+
+  removeAuthState(): void {
+    localStorage.removeItem(this.config.storageNaming.state);
+    this.authState$.next(null);
+  }
 }
