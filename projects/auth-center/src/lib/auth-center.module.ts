@@ -2,6 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { CallbackPageComponent } from './pages/callback/callback-page.component';
 import { AuthorizeForbiddenPageComponent } from './pages/authorize-forbidden/authorize-forbidden-page.component';
+import { UnauthorizedPageComponent } from './pages/unauthorized-page/unauthorized-page.component';
 
 import { AuthCenterRoutingModule } from './auth-center-routing.module';
 import { CONFIG, defaultConfig } from './auth-center.config';
@@ -10,7 +11,8 @@ import { IConfig } from './interfaces/config.interface';
 @NgModule({
   declarations: [
     CallbackPageComponent,
-    AuthorizeForbiddenPageComponent
+    AuthorizeForbiddenPageComponent,
+    UnauthorizedPageComponent
   ],
   imports: [AuthCenterRoutingModule],
   exports: []

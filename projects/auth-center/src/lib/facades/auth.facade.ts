@@ -31,9 +31,9 @@ export class AuthFacade {
         // TODO: Сохранить пользователя и токен в хранилищ
         this.authState.setIsAuthenticated(true);
       }),
-      catchError(() => {
-        // TODO: Сохранить в хранилище ошибку.
-      })
+      // catchError(() => {
+      //   // TODO: Сохранить в хранилище ошибку.
+      // })
     );
   }
 }
