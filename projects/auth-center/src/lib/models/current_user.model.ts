@@ -27,6 +27,6 @@ export class CurrentUser {
     public idTn: number = null,
     public tn: number = null,
     public fio: string = '',
-    public dept: number = null,
+    public dept: number = null
   ) { }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { AuthFacade } from '../../facades/auth.facade';
 
@@ -8,9 +9,14 @@ import { AuthFacade } from '../../facades/auth.facade';
   styleUrls: ['./callback-page.component.scss']
 })
 export class CallbackPageComponent implements OnInit {
-  constructor(private authFacade: AuthFacade) { }
+  constructor(
+    private authFacade: AuthFacade,
+    private activatedRoute: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
-    // this.authFacade.initAuthenticateProcess();
+    const params = this.activatedRoute.snapshot.queryParams;
+
+    this.authFacade.initAuthenticateProcess(params);
   }
 }

@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Params } from '@angular/router';
 
 import { AuthService } from './../services/auth.service';
 import { AuthState } from './../store/auth.state';
 import { RequestState } from '../request_state';
-import { tap } from 'rxjs/operators';
+import { tap, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -24,9 +25,15 @@ export class AuthFacade {
     this.authService.redirectToAuthorizationServer(state);
   }
 
-  initAuthenticateProcess(): void {
-    this.authService.getAuthData().pipe(
-      tap(data => this.authState.setAuthData(data))
+  initAuthenticateProcess(params: Params): void {
+    this.authService.authorize(params).pipe(
+      tap(data => {
+        // TODO: Сохранить пользователя и токен в хранилищ
+        this.authState.setIsAuthenticated(true);
+      }),
+      catchError(() => {
+        // TODO: Сохранить в хранилище ошибку.
+      })
     );
   }
 }
