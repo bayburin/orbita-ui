@@ -23,6 +23,10 @@ export class AuthState {
     return this.isAuthenticated$.asObservable();
   }
 
+  getIsAuthenticated(): boolean {
+    return this.isAuthenticated$.getValue();
+  }
+
   setIsAuthenticated(isAuthenticated: boolean): void {
     this.isAuthenticated$.next(isAuthenticated);
   }
@@ -33,6 +37,10 @@ export class AuthState {
 
   setAuthData(authData: IAuthData): void {
     this.authData$.next(authData);
+  }
+
+  getAuthData(): IAuthData {
+    return this.authData$.getValue();
   }
 
   getCurrentUser$(): Observable<CurrentUser> {
