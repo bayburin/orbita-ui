@@ -15,9 +15,11 @@ export class AuthState {
   private isAuthenticated$ = new BehaviorSubject<boolean>(false);
   private authData$ = new BehaviorSubject<IAuthData>(null);
   private currentUser$ = new BehaviorSubject<CurrentUser>(null);
-  private authState$ = new BehaviorSubject<string>(localStorage.getItem(this.config.storageNaming.state));
+  private authState$: BehaviorSubject<string>;
 
-  constructor(@Inject(CONFIG) private config: IConfig) { }
+  constructor(@Inject(CONFIG) private config: IConfig) {
+    this.authState$ = new BehaviorSubject(localStorage.getItem(this.config.storageNaming.state));
+  }
 
   getIsAuthenticated$(): Observable<boolean> {
     return this.isAuthenticated$.asObservable();
