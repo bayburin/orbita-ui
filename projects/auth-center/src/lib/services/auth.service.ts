@@ -3,11 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Params } from '@angular/router';
 
-import { IAuthData } from './../interfaces/auth-data.interface';
 import { CONFIG } from '../auth-center.config';
 import { IConfig } from './../interfaces/config.interface';
 import { RequestState } from '../request_state';
-import { ICurrentUser } from './../interfaces/current_user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -32,17 +30,9 @@ export class AuthService {
     window.open(url, '_self');
   }
 
-  // getAuthData(): Observable<IAuthData> {
-  //   return this.http.get<IAuthData>(this.config.apiServer);
-  // }
-
-  authorize(params: Params): Observable<ICurrentUser> {
+  getJwt(params: Params): Observable<{ token: string }> {
     const body = { code: params.code };
 
-    return this.http.post<ICurrentUser>(this.config.serverUrl, body);
+    return this.http.post<{ token: string }>(this.config.serverUrl, body);
   }
-
-  // getUserData(): Observable<IAuthData> {
-  //   return this.http.get(this.);
-  // }
 }

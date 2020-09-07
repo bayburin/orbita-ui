@@ -1,6 +1,5 @@
 export interface IStorageNaming {
-  currentUser: string;
-  authData: string;
+  jwt: string;
   state: string;
 }
 

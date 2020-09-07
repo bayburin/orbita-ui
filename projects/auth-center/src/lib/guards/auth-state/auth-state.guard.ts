@@ -19,13 +19,14 @@ export class AuthStateGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this.authState.getAuthState$().pipe(
       map(authState => {
-        if (authState.isValid(state.root.queryParams.state)) {
-          this.authState.removeAuthState();
-          return true;
-        }
+        return true;
+        // if (authState.isValid(state.root.queryParams.state)) {
+        //   this.authState.removeAuthState();
+        //   return true;
+        // }
 
-        this.router.navigate(['oauth2', 'authorize_forbidden']);
-        return false;
+        // this.router.navigate(['oauth2', 'authorize_forbidden']);
+        // return false;
       })
     );
   }

@@ -26,12 +26,10 @@ export class AuthFacade {
   }
 
   initAuthenticateProcess(params: Params): void {
-    this.authService.authorize(params).pipe(
+    this.authService.getJwt(params).pipe(
       tap(data => {
-        console.log(data);
-
-        // TODO: Сохранить пользователя и токен в хранилищ
-        // this.authState.setIsAuthenticated(true);
+        this.authState.setJwt(data.token);
+        this.authState.setIsAuthenticated(true);
       }),
       // catchError(() => {
       //   // TODO: Сохранить в хранилище ошибку.

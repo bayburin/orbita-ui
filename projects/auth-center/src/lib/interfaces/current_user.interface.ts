@@ -1,4 +1,4 @@
-import { IAuthData } from './auth-data.interface';
+import { IUserToken } from './user-token.interface';
 
 export interface ICurrentUser {
   tn: number;
@@ -27,5 +27,5 @@ export interface ICurrentUser {
   initials_family: string;
   family_with_initials: string;
   is_chief: boolean;
-  token: IAuthData;
+  token: IUserToken;
 }

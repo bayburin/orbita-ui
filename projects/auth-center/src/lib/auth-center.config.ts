@@ -11,8 +11,7 @@ export const defaultConfig: IConfig = {
   redirectUrl: '',
   scope: '',
   storageNaming: {
-    currentUser: 'currentUser',
-    authData: 'authData',
+    jwt: 'jwt',
     state: 'state'
   }
 };
