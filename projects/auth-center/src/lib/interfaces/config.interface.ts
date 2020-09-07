@@ -6,11 +6,11 @@ export interface IStorageNaming {
 
 export interface IConfig {
   authorizationServer?: string;
-  apiServer: string;
+  serverUrl: string;
   clientId: string;
   responseType?: string;
   state?: string;
-  redirectUri: string;
+  redirectUrl: string;
   scope?: string;
   storageNaming?: IStorageNaming;
 }

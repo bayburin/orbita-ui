@@ -23,7 +23,7 @@ export class AuthService {
       client_id: this.config.clientId,
       response_type: this.config.responseType,
       state: state.value,
-      redirect_uri: this.config.redirectUri,
+      redirect_uri: this.config.redirectUrl,
       scope: this.config.scope
     };
     const paramsString = Object.entries(paramsObject).map(([key, val]) => `${key}=${val}`).join('&');
@@ -39,7 +39,7 @@ export class AuthService {
   authorize(params: Params): Observable<ICurrentUser> {
     const body = { code: params.code };
 
-    return this.http.post<ICurrentUser>(this.config.apiServer, body);
+    return this.http.post<ICurrentUser>(this.config.serverUrl, body);
   }
 
   // getUserData(): Observable<IAuthData> {

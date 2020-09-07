@@ -4,11 +4,11 @@ import { IConfig } from './interfaces/config.interface';
 
 export const defaultConfig: IConfig = {
   authorizationServer: 'https://auth-center.iss-reshetnev.ru/oauth/authorize',
-  apiServer: '',
+  serverUrl: '',
   clientId: '',
   responseType: 'code',
   state: '',
-  redirectUri: '',
+  redirectUrl: '',
   scope: '',
   storageNaming: {
     currentUser: 'currentUser',
