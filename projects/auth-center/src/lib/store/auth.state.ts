@@ -2,7 +2,6 @@ import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { CurrentUser } from '../models/current_user.model';
 import { CONFIG } from '../auth-center.config';
 import { IConfig } from '../interfaces/config.interface';
 import { RequestState } from '../request_state';
@@ -12,7 +11,6 @@ import { RequestState } from '../request_state';
 })
 export class AuthState {
   private isAuthenticated$ = new BehaviorSubject<boolean>(false);
-  private currentUser$ = new BehaviorSubject<CurrentUser>(null);
   private requestState$: BehaviorSubject<string>;
   private jwt$: BehaviorSubject<string>;
 
@@ -54,13 +52,5 @@ export class AuthState {
 
   getJwt(): string {
     return this.jwt$.getValue();
-  }
-
-  getCurrentUser$(): Observable<CurrentUser> {
-    return this.currentUser$.asObservable();
-  }
-
-  setCurrentUser(currentUser: CurrentUser): void {
-    this.currentUser$.next(currentUser);
   }
 }
