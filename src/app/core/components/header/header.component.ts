@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 
+import { AuthHelper } from 'auth-center';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -8,5 +10,9 @@ import { Component, EventEmitter, Output } from '@angular/core';
 export class HeaderComponent {
   @Output() toggleSidenav = new EventEmitter<void>();
 
-  constructor() { }
+  constructor(private authHelper: AuthHelper) { }
+
+  logout(): void {
+    this.authHelper.logout();
+  }
 }
