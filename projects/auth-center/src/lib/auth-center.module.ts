@@ -10,7 +10,8 @@ import { AuthCenterRoutingModule } from './auth-center-routing.module';
 
 import { CONFIG, defaultConfig } from './auth-center.config';
 import { IConfig } from './interfaces/config.interface';
-import { FakeBackendInterceptor } from './interceptors/fake-backend.interceptor';
+import { FakeBackendInterceptor } from './interceptors/fake-backend/fake-backend.interceptor';
+import { ErrorInterceptor } from './interceptors/error/error.interceptor';
 import { AuthState } from './store/auth.state';
 import { jwtOptionsFactory } from './factories/jwt-options.factory';
 
@@ -38,7 +39,8 @@ export class AuthCenterModule {
       ngModule: AuthCenterModule,
       providers: [
         { provide: CONFIG, useValue: { ...defaultConfig, ...config } },
-        { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true }
+        { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
       ]
     };
   }

@@ -6,6 +6,7 @@ import { Params } from '@angular/router';
 import { CONFIG } from '../auth-center.config';
 import { IConfig } from './../interfaces/config.interface';
 import { RequestState } from '../request_state';
+import { IAuthData } from './../interfaces/auth-data.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -30,9 +31,9 @@ export class AuthService {
     window.open(url, '_self');
   }
 
-  getJwt(params: Params): Observable<{ token: string }> {
+  getJwt(params: Params): Observable<IAuthData> {
     const body = { code: params.code };
 
-    return this.http.post<{ token: string }>(this.config.serverUrl, body);
+    return this.http.post<IAuthData>(this.config.serverUrl, body);
   }
 }
