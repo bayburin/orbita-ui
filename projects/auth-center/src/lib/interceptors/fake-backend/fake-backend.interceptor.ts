@@ -9,9 +9,9 @@ import {
 import { Observable, of } from 'rxjs';
 import { materialize, dematerialize, delay, switchMap, mergeMap } from 'rxjs/operators';
 
-import { CONFIG } from '../auth-center.config';
-import { IConfig } from './../interfaces/config.interface';
-import { IAuthData } from './../interfaces/auth-data.interface';
+import { CONFIG } from '../../auth-center.config';
+import { IConfig } from './../../interfaces/config.interface';
+import { IAuthData } from './../../interfaces/auth-data.interface';
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -42,13 +42,13 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       //   id_tn: 54_321,
       //   tn: 12_345,
       //   fio: 'Форточкина Клавдия Ивановна',
-      //   dept: 714,
+      //   dept: 714,W
       //   auth_data: {
       //     access_token: 'fake-jwt-token',
       //     expired_time: 123456
       //   }
       // };
-      const fakeToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
+      const fakeToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF90biI6IjU0XzMyMSIsInRuIjoiMTJfMzQ1IiwiZmlvIjoi0KTQvtGA0YLQvtGH0LrQuNC90LAg0JrQu9Cw0LLQtNC40Y8g0JjQstCw0L3QvtCy0L3QsCIsImRlcHQiOiI3MTQiLCJhdXRoX2RhdGEiOnsiYWNjZXNzX3Rva2VuIjoiZmFrZS1qd3QtdG9rZW4iLCJleHBpcmVkX3RpbWUiOiIxMjM0NTYifX0.hgX_W-hO-XKuHGicwuzg2e0cxI8wT0fSSmTCTkAs6h4';
       const body: IAuthData = { token: fakeToken };
 
       return of(new HttpResponse({ body, status: 200 }));
