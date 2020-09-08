@@ -12,7 +12,8 @@ export const defaultConfig: IConfig = {
   scope: '',
   storageNaming: {
     jwt: 'jwt',
-    state: 'state'
+    state: 'state',
+    returnUrl: 'returnUrl'
   }
 };
 

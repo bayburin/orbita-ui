@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Params } from '@angular/router';
+import { Params, Router } from '@angular/router';
 
 import { AuthService } from './../services/auth.service';
 import { AuthState } from './../store/auth.state';
@@ -15,7 +15,8 @@ export class AuthFacade {
 
   constructor(
     private authService: AuthService,
-    private authState: AuthState
+    private authState: AuthState,
+    private router: Router
   ) { }
 
   loginWithRedirect(): void {
@@ -31,6 +32,7 @@ export class AuthFacade {
       tap(data => {
         this.authState.setJwt(data.token);
         this.authState.setIsAuthenticated(true);
+        this.router.navigateByUrl(this.authState.getReturnUrl());
       }),
       // catchError(() => {
       //   // TODO: Сохранить в хранилище ошибку.
@@ -39,6 +41,6 @@ export class AuthFacade {
   }
 
   logout(): void {
-    this.authState.setJwt(null);
+    this.authState.removeJwt();
   }
 }

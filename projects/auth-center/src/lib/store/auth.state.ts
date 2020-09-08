@@ -10,21 +10,25 @@ import { RequestState } from '../request_state';
   providedIn: 'root'
 })
 export class AuthState {
-  private isAuthenticated$ = new BehaviorSubject<boolean>(false);
+  private isAuthenticated$: BehaviorSubject<boolean>;
   private requestState$: BehaviorSubject<string>;
   private jwt$: BehaviorSubject<string>;
+  private returnUrl$: BehaviorSubject<string>;
 
   constructor(@Inject(CONFIG) private config: IConfig) {
     this.requestState$ = new BehaviorSubject(localStorage.getItem(this.config.storageNaming.state));
     this.jwt$ = new BehaviorSubject(localStorage.getItem(this.config.storageNaming.jwt));
+    this.returnUrl$ = new BehaviorSubject(localStorage.getItem(this.config.storageNaming.returnUrl));
+
+    let isAuth = false;
+    if (this.getJwt()) {
+      isAuth = true;
+    }
+    this.isAuthenticated$ = new BehaviorSubject(isAuth);
   }
 
   getIsAuthenticated$(): Observable<boolean> {
     return this.isAuthenticated$.asObservable();
-  }
-
-  getIsAuthenticated(): boolean {
-    return this.isAuthenticated$.getValue();
   }
 
   setIsAuthenticated(isAuthenticated: boolean): void {
@@ -45,12 +49,26 @@ export class AuthState {
     this.requestState$.next(null);
   }
 
+  getJwt(): string {
+    return this.jwt$.getValue();
+  }
+
   setJwt(jwt: string): void {
     localStorage.setItem(this.config.storageNaming.jwt, jwt);
     this.jwt$.next(jwt);
   }
 
-  getJwt(): string {
-    return this.jwt$.getValue();
+  removeJwt(): void {
+    localStorage.removeItem(this.config.storageNaming.jwt);
+    this.jwt$.next(null);
+  }
+
+  getReturnUrl(): string {
+    return this.returnUrl$.getValue();
+  }
+
+  setReturnUrl(url: string): void {
+    localStorage.setItem(this.config.storageNaming.returnUrl, url);
+    this.returnUrl$.next(url);
   }
 }

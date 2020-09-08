@@ -1,6 +1,7 @@
 export interface IStorageNaming {
   jwt: string;
   state: string;
+  returnUrl: string;
 }
 
 export interface IConfig {

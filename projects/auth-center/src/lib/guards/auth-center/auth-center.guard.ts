@@ -21,6 +21,7 @@ export class AuthCenterGuard implements CanActivate {
       map(isAuthenticated => !!isAuthenticated),
       tap(isAuthenticated => {
         if (!isAuthenticated) {
+          this.authState.setReturnUrl(state.url);
           this.router.navigate(['oauth2', 'unauthorized']);
         }
       })
