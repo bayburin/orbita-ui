@@ -4,6 +4,7 @@ export function jwtOptionsFactory(authState: AuthState) {
   return {
     tokenGetter: () => {
       return authState.getJwt();
-    }
+    },
+    skipWhenExpired: true
   };
 }

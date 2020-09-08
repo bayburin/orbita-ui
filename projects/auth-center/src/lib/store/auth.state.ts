@@ -13,11 +13,11 @@ import { RequestState } from '../request_state';
 export class AuthState {
   private isAuthenticated$ = new BehaviorSubject<boolean>(false);
   private currentUser$ = new BehaviorSubject<CurrentUser>(null);
-  private authState$: BehaviorSubject<string>;
+  private requestState$: BehaviorSubject<string>;
   private jwt$: BehaviorSubject<string>;
 
   constructor(@Inject(CONFIG) private config: IConfig) {
-    this.authState$ = new BehaviorSubject(localStorage.getItem(this.config.storageNaming.state));
+    this.requestState$ = new BehaviorSubject(localStorage.getItem(this.config.storageNaming.state));
     this.jwt$ = new BehaviorSubject(localStorage.getItem(this.config.storageNaming.jwt));
   }
 
@@ -33,18 +33,18 @@ export class AuthState {
     this.isAuthenticated$.next(isAuthenticated);
   }
 
-  getAuthState$(): Observable<RequestState> {
-    return this.authState$.asObservable().pipe(map(state => new RequestState(state)));
+  getRequestState$(): Observable<RequestState> {
+    return this.requestState$.asObservable().pipe(map(state => new RequestState(state)));
   }
 
-  setAuthState(authState: RequestState): void {
-    localStorage.setItem(this.config.storageNaming.state, authState.value);
-    this.authState$.next(authState.value);
+  setRequestState(requestState: RequestState): void {
+    localStorage.setItem(this.config.storageNaming.state, requestState.value);
+    this.requestState$.next(requestState.value);
   }
 
-  removeAuthState(): void {
+  removeRequestState(): void {
     localStorage.removeItem(this.config.storageNaming.state);
-    this.authState$.next(null);
+    this.requestState$.next(null);
   }
 
   setJwt(jwt: string): void {

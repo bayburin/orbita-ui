@@ -21,11 +21,12 @@ export class AuthFacade {
   loginWithRedirect(): void {
     const state = new RequestState();
 
-    this.authState.setAuthState(state);
+    this.authState.setRequestState(state);
     this.authService.redirectToAuthorizationServer(state);
   }
 
   initAuthenticateProcess(params: Params): void {
+    this.authState.removeRequestState();
     this.authService.getJwt(params).pipe(
       tap(data => {
         this.authState.setJwt(data.token);
