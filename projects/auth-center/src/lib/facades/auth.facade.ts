@@ -33,6 +33,7 @@ export class AuthFacade {
         this.authState.setJwt(data.token);
         this.authState.setIsAuthenticated(true);
         this.router.navigateByUrl(this.authState.getReturnUrl());
+        this.authState.setReturnUrl('/');
       }),
       // catchError(() => {
       //   // TODO: Сохранить в хранилище ошибку.
