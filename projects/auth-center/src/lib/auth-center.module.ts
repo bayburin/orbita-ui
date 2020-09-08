@@ -14,6 +14,7 @@ import { FakeBackendInterceptor } from './interceptors/fake-backend/fake-backend
 import { ErrorInterceptor } from './interceptors/error/error.interceptor';
 import { AuthState } from './store/auth.state';
 import { jwtOptionsFactory } from './factories/jwt-options.factory';
+import { MaterialModule } from './material.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { jwtOptionsFactory } from './factories/jwt-options.factory';
     UnauthorizedPageComponent
   ],
   imports: [
+    MaterialModule,
     AuthCenterRoutingModule,
     JwtModule.forRoot({
       jwtOptionsProvider: {
