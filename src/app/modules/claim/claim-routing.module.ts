@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthCenterGuard } from 'auth-center';
 
 import { ClaimsPageComponent } from './pages/claims-page/claims-page.component';
 
 const routes: Routes = [
   {
-    path: 'claims',
-    component: ClaimsPageComponent
+    path: '',
+    component: ClaimsPageComponent,
+    canActivate: [AuthCenterGuard]
   }
 ];
 
