@@ -1,6 +1,6 @@
-import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Router } from '@angular/router';
 
 import { CurrentUser } from '../models/current_user.model';
 import { AuthState } from './../store/auth.state';
@@ -11,7 +11,8 @@ import { AuthState } from './../store/auth.state';
 export class AuthHelper {
   constructor(
     private state: AuthState,
-    private jwtHelper: JwtHelperService
+    private jwtHelper: JwtHelperService,
+    private router: Router
   ) { }
 
   getCurrentUser(): CurrentUser {
@@ -23,5 +24,9 @@ export class AuthHelper {
     }
 
     return null;
+  }
+
+  logout(): void {
+    this.router.navigate(['oauth2', 'unauthorized']);
   }
 }
