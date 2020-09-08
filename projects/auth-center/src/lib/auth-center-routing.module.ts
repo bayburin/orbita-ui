@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { CallbackPageComponent } from './pages/callback/callback-page.component';
 import { AuthorizeForbiddenPageComponent } from './pages/authorize-forbidden/authorize-forbidden-page.component';
-import { UnauthorizedPageComponent } from './pages/unauthorized-page/unauthorized-page.component';
+import { UnauthorizedPageComponent } from './pages/unauthorized/unauthorized-page.component';
 
 import { RequestStateGuard } from './guards/request-state/request-state.guard';
 

@@ -37,4 +37,8 @@ export class AuthFacade {
       // })
     ).subscribe();
   }
+
+  logout(): void {
+    this.authState.setJwt(null);
+  }
 }

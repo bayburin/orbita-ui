@@ -4,7 +4,7 @@ import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 import { CallbackPageComponent } from './pages/callback/callback-page.component';
 import { AuthorizeForbiddenPageComponent } from './pages/authorize-forbidden/authorize-forbidden-page.component';
-import { UnauthorizedPageComponent } from './pages/unauthorized-page/unauthorized-page.component';
+import { UnauthorizedPageComponent } from './pages/unauthorized/unauthorized-page.component';
 
 import { AuthCenterRoutingModule } from './auth-center-routing.module';
 
