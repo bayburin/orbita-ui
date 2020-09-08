@@ -13,4 +13,8 @@ export class UnauthorizedPageComponent implements OnInit {
   ngOnInit(): void {
     this.authFacade.logout();
   }
+
+  login(): void {
+    this.authFacade.loginWithRedirect();
+  }
 }
