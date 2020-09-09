@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { CurrentUser } from '../models/current_user.model';
 import { AuthState } from './../store/auth.state';
@@ -9,11 +10,15 @@ import { AuthState } from './../store/auth.state';
   providedIn: 'root'
 })
 export class AuthHelper {
+  isAuthenticated$: Observable<boolean>;
+
   constructor(
     private state: AuthState,
     private jwtHelper: JwtHelperService,
     private router: Router
-  ) { }
+  ) {
+    this.isAuthenticated$ = this.state.getIsAuthenticated$();
+  }
 
   getCurrentUser(): CurrentUser {
     const decoded = this.jwtHelper.decodeToken(this.state.getJwt());
