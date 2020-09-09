@@ -1,9 +1,11 @@
 <div class="container">
-  <section class="header-block">
-    <h1>{{ appName }}</h1>
-    <mat-divider></mat-divider>
-  </section>
-  <section class="content-block">
-    <ng-content></ng-content>
-  </section>
+  <mat-card class="mat-elevation-z3">
+    <section class="header-block">
+      <h1>{{ appName }}</h1>
+      <mat-divider></mat-divider>
+    </section>
+    <section class="content-block">
+      <ng-content></ng-content>
+    </section>
+  </mat-card>
 </div>
