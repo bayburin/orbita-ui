@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 import { AuthState } from './../../store/auth.state';
+import { AuthFacade } from './../../facades/auth.facade';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ import { AuthState } from './../../store/auth.state';
 export class AuthCenterGuard implements CanActivate {
   constructor(
     private authState: AuthState,
-    private router: Router
+    private router: Router,
+    private authFacade: AuthFacade
   ) { }
 
   canActivate(
@@ -22,7 +24,8 @@ export class AuthCenterGuard implements CanActivate {
       tap(isAuthenticated => {
         if (!isAuthenticated) {
           this.authState.setReturnUrl(state.url);
-          this.router.navigate(['oauth2', 'unauthorized']);
+          // this.router.navigate(['oauth2', 'unauthorized']);
+          this.authFacade.loginWithRedirect();
         }
       })
     );

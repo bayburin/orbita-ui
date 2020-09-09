@@ -19,13 +19,12 @@ export class RequestStateGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this.authState.getRequestState$().pipe(
       map(requestState => {
-        return true;
-        // if (requestState.isValid(state.root.queryParams.state)) {
-        //   return true;
-        // }
+        if (requestState.isValid(state.root.queryParams.state)) {
+          return true;
+        }
 
-        // this.router.navigate(['oauth2', 'authorize_forbidden']);
-        // return false;
+        this.router.navigate(['oauth2', 'authorize_forbidden']);
+        return false;
       })
     );
   }
