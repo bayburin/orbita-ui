@@ -13,4 +13,5 @@ export interface IConfig {
   redirectUrl: string;
   scope?: string;
   storageNaming?: IStorageNaming;
+  appName: string;
 }

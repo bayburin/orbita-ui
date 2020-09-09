@@ -2,6 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 
+import { LayoutComponent } from './pages/layout/layout.component';
 import { CallbackPageComponent } from './pages/callback/callback-page.component';
 import { AuthorizeForbiddenPageComponent } from './pages/authorize-forbidden/authorize-forbidden-page.component';
 import { UnauthorizedPageComponent } from './pages/unauthorized/unauthorized-page.component';
@@ -18,6 +19,7 @@ import { MaterialModule } from './material.module';
 
 @NgModule({
   declarations: [
+    LayoutComponent,
     CallbackPageComponent,
     AuthorizeForbiddenPageComponent,
     UnauthorizedPageComponent

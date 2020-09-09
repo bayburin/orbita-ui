@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Params, Router } from '@angular/router';
 
@@ -6,6 +6,8 @@ import { AuthService } from './../services/auth.service';
 import { AuthState } from './../store/auth.state';
 import { RequestState } from '../request_state';
 import { tap, catchError } from 'rxjs/operators';
+import { IConfig } from './../interfaces/config.interface';
+import { CONFIG } from '../auth-center.config';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,8 @@ export class AuthFacade {
   constructor(
     private authService: AuthService,
     private authState: AuthState,
-    private router: Router
+    private router: Router,
+    @Inject(CONFIG) private config: IConfig
   ) { }
 
   loginWithRedirect(): void {
@@ -43,5 +46,9 @@ export class AuthFacade {
 
   logout(): void {
     this.authState.removeJwt();
+  }
+
+  getAppName(): string {
+    return this.config.appName;
   }
 }

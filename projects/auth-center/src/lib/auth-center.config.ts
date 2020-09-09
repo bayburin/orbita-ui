@@ -10,6 +10,7 @@ export const defaultConfig: IConfig = {
   state: '',
   redirectUrl: '',
   scope: '',
+  appName: '',
   storageNaming: {
     jwt: 'jwt',
     state: 'state',
