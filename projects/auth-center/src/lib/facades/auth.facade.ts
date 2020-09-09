@@ -5,7 +5,7 @@ import { Params, Router } from '@angular/router';
 import { AuthService } from './../services/auth.service';
 import { AuthState } from './../store/auth.state';
 import { RequestState } from '../request_state';
-import { tap, catchError } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 import { IConfig } from './../interfaces/config.interface';
 import { CONFIG } from '../auth-center.config';
 
@@ -13,14 +13,18 @@ import { CONFIG } from '../auth-center.config';
   providedIn: 'root'
 })
 export class AuthFacade {
-  isAuthenticated$: Observable<boolean>;
+  isLoading$: Observable<boolean>;
+  error$: Observable<any>;
 
   constructor(
     private authService: AuthService,
     private authState: AuthState,
     private router: Router,
     @Inject(CONFIG) private config: IConfig
-  ) { }
+  ) {
+    this.isLoading$ = this.authState.getIsLoading$();
+    this.error$ = this.authState.getError$();
+  }
 
   loginWithRedirect(): void {
     const state = new RequestState();
@@ -30,18 +34,25 @@ export class AuthFacade {
   }
 
   initAuthenticateProcess(params: Params): void {
+    this.authState.setIsLoading(true);
     this.authState.removeRequestState();
     this.authService.getJwt(params).pipe(
-      tap(data => {
+      finalize(() => this.authState.setIsLoading(false))
+    ).subscribe(
+      data => {
         this.authState.setJwt(data.token);
-        this.authState.setIsAuthenticated(true);
-        this.router.navigateByUrl(this.authState.getReturnUrl());
-        this.authState.setReturnUrl('/');
-      }),
-      // catchError(() => {
-      //   // TODO: Сохранить в хранилище ошибку.
-      // })
-    ).subscribe();
+
+        setTimeout(() => {
+          this.authState.setIsAuthenticated(true);
+          this.router.navigateByUrl(this.authState.getReturnUrl());
+          this.authState.setReturnUrl('/');
+        }, 1000);
+      },
+      error => {
+        console.log(error);
+        this.authState.setError(error);
+      }
+    );
   }
 
   logout(): void {

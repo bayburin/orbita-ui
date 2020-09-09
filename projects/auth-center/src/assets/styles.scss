@@ -21,6 +21,15 @@ ac-layout {
   }
 
   .actions {
-    margin-top: 20px;
+    width: 60%;
+    margin: 20px auto 0 auto;
+  }
+
+  .accent-color {
+    color: #388e3c;
+  }
+
+  .warn-color {
+    color: #f44336
   }
 }

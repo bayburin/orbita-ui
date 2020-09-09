@@ -1,6 +1,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { CommonModule } from '@angular/common';
 
 import { LayoutComponent } from './pages/layout/layout.component';
 import { CallbackPageComponent } from './pages/callback/callback-page.component';
@@ -25,6 +26,7 @@ import { MaterialModule } from './material.module';
     UnauthorizedPageComponent
   ],
   imports: [
+    CommonModule,
     MaterialModule,
     AuthCenterRoutingModule,
     JwtModule.forRoot({

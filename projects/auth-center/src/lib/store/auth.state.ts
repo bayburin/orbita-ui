@@ -14,11 +14,15 @@ export class AuthState {
   private requestState$: BehaviorSubject<string>;
   private jwt$: BehaviorSubject<string>;
   private returnUrl$: BehaviorSubject<string>;
+  private isLoading$: BehaviorSubject<boolean>;
+  private error$: BehaviorSubject<any>;
 
   constructor(@Inject(CONFIG) private config: IConfig) {
     this.requestState$ = new BehaviorSubject(localStorage.getItem(this.config.storageNaming.state));
     this.jwt$ = new BehaviorSubject(localStorage.getItem(this.config.storageNaming.jwt));
     this.returnUrl$ = new BehaviorSubject(localStorage.getItem(this.config.storageNaming.returnUrl));
+    this.isLoading$ = new BehaviorSubject(false);
+    this.error$ = new BehaviorSubject(null);
 
     let isAuth = false;
     if (this.getJwt()) {
@@ -70,5 +74,21 @@ export class AuthState {
   setReturnUrl(url: string): void {
     localStorage.setItem(this.config.storageNaming.returnUrl, url);
     this.returnUrl$.next(url);
+  }
+
+  getIsLoading$(): Observable<boolean> {
+    return this.isLoading$.asObservable();
+  }
+
+  setIsLoading(isLoading: boolean): void {
+    this.isLoading$.next(isLoading);
+  }
+
+  getError$(): Observable<any> {
+    return this.error$.asObservable();
+  }
+
+  setError(error: any): void {
+    this.error$.next(error);
   }
 }

@@ -6,7 +6,7 @@ import {
   HttpInterceptor,
   HttpResponse
 } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { materialize, dematerialize, delay, switchMap, mergeMap } from 'rxjs/operators';
 
 import { CONFIG } from '../../auth-center.config';
@@ -51,6 +51,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       const fakeToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF90biI6IjU0XzMyMSIsInRuIjoiMTJfMzQ1IiwiZmlvIjoi0KTQvtGA0YLQvtGH0LrQuNC90LAg0JrQu9Cw0LLQtNC40Y8g0JjQstCw0L3QvtCy0L3QsCIsImRlcHQiOiI3MTQiLCJhdXRoX2RhdGEiOnsiYWNjZXNzX3Rva2VuIjoiZmFrZS1qd3QtdG9rZW4iLCJleHBpcmVkX3RpbWUiOiIxMjM0NTYifX0.hgX_W-hO-XKuHGicwuzg2e0cxI8wT0fSSmTCTkAs6h4';
       const body: IAuthData = { token: fakeToken };
 
+      // return throwError({ message: 'Unauthorized' });
       return of(new HttpResponse({ body, status: 200 }));
     }
   }
