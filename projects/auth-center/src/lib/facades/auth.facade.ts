@@ -56,6 +56,7 @@ export class AuthFacade {
   }
 
   logout(): void {
+    this.authState.setIsAuthenticated(false);
     this.authState.removeJwt();
   }
 
