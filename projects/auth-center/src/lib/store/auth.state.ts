@@ -5,19 +5,14 @@ import { map } from 'rxjs/operators';
 import { CONFIG } from '../auth-center.config';
 import { IConfig } from '../interfaces/config.interface';
 import { RequestState } from '../request_state';
+import { AuthStateAbstract } from './auth.state.abstract';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthState {
-  private isAuthenticated$: BehaviorSubject<boolean>;
-  private requestState$: BehaviorSubject<string>;
-  private jwt$: BehaviorSubject<string>;
-  private returnUrl$: BehaviorSubject<string>;
-  private isLoading$: BehaviorSubject<boolean>;
-  private error$: BehaviorSubject<any>;
-
+export class AuthState extends AuthStateAbstract {
   constructor(@Inject(CONFIG) private config: IConfig) {
+    super();
     this.requestState$ = new BehaviorSubject(localStorage.getItem(this.config.storageNaming.state));
     this.jwt$ = new BehaviorSubject(localStorage.getItem(this.config.storageNaming.jwt));
     this.returnUrl$ = new BehaviorSubject(localStorage.getItem(this.config.storageNaming.returnUrl));
