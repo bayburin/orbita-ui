@@ -7,15 +7,18 @@ import { CONFIG } from '../auth-center.config';
 import { IConfig } from './../interfaces/config.interface';
 import { RequestState } from '../request_state';
 import { IAuthData } from './../interfaces/auth-data.interface';
+import { AuthServiceAbstract } from './auth.service.abstract';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthService extends AuthServiceAbstract {
   constructor(
     private http: HttpClient,
     @Inject(CONFIG) private config: IConfig
-  ) { }
+  ) {
+    super();
+  }
 
   redirectToAuthorizationServer(state: RequestState): void {
     const paramsObject = {
