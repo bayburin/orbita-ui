@@ -9,6 +9,6 @@ import { AuthHelper } from 'auth-center';
 })
 export class AppComponent {
   constructor(private authHelper: AuthHelper) {
-    // authHelper.getCurrentUser();
+    console.log(authHelper.getCurrentUser());
   }
 }

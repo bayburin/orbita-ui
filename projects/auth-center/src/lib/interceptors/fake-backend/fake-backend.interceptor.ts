@@ -39,16 +39,16 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
     function authorize(): Observable<any> {
       // const body = {
-      //   id_tn: 54_321,
-      //   tn: 12_345,
+      //   id_tn: 54321,
+      //   tn: 12345,
       //   fio: 'Форточкина Клавдия Ивановна',
-      //   dept: 714,W
+      //   dept: 714,
       //   auth_data: {
       //     access_token: 'fake-jwt-token',
       //     expired_time: 123456
       //   }
       // };
-      const fakeToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF90biI6IjU0XzMyMSIsInRuIjoiMTJfMzQ1IiwiZmlvIjoi0KTQvtGA0YLQvtGH0LrQuNC90LAg0JrQu9Cw0LLQtNC40Y8g0JjQstCw0L3QvtCy0L3QsCIsImRlcHQiOiI3MTQiLCJhdXRoX2RhdGEiOnsiYWNjZXNzX3Rva2VuIjoiZmFrZS1qd3QtdG9rZW4iLCJleHBpcmVkX3RpbWUiOiIxMjM0NTYifX0.hgX_W-hO-XKuHGicwuzg2e0cxI8wT0fSSmTCTkAs6h4';
+      const fakeToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF90biI6IjU0MzIxIiwidG4iOiIxMjM0NSIsImZpbyI6ItCk0L7RgNGC0L7Rh9C60LjQvdCwINCa0LvQsNCy0LTQuNGPINCY0LLQsNC90L7QstC90LAiLCJkZXB0IjoiNzE0IiwiYXV0aF9kYXRhIjp7ImFjY2Vzc190b2tlbiI6ImZha2Utand0LXRva2VuIiwiZXhwaXJlZF90aW1lIjoiMTIzNDU2In19.G4wgcZDQOLyCHD_lKpO5nNGwjMA68qDWUfpb41WWZbg';
       const body: IAuthData = { token: fakeToken };
 
       // return throwError({ message: 'Unauthorized' });
