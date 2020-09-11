@@ -16,7 +16,7 @@ export class RequestStateGuard implements CanActivate {
 
   canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    state: RouterStateSnapshot): Observable<boolean> {
     return this.authState.getRequestState$().pipe(
       map(requestState => {
         if (requestState.isValid(state.root.queryParams.state)) {

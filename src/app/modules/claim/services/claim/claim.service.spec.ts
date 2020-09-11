@@ -7,7 +7,7 @@ import { IClaim } from '@modules/claim/interfaces/claim.interface';
 
 describe('ClaimService', () => {
   let service: ClaimService;
-  let httpTestingController: HttpTestingController;
+  let httpMock: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -15,11 +15,11 @@ describe('ClaimService', () => {
     });
 
     service = TestBed.inject(ClaimService);
-    httpTestingController = TestBed.inject(HttpTestingController);
+    httpMock = TestBed.inject(HttpTestingController);
   });
 
   afterEach(() => {
-    httpTestingController.verify();
+    httpMock.verify();
   });
 
   it('should be created', () => {
@@ -35,7 +35,7 @@ describe('ClaimService', () => {
         expect(result).toEqual(claims);
       });
 
-      httpTestingController.expectOne({
+      httpMock.expectOne({
         method: 'GET',
         url: api
       }).flush(claims);

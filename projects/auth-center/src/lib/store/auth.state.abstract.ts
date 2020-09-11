@@ -1,6 +1,6 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { RequestState } from './../request_state';
+import { RequestState } from '../models/request-state/request-state.model';
 
 export abstract class AuthStateAbstract {
   /**

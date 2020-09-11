@@ -4,15 +4,16 @@ import { Params, Router } from '@angular/router';
 
 import { AuthService } from './../services/auth.service';
 import { AuthState } from './../store/auth.state';
-import { RequestState } from '../request_state';
+import { RequestState } from '../models/request-state/request-state.model';
 import { finalize } from 'rxjs/operators';
 import { IConfig } from './../interfaces/config.interface';
 import { CONFIG } from '../auth-center.config';
+import { AuthFacadeAbstract } from './auth.facade.abstract';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthFacade {
+export class AuthFacade extends AuthFacadeAbstract {
   isLoading$: Observable<boolean>;
   error$: Observable<any>;
 
@@ -22,6 +23,7 @@ export class AuthFacade {
     private router: Router,
     @Inject(CONFIG) private config: IConfig
   ) {
+    super();
     this.isLoading$ = this.authState.getIsLoading$();
     this.error$ = this.authState.getError$();
   }
@@ -29,6 +31,7 @@ export class AuthFacade {
   loginWithRedirect(): void {
     const state = new RequestState();
 
+    state.generateCode();
     this.authState.setRequestState(state);
     this.authService.redirectToAuthorizationServer(state);
   }

@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { CurrentUser } from './../models/current_user.model';
+import { CurrentUser } from './../models/current-user/current-user.model';
 
 export abstract class AuthHelperAbstract {
   /**

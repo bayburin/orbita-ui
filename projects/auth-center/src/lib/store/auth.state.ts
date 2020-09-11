@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 
 import { CONFIG } from '../auth-center.config';
 import { IConfig } from '../interfaces/config.interface';
-import { RequestState } from '../request_state';
+import { RequestState } from '../models/request-state/request-state.model';
 import { AuthStateAbstract } from './auth.state.abstract';
 
 @Injectable({
@@ -18,12 +18,7 @@ export class AuthState extends AuthStateAbstract {
     this.returnUrl$ = new BehaviorSubject(localStorage.getItem(this.config.storageNaming.returnUrl));
     this.isLoading$ = new BehaviorSubject(false);
     this.error$ = new BehaviorSubject(null);
-
-    let isAuth = false;
-    if (this.getJwt()) {
-      isAuth = true;
-    }
-    this.isAuthenticated$ = new BehaviorSubject(isAuth);
+    this.isAuthenticated$ = new BehaviorSubject(!!this.getJwt());
   }
 
   getIsAuthenticated$(): Observable<boolean> {

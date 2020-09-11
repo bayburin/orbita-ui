@@ -28,9 +28,9 @@
               "src/assets"
             ],
             "styles": [
+              "dist/auth-center/assets/styles.scss",
               "src/styles.scss",
-              "src/assets/scss/skin.scss",
-              "dist/auth-center/assets/styles.scss"
+              "src/assets/scss/skin.scss"
             ],
             "scripts": []
           },

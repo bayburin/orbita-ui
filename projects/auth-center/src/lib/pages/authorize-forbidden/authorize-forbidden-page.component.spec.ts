@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { AuthorizeForbiddenPageComponent } from './authorize-forbidden-page.component';
 
@@ -8,7 +9,8 @@ describe('AuthorizeForbiddenPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AuthorizeForbiddenPageComponent ]
+      declarations: [AuthorizeForbiddenPageComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
   }));

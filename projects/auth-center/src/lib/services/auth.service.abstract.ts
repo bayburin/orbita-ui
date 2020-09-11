@@ -2,7 +2,7 @@ import { Params } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { IAuthData } from './../interfaces/auth-data.interface';
-import { RequestState } from './../request_state';
+import { RequestState } from '../models/request-state/request-state.model';
 
 export abstract class AuthServiceAbstract {
   /**

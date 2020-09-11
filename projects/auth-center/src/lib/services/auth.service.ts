@@ -5,7 +5,7 @@ import { Params } from '@angular/router';
 
 import { CONFIG } from '../auth-center.config';
 import { IConfig } from './../interfaces/config.interface';
-import { RequestState } from '../request_state';
+import { RequestState } from '../models/request-state/request-state.model';
 import { IAuthData } from './../interfaces/auth-data.interface';
 import { AuthServiceAbstract } from './auth.service.abstract';
 

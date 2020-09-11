@@ -46,7 +46,7 @@ export class AuthCenterModule {
       ngModule: AuthCenterModule,
       providers: [
         { provide: CONFIG, useValue: { ...defaultConfig, ...config } },
-        { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true },
+        // { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
       ]
     };

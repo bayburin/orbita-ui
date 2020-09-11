@@ -3,7 +3,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { CurrentUser } from '../models/current_user.model';
+import { CurrentUser } from '../models/current-user/current-user.model';
 import { AuthState } from './../store/auth.state';
 import { AuthHelperAbstract } from './auth.helper.abstract';
 

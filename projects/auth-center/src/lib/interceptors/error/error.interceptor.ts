@@ -16,7 +16,6 @@ export class ErrorInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(catchError(error => {
       if (error.status === 401) {
-        // TODO: перед выходом нужно запомнить страницу, на которую хотел перейти пользователь
         this.router.navigate(['oauth2', 'unauthorized']);
 
         return throwError(error);

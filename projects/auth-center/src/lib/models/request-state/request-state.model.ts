@@ -1,15 +1,9 @@
 export class RequestState {
   private readonly CODE_LENGTH = 30;
 
-  constructor(public value: string = null) {
-    this.value = value || this.generateCode();
-  }
+  constructor(public value: string = null) { }
 
-  isValid(received: string): boolean {
-    return this.value === received;
-  }
-
-  private generateCode(): string {
+  generateCode(): void {
     let result = '';
     const dictionary = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -17,6 +11,10 @@ export class RequestState {
       result += dictionary.charAt(Math.floor(Math.random() * dictionary.length));
     }
 
-    return result;
+    this.value = result;
+  }
+
+  isValid(received: string): boolean {
+    return this.value === received;
   }
 }
