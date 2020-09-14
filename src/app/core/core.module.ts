@@ -7,8 +7,10 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
+import { environment } from '@env/environment';
 import { SharedModule } from '@shared/shared.module';
-import { environment } from 'environments/environment';
+import { AuthCenterModule } from 'auth-center';
+import { CoreRoutingModule } from './core-routing.module';
 
 import { HeaderComponent } from './components/header/header.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
@@ -22,12 +24,14 @@ import { FakeBackendInterceptor } from './interceptors/fake-backend.interceptor'
   imports: [
     BrowserAnimationsModule,
     RouterModule,
+    CoreRoutingModule,
     FlexLayoutModule,
     SharedModule,
     HttpClientModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot(),
-    environment.production ? [] : StoreDevtoolsModule.instrument({ maxAge: 25 })
+    environment.production ? [] : StoreDevtoolsModule.instrument({ maxAge: 25 }),
+    AuthCenterModule.forRoot(environment.auth)
   ],
   exports: [
     HeaderComponent,

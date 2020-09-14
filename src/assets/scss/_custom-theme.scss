@@ -3,7 +3,8 @@
 @include mat-core();
 
 $orbita-theme-primary: mat-palette($mat-main-primary);
-$orbita-theme-accent: mat-palette($mat-green, 400, 300, 600);
+$orbita-theme-accent: mat-palette($mat-green);
+// , 400, 300, 600
 $orbita-theme-warn: mat-palette($mat-red);
 
 $orbita-theme: mat-light-theme($orbita-theme-primary, $orbita-theme-accent, $orbita-theme-warn);

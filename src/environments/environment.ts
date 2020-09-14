@@ -5,6 +5,12 @@
 export const environment = {
   production: false,
   serverUrl: 'http://localhost:3000',
+  auth: {
+    clientId: '83',
+    redirectUrl: 'https://localhost.iss-reshetnev.ru:4200/oauth2/callback',
+    serverUrl: 'http://localhost:3000/oauth2/authorize',
+    appName: 'Орбита'
+  }
 };
 
 /*

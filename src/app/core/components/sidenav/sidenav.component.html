@@ -6,7 +6,7 @@
       </mat-toolbar-row>
     </mat-toolbar>
     <mat-list>
-      <a mat-list-item [routerLink]="['/']">
+      <a mat-list-item [routerLink]="['/dashboard']">
         <mat-icon mat-list-icon>dashboard</mat-icon>
         Сводка
       </a>
@@ -18,6 +18,7 @@
   </mat-sidenav>
   <mat-sidenav-content class="sidenav-content">
     <div class="mat-elevation-z2">
+      <!-- <button (click)="login()">Login</button> -->
       <app-header (toggleSidenav)="resizeSidenav()"></app-header>
     </div>
     <main>

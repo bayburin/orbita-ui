@@ -1,8 +1,7 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -17,10 +16,25 @@
       "dom"
     ],
     "paths": {
-      "@core/*": ["app/core/*"],
-      "@modules/*": ["app/modules/*"],
-      "@shared/*": ["app/shared/*"],
-      "@store/*": ["app/store/*"]
+      "@core/*": [
+        "src/app/core/*"
+      ],
+      "@env/*": [
+        "src/environments/*"
+      ],
+      "@modules/*": [
+        "src/app/modules/*"
+      ],
+      "@shared/*": [
+        "src/app/shared/*"
+      ],
+      "@store/*": [
+        "src/app/store/*"
+      ],
+      "auth-center": [
+        "dist/auth-center/auth-center",
+        "dist/auth-center"
+      ]
     }
   }
 }
