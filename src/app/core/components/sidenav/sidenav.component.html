@@ -7,18 +7,17 @@
     </mat-toolbar>
     <mat-list>
       <a mat-list-item [routerLink]="['/dashboard']">
-        <mat-icon mat-list-icon>dashboard</mat-icon>
+        <mat-icon mat-list-icon svgIcon="view-dashboard-outline"></mat-icon>
         Сводка
       </a>
       <a mat-list-item [routerLink]="['/claims']">
-        <mat-icon mat-list-icon>email</mat-icon>
+        <mat-icon mat-list-icon svgIcon="file-document-multiple-outline"></mat-icon>
         Заявки
       </a>
      </mat-list>
   </mat-sidenav>
   <mat-sidenav-content class="sidenav-content">
     <div class="mat-elevation-z2">
-      <!-- <button (click)="login()">Login</button> -->
       <app-header (toggleSidenav)="resizeSidenav()"></app-header>
     </div>
     <main>

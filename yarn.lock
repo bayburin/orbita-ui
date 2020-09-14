@@ -1108,6 +1108,11 @@
     merge-source-map "^1.1.0"
     schema-utils "^2.6.4"
 
+"@mdi/angular-material@^5.5.55":
+  version "5.5.55"
+  resolved "https://registry.yarnpkg.com/@mdi/angular-material/-/angular-material-5.5.55.tgz#9ef1bf74767a7d585e1661b5c7d6c926fd3cafd7"
+  integrity sha512-U+wziYUCN2QGISQLq2eDur6Cx1NDrKNWfsPgKCHngt11XEhzBGeThjCOXzwMb3VeXIaSL5nvjRCg45dls9uA2g==
+
 "@ngrx/core@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@ngrx/core/-/core-1.2.0.tgz#882b46abafa2e0e6d887cb71a1b2c2fa3e6d0dc6"

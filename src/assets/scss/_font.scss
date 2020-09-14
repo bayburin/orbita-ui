@@ -9,3 +9,17 @@
     url(../fonts/MaterialIcons-Regular.woff) format('woff'),
     url(../fonts/MaterialIcons-Regular.ttf) format('truetype');
 }
+
+@mixin mat-icon-size($size: 24px) {
+  height: $size !important;
+  width: $size !important;
+  font-size: $size !important;
+  line-height: $size !important;
+}
+
+$sizes: 18px, 24px, 36px, 48px;
+@each $size in $sizes {
+  .mat-#{$size} {
+    @include mat-icon-size($size)
+  }
+}

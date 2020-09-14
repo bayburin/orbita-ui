@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 
 /**
  * Navigation
@@ -9,7 +10,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 /**
  * Buttons & Indicators
  */
-import { MatIconModule } from '@angular/material/icon';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
 
@@ -47,4 +48,8 @@ const modules: any[] = [
   imports: [...modules],
   exports: [...modules]
 })
-export class MaterialModule { }
+export class MaterialModule {
+  constructor(matIconRegistry: MatIconRegistry, domSanitizer: DomSanitizer) {
+    matIconRegistry.addSvgIconSet(domSanitizer.bypassSecurityTrustResourceUrl('./assets/mdi.svg'));
+  }
+}

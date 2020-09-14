@@ -1,50 +1,41 @@
 <mat-toolbar class="navigation-bar" color="primary">
   <mat-toolbar-row>
     <button mat-icon-button>
-      <mat-icon (click)="toggleSidenav.emit()">menu</mat-icon>
+      <mat-icon class="mat-18px" (click)="toggleSidenav.emit()" svgIcon="menu"></mat-icon>
     </button>
     <div fxFlex fxLayout fxLayoutAlign="end">
-      <ul fxLayout fxLayoutAlign="center center" class="navigation-items">
-        <!-- TODO: Тестовые элементы. Необходимо исправить -->
+      <ul fxLayout fxLayoutGap="5px" fxLayoutAlign="center center" class="navigation-items">
         <li>
           <button mat-button>
-            <mat-icon>schedule</mat-icon>
+            <mat-icon class="mat-18px" svgIcon="calendar-clock"></mat-icon>
             15
           </button>
         </li>
         <li>
           <button mat-button>
-            <mat-icon>event_available</mat-icon>
+            <mat-icon class="mat-18px" svgIcon="calendar-check"></mat-icon>
             287
           </button>
         </li>
         <li>
           <button mat-icon-button>
-            <mat-icon matBadge="15" matBadgeColor="warn">warning</mat-icon>
+            <mat-icon class="mat-18px" matBadge="15" matBadgeSize="small" matBadgeColor="warn" svgIcon="alert-outline"></mat-icon>
           </button>
         </li>
         <li>
           <button mat-icon-button>
-            <mat-icon matBadge="2" color="accent">notifications_active</mat-icon>
+            <mat-icon class="mat-18px" matBadge="24" matBadgeSize="small" color="accent" matBadgeOverlap="false" svgIcon="bell-ring-outline"></mat-icon>
           </button>
         </li>
         <li>
           <button mat-button>
-            <mat-icon>person</mat-icon>
-            <span fxHide.lt-md>Байбурин Равиль</span>
-          </button>
-        </li>
-        <li>
-          <mat-divider [vertical]="true"></mat-divider>
-        </li>
-        <li>
-          <button mat-icon-button>
-            <mat-icon>security</mat-icon>
+            <mat-icon class="mat-18px" svgIcon="account"></mat-icon>
+            Байбурин Равиль
           </button>
         </li>
         <li>
           <button mat-icon-button (click)="logout()">
-            <mat-icon>exit_to_app</mat-icon>
+            <mat-icon class="mat-18px" svgIcon="logout"></mat-icon>
           </button>
         </li>
       </ul>
