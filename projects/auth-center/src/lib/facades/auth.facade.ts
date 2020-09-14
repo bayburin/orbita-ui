@@ -37,6 +37,12 @@ export class AuthFacade extends AuthFacadeAbstract {
   }
 
   initAuthenticateProcess(params: Params): void {
+    if (params.error) {
+      this.authState.setError({ error: params.error });
+
+      return;
+    }
+
     this.authState.setIsLoading(true);
     this.authState.removeRequestState();
     this.authService.getJwt(params).pipe(

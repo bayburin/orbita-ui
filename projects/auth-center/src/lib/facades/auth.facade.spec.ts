@@ -54,12 +54,29 @@ describe('AuthFacade', () => {
   });
 
   describe('#initAuthenticateProcess', () => {
-    const params = { code: 'fake-code' };
+    let params: any;
 
     beforeEach(() => {
       spyOn(authState, 'setIsLoading');
       spyOn(authState, 'removeRequestState');
       spyOn(router, 'navigateByUrl');
+      params = { code: 'fake-code', error: null };
+    });
+
+    describe('if received error', () => {
+      beforeEach(() => {
+        params.error = 'access_denied';
+        spyOn(authState, 'setError');
+        facade.initAuthenticateProcess(params);
+      });
+
+      it('should set error', () => {
+        expect(authState.setError).toHaveBeenCalledWith({ error: params.error });
+      });
+
+      it('should stop processing', () => {
+        expect(authState.setIsLoading).not.toHaveBeenCalled();
+      });
     });
 
     describe('common part', () => {
