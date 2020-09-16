@@ -4,6 +4,11 @@ export interface IStorageNaming {
   returnUrl: string;
 }
 
+export interface IJwtOptions {
+  allowedDomains: string[];
+  disallowedRoutes: string[];
+}
+
 export interface IConfig {
   authorizationServer?: string;
   serverUrl: string;
@@ -14,4 +19,5 @@ export interface IConfig {
   scope?: string;
   storageNaming?: IStorageNaming;
   appName: string;
+  jwtOptions?: IJwtOptions;
 }

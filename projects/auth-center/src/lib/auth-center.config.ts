@@ -15,6 +15,10 @@ export const defaultConfig: IConfig = {
     jwt: 'jwt',
     state: 'state',
     returnUrl: 'returnUrl'
+  },
+  jwtOptions: {
+    allowedDomains: [],
+    disallowedRoutes: []
   }
 };
 
