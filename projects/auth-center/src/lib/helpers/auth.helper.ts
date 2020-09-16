@@ -20,10 +20,16 @@ export class AuthHelper extends AuthHelperAbstract {
     this.isAuthenticated$ = this.state.getIsAuthenticated$();
   }
 
-  getCurrentUser(): CurrentUser {
+  // getCurrentUser(): CurrentUser {
+  //   const decoded = this.jwtHelper.decodeToken(this.state.getJwt());
+
+  //   return decoded ? new CurrentUser(decoded) : null;
+  // }
+
+  getJwtPayload(): any {
     const decoded = this.jwtHelper.decodeToken(this.state.getJwt());
 
-    return decoded ? new CurrentUser(decoded) : null;
+    return decoded || null;
   }
 
   logout(): void {

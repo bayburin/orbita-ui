@@ -11,7 +11,12 @@ export abstract class AuthHelperAbstract {
   /**
    * Возвращает текущего пользователя.
    */
-  abstract getCurrentUser(): CurrentUser;
+  // abstract getCurrentUser(): CurrentUser;
+
+  /**
+   * Возвращает данные из JWT
+   */
+  abstract getJwtPayload(): any;
 
   /**
    * Редиректит на страницу "/oauth2/unauthorized" для выхода из приложения.
