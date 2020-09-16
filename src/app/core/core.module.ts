@@ -15,6 +15,7 @@ import { CoreRoutingModule } from './core-routing.module';
 import { HeaderComponent } from './components/header/header.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { FakeBackendInterceptor } from './interceptors/fake-backend.interceptor';
+import { JsonInterceptor } from './interceptors/json/json.interceptor';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { FakeBackendInterceptor } from './interceptors/fake-backend.interceptor'
     SidenavComponent
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true }
+    // { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: JsonInterceptor, multi: true }
   ]
 })
 export class CoreModule {
