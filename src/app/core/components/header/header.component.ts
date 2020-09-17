@@ -1,18 +1,24 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 
-import { AuthHelper } from 'auth-center';
+import { AuthFacade } from '@core/facades/auth.facade';
+import { User } from '@core/models/user.model';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+  user: User;
   @Output() toggleSidenav = new EventEmitter<void>();
 
-  constructor(private authHelper: AuthHelper) { }
+  constructor(private authFacade: AuthFacade) { }
+
+  ngOnInit(): void {
+    this.user = this.authFacade.getCurrentUser();
+  }
 
   logout(): void {
-    this.authHelper.logout();
+    this.authFacade.logout();
   }
 }
