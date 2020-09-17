@@ -4,10 +4,14 @@
 // Импорт переменных
 @import "variables";
 
+// Импорт утилит bootstrap
+@import "~bootstrap-utilities";
+
 // Испорт стилей компонентов
 @import "components/sidenav";
 @import "components/navigation-bar";
 @import "components/table";
+@import "components/button";
 
 // Испорт цветовой схемы
 @import "custom-theme";
