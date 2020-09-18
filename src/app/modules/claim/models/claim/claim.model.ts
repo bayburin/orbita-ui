@@ -1,11 +1,25 @@
+export enum ClaimStatuses {
+  OPENED = 'opened', // Открыта
+  AT_WORK = 'at_work', // В работе
+  CANCELED = 'canceled', // Отменена
+  APPROVED = 'approved', // Согласована
+  REOPENED = 'reopened' // Переоткрыта
+}
+
+export enum ClaimPriorities {
+  DEFAULT = 'default',
+  LOW = 'low',
+  HIGH = 'high'
+}
+
 export class Claim {
   id: number;
   serviceId: number;
   claimTemplateId: number;
   serviceName: string;
   claimTemplateName: string;
-  status: string;
-  priority: string;
+  status: ClaimStatuses;
+  priority: ClaimPriorities;
   attrs: any;
   rating: number;
 

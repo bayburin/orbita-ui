@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { mergeMap, catchError, map, withLatestFrom, filter } from 'rxjs/operators';
+import { mergeMap, catchError, map, withLatestFrom, filter, tap } from 'rxjs/operators';
 
 import { ClaimService } from '@modules/claim/services/claim/claim.service';
 import { State } from '@modules/claim/store/reducers/claim.reducer';
@@ -25,6 +25,7 @@ export class ClaimEffects {
       filter(([action, claims]) => claims === null),
       mergeMap(() => this.claimService.getClaims()
         .pipe(
+          tap(data => console.log(data)),
           map(iClaims => iClaims.map(iClaim => new Claim(iClaim))),
           map(claims => ClaimActions.loadAllSuccess({ claims })),
           catchError(error => of(ClaimActions.loadAllFailure({ error })))
