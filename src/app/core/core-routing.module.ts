@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthCenterGuard } from 'auth-center';
+import { AuthCenterGuard } from '@iss/ng-auth-center';
 
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 

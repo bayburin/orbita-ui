@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { AuthHelper, AuthHelperStub } from 'auth-center';
+import { AuthHelper, AuthHelperStub } from '@iss/ng-auth-center';
 
 import { AuthFacade } from '@core/facades/auth.facade';
 import { User } from '@core/models/user.model';

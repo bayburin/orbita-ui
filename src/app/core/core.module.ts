@@ -9,7 +9,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { environment } from '@env/environment';
 import { SharedModule } from '@shared/shared.module';
-import { AuthCenterModule } from 'auth-center';
+import { AuthCenterModule } from '@iss/ng-auth-center';
 import { CoreRoutingModule } from './core-routing.module';
 
 import { HeaderComponent } from './components/header/header.component';

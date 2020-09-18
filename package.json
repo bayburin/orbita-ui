@@ -7,9 +7,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "build-lib-watch-styles": "scss-bundle -e \"./projects/auth-center/src/styles.scss\" -o \"./dist/auth-center/_theme.scss\" -p \"./\" -w \"./projects/auth-center/src/\"",
-    "build-lib-styles": "scss-bundle -e \"./projects/auth-center/src/styles.scss\" -o \"./dist/auth-center/assets/styles.scss\" -p \"./\""
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
@@ -25,6 +23,7 @@
     "@angular/platform-browser-dynamic": "~10.0.11",
     "@angular/router": "~10.0.11",
     "@auth0/angular-jwt": "^5.0.1",
+    "@iss/ng-auth-center": "^1.0.0",
     "@mdi/angular-material": "^5.5.55",
     "@ngrx/core": "^1.2.0",
     "@ngrx/effects": "^10.0.0",

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { AuthHelper } from 'auth-center';
+import { AuthHelper } from '@iss/ng-auth-center';
 import { User } from '@core/models/user.model';
 
 @Injectable({
