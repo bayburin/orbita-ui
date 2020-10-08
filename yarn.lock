@@ -1093,9 +1093,9 @@
     to-fast-properties "^2.0.0"
 
 "@iss/ng-auth-center@^1.0.0":
-  version "1.0.0"
-  resolved "https://gitlab.iss-reshetnev.ru/api/v4/projects/774/packages/npm/@iss/ng-auth-center/-/@iss/ng-auth-center-1.0.0.tgz#cc000dcaffd4dd5d9d80fed0315c4d22e3a215dc"
-  integrity sha1-zAANyv/U3V2dgP7QMVxNIuOiFdw=
+  version "1.0.1"
+  resolved "https://gitlab.iss-reshetnev.ru/api/v4/projects/774/packages/npm/@iss/ng-auth-center/-/@iss/ng-auth-center-1.0.1.tgz#88aecf96b70bcb1d578b1b72280e15337e7129e0"
+  integrity sha1-iK7PlrcLyx1XixtyKA4VM35xKeA=
   dependencies:
     tslib "^2.0.0"
 
