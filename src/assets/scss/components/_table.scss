@@ -1,3 +1,16 @@
 .table {
   width: 100%;
 }
+
+tr.claim-detail-row {
+  height: 0 !important;
+}
+
+.claim-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.claim-element-row td {
+  border-bottom-width: 0 !important;
+}

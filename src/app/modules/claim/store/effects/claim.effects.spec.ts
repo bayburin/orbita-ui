@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { Observable, throwError, of } from 'rxjs';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
+import { Action } from '@ngrx/store';
 
 import { ClaimEffects } from '@modules/claim/store/effects/claim.effects';
 import { ClaimService } from '@modules/claim/services/claim/claim.service';
@@ -13,7 +14,7 @@ import { IClaim } from '@modules/claim/interfaces/claim.interface';
 import { Claim } from '@modules/claim/models/claim/claim.model';
 
 describe('ClaimEffects', () => {
-  let actions$: Observable<any>;
+  let actions$: Observable<Action>;
   let effects: ClaimEffects;
   let store: MockStore<State>;
   let claimService: ClaimService;

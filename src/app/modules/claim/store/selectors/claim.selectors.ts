@@ -28,3 +28,13 @@ export const getSelected = createSelector(
   selectClaims,
   fromClaims.getSelected
 );
+
+export const getEntity = createSelector(
+  getSelected,
+  getEntities,
+  (selectedId, entities) => {
+    return {
+      ...entities[selectedId]
+    };
+  }
+);

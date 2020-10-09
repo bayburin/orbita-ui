@@ -11,14 +11,20 @@ import { Claim } from '@modules/claim/models/claim/claim.model';
 })
 export class ClaimsBlockComponent implements OnInit {
   claims$: Observable<Claim[]>;
+  claim$: Observable<Claim>;
   dataSource: MatTableDataSource<Claim>;
 
   constructor(private claimFacade: ClaimFacade) {
     this.claims$ = claimFacade.claims$;
+    this.claim$ = claimFacade.claim$;
   }
 
   ngOnInit(): void {
     this.claimFacade.loadClaims();
     this.claims$.subscribe(claims => this.dataSource = new MatTableDataSource(claims));
+  }
+
+  onSelect(claimId: number): void {
+    this.claimFacade.showWorkflow(claimId);
   }
 }

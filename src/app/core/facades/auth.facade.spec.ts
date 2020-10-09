@@ -4,7 +4,7 @@ import { AuthHelper, AuthHelperStub } from '@iss/ng-auth-center';
 import { AuthFacade } from '@core/facades/auth.facade';
 import { User } from '@core/models/user.model';
 
-fdescribe('AuthFacade', () => {
+describe('AuthFacade', () => {
   let authHelper: AuthHelper;
   let facade: AuthFacade;
 

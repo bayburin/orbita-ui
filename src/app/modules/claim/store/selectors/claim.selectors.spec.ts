@@ -35,4 +35,8 @@ describe('ClaimSelectors', () => {
   it('should return selected id if call getSelected', () => {
     expect(ClaimSelectors.getSelected.projector(initialState)).toEqual(selected);
   });
+
+  it('should return single entity if call getEntity', () => {
+    expect(ClaimSelectors.getEntity.projector(selected, claims)).toEqual(claims[selected]);
+  });
 });
