@@ -1,12 +1,12 @@
 import { createReducer, on, Action } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
-import { Claim } from '@modules/claim/models/claim/claim.model';
+import { IClaim } from '@modules/claim/interfaces/claim.interface';
 import * as ClaimActions from '@modules/claim/store/actions/claim.actions';
 
 export const CLAIM_FEATURE_KEY = 'claim';
 
-export interface State extends EntityState<Claim> {
+export interface State extends EntityState<IClaim> {
   selected: number;
   error?: string | null;
 }
@@ -17,7 +17,7 @@ export const initialState: State = {
   selected: null
 };
 
-export const adapter: EntityAdapter<Claim> = createEntityAdapter();
+export const adapter: EntityAdapter<IClaim> = createEntityAdapter();
 
 const claimReducer = createReducer(
   initialState,

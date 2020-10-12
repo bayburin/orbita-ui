@@ -1,3 +1,4 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ClaimsBlockComponent } from './claims-block.component';
@@ -12,7 +13,8 @@ describe('ClaimsBlockComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ClaimsBlockComponent],
-      providers: [{ provide: ClaimFacade, useClass: ClaimFacadeStub }]
+      providers: [{ provide: ClaimFacade, useClass: ClaimFacadeStub }],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

@@ -15,8 +15,8 @@ export class ClaimFacade {
   claim$: Observable<Claim>;
 
   constructor(private store: Store<fromClaims.State>) {
-    this.claims$ = store.select(ClaimSelectors.getAll);
-    this.claim$ = store.select(ClaimSelectors.getEntity);
+    this.claims$ = store.select(ClaimSelectors.getAllClaims);
+    this.claim$ = store.select(ClaimSelectors.getEntityClaim);
   }
 
   /**

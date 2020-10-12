@@ -8,7 +8,6 @@ import { ClaimService } from '@modules/claim/services/claim/claim.service';
 import { State } from '@modules/claim/store/reducers/claim.reducer';
 import * as ClaimActions from '@modules/claim/store/actions/claim.actions';
 import * as ClaimSelectors from '@modules/claim/store/selectors/claim.selectors';
-import { Claim } from '@modules/claim/models/claim/claim.model';
 
 @Injectable()
 export class ClaimEffects {
@@ -25,7 +24,6 @@ export class ClaimEffects {
       filter(([action, claims]) => claims === null),
       mergeMap(() => this.claimService.getClaims()
         .pipe(
-          map(iClaims => iClaims.map(iClaim => new Claim(iClaim))),
           map(claims => ClaimActions.loadAllSuccess({ claims })),
           catchError(error => of(ClaimActions.loadAllFailure({ error })))
         )

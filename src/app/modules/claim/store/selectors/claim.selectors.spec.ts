@@ -1,31 +1,32 @@
-import { Claim } from '@modules/claim/models/claim/claim.model';
+import { ClaimFactory } from '@modules/claim/factories/claim.factory';
+import { IClaim } from '@modules/claim/interfaces/claim.interface';
 import * as ClaimSelectors from '@modules/claim/store/selectors/claim.selectors';
 
 describe('ClaimSelectors', () => {
   const ids = [1, 2];
-  const claims = { 1: new Claim({ id: 1, service_name: 'Test 1' }), 2: new Claim({ id: 2, service_name: 'Test 2' }) };
+  const entities = { 1: { id: 1, service_name: 'Test 1' } as IClaim, 2: { id: 2, service_name: 'Test 2' } as IClaim };
+  const arrEntities = Object.values(entities).map(val => val);
   const selected = 1;
   const initialState = {
     ids,
-    entities: claims,
+    entities,
     selected,
     loading: false,
     loaded: false,
     error: null
   };
+  const factory = new ClaimFactory();
 
   it('should return ids array if call getIds', () => {
     expect(ClaimSelectors.getIds.projector(initialState)).toEqual(ids);
   });
 
-  it('should return claims if call getEntities', () => {
-    expect(ClaimSelectors.getEntities.projector(initialState)).toEqual(claims);
+  it('should return entities object if call getEntities', () => {
+    expect(ClaimSelectors.getEntities.projector(initialState)).toEqual(entities);
   });
 
-  it('should return claims array if call getAll', () => {
-    const result = Object.values(claims).map(val => val);
-
-    expect(ClaimSelectors.getAll.projector(initialState)).toEqual(result);
+  it('should return entities array if call getAll', () => {
+    expect(ClaimSelectors.getAll.projector(initialState)).toEqual(arrEntities);
   });
 
   it('should return total count of entities if call getTotalCount', () => {
@@ -37,6 +38,10 @@ describe('ClaimSelectors', () => {
   });
 
   it('should return single entity if call getEntity', () => {
-    expect(ClaimSelectors.getEntity.projector(selected, claims)).toEqual(claims[selected]);
+    expect(ClaimSelectors.getEntityClaim.projector(selected, entities)).toEqual(factory.create(entities[selected]));
+  });
+
+  it('should return array of claims if call getAllClaims', () => {
+    expect(ClaimSelectors.getAllClaims.projector(arrEntities)).toEqual(arrEntities.map(el => factory.create(el)));
   });
 });

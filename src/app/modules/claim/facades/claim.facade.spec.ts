@@ -8,12 +8,13 @@ import * as ClaimActions from '@modules/claim/store/actions/claim.actions';
 import * as ClaimSelectors from '@modules/claim/store/selectors/claim.selectors';
 import { CLAIM_FEATURE_KEY, State } from '@modules/claim/store/reducers/claim.reducer';
 import { ClaimFacade } from '@modules/claim/facades/claim.facade';
-import { Claim } from './../models/claim/claim.model';
+import { ClaimFactory } from '@modules/claim/factories/claim.factory';
 
 describe('ClaimFacade', () => {
   let actions$: Observable<Action>;
   let facade: ClaimFacade;
   let store: MockStore<State>;
+  const factory = new ClaimFactory();
   const initialState = {
     [CLAIM_FEATURE_KEY]: {
       ids: [],
@@ -39,9 +40,9 @@ describe('ClaimFacade', () => {
 
   describe('#constructor', () => {
     it('should call "ClaimSelectors.getAll" selector', () => {
-      const selectResult = [new Claim({})];
+      const selectResult = [factory.create({})];
 
-      store.overrideSelector(ClaimSelectors.getAll, selectResult);
+      store.overrideSelector(ClaimSelectors.getAllClaims, selectResult);
 
       facade.claims$.subscribe(result => {
         expect(result).toEqual(selectResult);
@@ -49,9 +50,9 @@ describe('ClaimFacade', () => {
     });
 
     it('should call "ClaimSelectors.getEntity" selector', () => {
-      const selectResult = new Claim({});
+      const selectResult = factory.create({});
 
-      store.overrideSelector(ClaimSelectors.getEntity, selectResult);
+      store.overrideSelector(ClaimSelectors.getEntityClaim, selectResult);
 
       facade.claim$.subscribe(result => {
         expect(result).toEqual(selectResult);

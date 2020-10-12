@@ -1,3 +1,4 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AuthFacade } from '@core/facades/auth.facade';
@@ -14,7 +15,8 @@ describe('HeaderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HeaderComponent],
-      providers: [{ provide: AuthFacade, useClass: AuthFacadeStub }]
+      providers: [{ provide: AuthFacade, useClass: AuthFacadeStub }],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
