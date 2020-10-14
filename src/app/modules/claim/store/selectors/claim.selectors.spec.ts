@@ -1,3 +1,5 @@
+import * as moment from 'moment';
+
 import { ClaimFactory } from '@modules/claim/factories/claim.factory';
 import { IClaim } from '@modules/claim/interfaces/claim.interface';
 import * as ClaimSelectors from '@modules/claim/store/selectors/claim.selectors';
@@ -16,6 +18,12 @@ describe('ClaimSelectors', () => {
     error: null
   };
   const factory = new ClaimFactory();
+
+  beforeEach(() => {
+    const today = moment('2015-10-19').toDate();
+
+    jasmine.clock().mockDate(today);
+  });
 
   it('should return ids array if call getIds', () => {
     expect(ClaimSelectors.getIds.projector(initialState)).toEqual(ids);

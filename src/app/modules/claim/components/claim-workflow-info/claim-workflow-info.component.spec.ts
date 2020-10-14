@@ -2,6 +2,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ClaimWorkflowInfoComponent } from './claim-workflow-info.component';
+import { ClaimFactory } from '@modules/claim/factories/claim.factory';
 
 describe('ClaimWorkflowInfoComponent', () => {
   let component: ClaimWorkflowInfoComponent;
@@ -18,6 +19,7 @@ describe('ClaimWorkflowInfoComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ClaimWorkflowInfoComponent);
     component = fixture.componentInstance;
+    component.claim = new ClaimFactory().create();
     fixture.detectChanges();
   });
 
