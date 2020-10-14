@@ -1,7 +1,7 @@
 // Text
 $text-color: #2c2c2c;
 $light-text-color: #ffffff;
-$background-color: #ededed;
+$default-background-color: #ededed;
 
 $mat-main-primary: (
   50: #e6eaf5,
@@ -106,3 +106,9 @@ $mat-main-warn: (
 $link-color: map-get($map: $mat-main-primary, $key: 500);
 $link-hover-color: map-get($map: $mat-main-primary, $key: 800);
 $link-hover-decoration: none;
+
+// Border color
+$border-color:  rgba(0, 0, 0, 0.12);
+
+// Spacing
+$spacer: 1rem;

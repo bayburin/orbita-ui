@@ -1,0 +1,13 @@
+.bg-primary {
+  background-color: map-get($mat-main-primary, 500) !important;
+  color: $light-text-color !important;
+}
+
+.bg-success {
+  background-color: map-get($mat-green, 500) !important;
+}
+
+.bg-danger {
+  background-color: map-get($mat-red, 500) !important;
+  color: $light-text-color !important;
+}

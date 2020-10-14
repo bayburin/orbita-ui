@@ -3,14 +3,14 @@
 
   .sidenav-bar {
     width: 200px;
-    background-color: $background-color;
+    background-color: $default-background-color;
 
     .mat-toolbar-row {
-      background-color: $background-color;
+      background-color: $default-background-color;
     }
   }
 
   .sidenav-content {
-    background-color: $background-color;
+    background-color: $default-background-color;
   }
 }

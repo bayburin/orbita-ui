@@ -1,21 +1,26 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+// Импорт утилит bootstrap
+@import "~bootstrap-utilities";
+
 // Импорт шрифтов и иконок
 @import "font";
 
 // Импорт переменных
 @import "variables";
 
-// Импорт утилит bootstrap
-@import "~bootstrap-utilities";
-
-// Испорт стилей компонентов
+// Импорт стилей компонентов
 @import "components/sidenav";
 @import "components/navigation-bar";
 @import "components/table";
 @import "components/button";
 @import "components/icon";
 
-// Испорт цветовой схемы
+// Импорт цветовой схемы
 @import "custom-theme";
+// Импорт стилей для утилит bootstrap
+@import "materialize-bootstrap-utilities";
 
 .material-icons {
   font-family: 'Material Icons';
@@ -52,8 +57,5 @@ a {
   }
 }
 
-body { background-color: $background-color; }
-
-main {
-  padding: 15px;
-}
+body { background-color: $default-background-color; }
+main { padding: $spacer; }

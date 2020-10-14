@@ -22,6 +22,7 @@ export class Claim {
   priority: ClaimPriorities;
   attrs: any;
   rating: number;
+  works: any[];
 
   constructor(claim: any = {}) {
     this.id = claim.id;
@@ -33,5 +34,6 @@ export class Claim {
     this.priority = claim.priority;
     this.attrs = claim.attrs;
     this.rating = claim.rating;
+    this.works = claim.works || [];
   }
 }

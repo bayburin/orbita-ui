@@ -1,0 +1,70 @@
+@import '~src/assets/scss/variables';
+
+$claim-history-card-width: 250px;
+$claim-history-card-height: 150px;
+$claim-history-content-height: 500px;
+
+:host {
+  display: block;
+  width: 100%;
+  padding: $spacer;
+
+  .header {
+    border-bottom: 1px dashed $border-color;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: row;
+    gap: $spacer;
+    padding-top: $spacer;
+    max-height: $claim-history-content-height;
+    overflow: scroll;
+
+    .workflow-block {
+      min-width: $claim-history-card-width;
+      width: $claim-history-card-width;
+    }
+
+    .workflow-block + .workflow-block {
+      padding: 0 $spacer;
+      border-left: 1px solid $border-color;
+    }
+
+    .history-block {
+      display: flex;
+      flex-direction: column;
+      gap: $spacer;
+    }
+
+    .history-card {
+      border: 1px solid $border-color;
+      padding: 0;
+      font-size: .8rem;
+      max-height: $claim-history-card-height;
+
+      .history-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: $default-background-color;
+        border-bottom: 1px solid $border-color;
+        padding: .25rem;
+      }
+
+      .history-card-content {
+        padding: .25rem;
+      }
+    }
+
+    .work-title {
+      padding-bottom: .5rem;
+    }
+
+    .last-action {
+      margin-bottom: $spacer;
+      padding-bottom: $spacer;
+      border-bottom: 1px solid $border-color;
+    }
+  }
+}

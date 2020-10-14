@@ -1,0 +1,38 @@
+<div class="header">
+  <h3>ХОД РАБОТЫ</h3>
+</div>
+<div class="content">
+  <span *ngFor="let work of claim.works" class="workflow-block">
+    <h3>{{ work.title }}</h3>
+
+    <div class="last-action">
+      <mat-card class="history-card">
+        <div  class="history-card-header bg-success">
+          <!-- <span>{{ history.created_at }}</span> -->
+          <span>18.08.20 15:43</span>
+          <mat-icon svgIcon="comment-outline" class="mat-18px"></mat-icon>
+        </div>
+        <div class="history-card-content">
+          <b>Байбурин Равиль</b> {{ work.histories[work.histories.length - 1].action }}
+        </div>
+      </mat-card>
+    </div>
+
+    <div class="history-block">
+      <div *ngFor="let history of work.histories">
+
+        <mat-card class="history-card">
+          <div class="history-card-header">
+            <!-- <span>{{ history.created_at }}</span> -->
+            <span>18.08.20 15:43</span>
+            <mat-icon svgIcon="comment-outline" color="accent" class="mat-18px"></mat-icon>
+          </div>
+          <div class="history-card-content">
+            <b>Байбурин Равиль</b> {{ history.action }}
+          </div>
+        </mat-card>
+
+      </div>
+    </div>
+  </span>
+</div>

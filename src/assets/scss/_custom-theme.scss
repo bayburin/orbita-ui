@@ -1,7 +1,3 @@
-@import '~@angular/material/theming';
-
-@include mat-core();
-
 $orbita-theme-primary: mat-palette($mat-main-primary);
 $orbita-theme-accent: mat-palette($mat-green);
 // , 400, 300, 600

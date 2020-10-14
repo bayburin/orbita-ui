@@ -60,7 +60,7 @@
   <ng-container matColumnDef="expandedEl">
     <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
       <div class="claim-element-detail" [@expandAnimation]="isSelected(element) ? 'expanded' : 'collapsed'">
-        <p>Тут дополнительные данные</p>
+        <app-claim-workflow-info [claim]="element" class="mb-3"></app-claim-workflow-info>
       </div>
     </td>
   </ng-container>

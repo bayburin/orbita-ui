@@ -1,7 +1,6 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -26,7 +25,6 @@ import { JsonInterceptor } from './interceptors/json/json.interceptor';
     BrowserAnimationsModule,
     RouterModule,
     CoreRoutingModule,
-    FlexLayoutModule,
     SharedModule,
     HttpClientModule,
     StoreModule.forRoot({}),
