@@ -1,7 +1,7 @@
 import { Claim } from '@modules/claim/models/claim/claim.model';
 import { IClaim } from '@modules/claim/interfaces/claim.interface';
-import { Work } from '@modules/claim/models/work/work.model';
-import { Runtime } from '@modules/claim/models/runtime/runtime.model';
+import { RuntimeFactory } from '@modules/claim/factories/runtime.factory';
+import { WorkFactory } from '@modules/claim/factories/work.factory';
 
 export class ClaimFactory {
   /**
@@ -10,9 +10,9 @@ export class ClaimFactory {
   static create(attrs: IClaim = { } as IClaim): Claim {
     const claim = new Claim(attrs);
 
-    claim.runtime = new Runtime(attrs.runtime);
+    claim.runtime = RuntimeFactory.create(attrs.runtime);
     if (attrs.works) {
-      claim.works = attrs.works.map(work => new Work(work));
+      claim.works = attrs.works.map(work => WorkFactory.create(work));
     }
 
     return claim;
