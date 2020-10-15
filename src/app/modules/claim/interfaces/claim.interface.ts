@@ -15,7 +15,7 @@ export interface IClaim {
   time_info: ITimeInfo;
   attrs: any;
   rating: number;
-  works: IWork[];
-  created_at: string;
-  finished_at_plan: string;
+  created_at?: string; // ! TODO: Убрать
+  finished_at_plan?: string; // ! TODO: Убрать
+  works?: IWork[];
 }

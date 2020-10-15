@@ -1,20 +1,12 @@
+import { IClaimBuilder } from '@modules/claim/builders/i-claim.builder';
+import { IClaim } from '@modules/claim/interfaces/claim.interface';
 import { Claim } from './claim.model';
 
 describe('Claim', () => {
-  let iClaim: any;
+  let iClaim: IClaim;
 
   beforeEach(() => {
-    iClaim = {
-      id: 1,
-      service_id: 1,
-      claim_template_id: 1,
-      service_name: 'Печать',
-      claim_template_name: 'Заявка на печать КД',
-      status: 'opened',
-      priority: 'high',
-      attrs: {},
-      rating: null
-    };
+    iClaim = new IClaimBuilder().build();
   });
 
   describe('Constructor', () => {

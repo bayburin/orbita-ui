@@ -1,4 +1,4 @@
-import { IClaim } from '@modules/claim/interfaces/claim.interface';
+import { IClaimBuilder } from '@modules/claim/builders/i-claim.builder';
 import { reducer, State, initialState, adapter } from './claim.reducer';
 import * as ClaimActions from '@modules/claim/store/actions/claim.actions';
 
@@ -34,7 +34,7 @@ describe('claimReducer', () => {
 
   describe('loadAllSuccess', () => {
     it('should set ids and claims values with paylod value', () => {
-      const claims = [{ id: 1, service_name: 'Test 1' } as IClaim, { id: 2, service_name: 'Test 2' } as IClaim];
+      const claims = [new IClaimBuilder().id(1).build(), new IClaimBuilder().id(2).build()];
 
       payload = { claims };
       action = ClaimActions.loadAllSuccess(payload);

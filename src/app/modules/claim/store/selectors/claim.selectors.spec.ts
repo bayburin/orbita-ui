@@ -1,12 +1,12 @@
 import * as moment from 'moment';
 
 import { ClaimFactory } from '@modules/claim/factories/claim.factory';
-import { IClaim } from '@modules/claim/interfaces/claim.interface';
+import { IClaimBuilder } from '@modules/claim/builders/i-claim.builder';
 import * as ClaimSelectors from '@modules/claim/store/selectors/claim.selectors';
 
 describe('ClaimSelectors', () => {
   const ids = [1, 2];
-  const entities = { 1: { id: 1, service_name: 'Test 1' } as IClaim, 2: { id: 2, service_name: 'Test 2' } as IClaim };
+  const entities = { 1: new IClaimBuilder().id(1).build(), 2: new IClaimBuilder().id(2).build() };
   const arrEntities = Object.values(entities).map(val => val);
   const selected = 1;
   const initialState = {

@@ -3,9 +3,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { ClaimsTableComponent } from './claims-table.component';
-import { IClaim } from '@modules/claim/interfaces/claim.interface';
 import { Claim } from '@modules/claim/models/claim/claim.model';
 import { ClaimFactory } from '@modules/claim/factories/claim.factory';
+import { IClaimBuilder } from '@modules/claim/builders/i-claim.builder';
 
 describe('ClaimsTableComponent', () => {
   let component: ClaimsTableComponent;
@@ -24,7 +24,7 @@ describe('ClaimsTableComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ClaimsTableComponent);
     component = fixture.componentInstance;
-    claims = [new ClaimFactory().create({ id: 1, service_name: 'Test name' } as IClaim)];
+    claims = [new ClaimFactory().create(new IClaimBuilder().build())];
     component.dataSource = new MatTableDataSource(claims);
     selected = claims[0];
 

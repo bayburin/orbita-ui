@@ -3,7 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 import { environment } from '@env/environment';
 import { ClaimService } from './claim.service';
-import { IClaim } from '@modules/claim/interfaces/claim.interface';
+import { IClaimBuilder } from '@modules/claim/builders/i-claim.builder';
 
 describe('ClaimService', () => {
   let service: ClaimService;
@@ -27,7 +27,7 @@ describe('ClaimService', () => {
   });
 
   describe('#getClaims', () => {
-    const claims = [{ id: 1 }, { id: 2 }] as IClaim[];
+    const claims = [new IClaimBuilder().id(1).build(), new IClaimBuilder().id(2).build()];
     const api = `${environment.serverUrl}/api/v1/claims`;
 
     it('should return Observable with array of claims', () => {

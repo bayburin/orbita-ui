@@ -65,7 +65,7 @@
 
 //     it('should not call ClaimService.getClaims API if claims is not null', () => {
 //       spyOn(claimService, 'getClaims').and.callThrough();
-//       store.overrideSelector(ClaimSelectors.getEntities, { 1: { id: 1 } as IClaim });
+//       store.overrideSelector(ClaimSelectors.getEntities, { 1: new IClaimBuilder().build() });
 
 //       effects.loadClaims$.subscribe(() => {
 //         expect(claimService.getClaims).not.toHaveBeenCalled();
@@ -73,10 +73,7 @@
 //     });
 
 //     it('should call ClaimActions.loadAllSuccess action if API respond with success status', () => {
-//       const iClaim = {
-//         id: 1,
-//         service_name: 'test'
-//       } as IClaim;
+//       const iClaim = new IClaimBuilder().build();
 
 //       spyOn(claimService, 'getClaims').and.returnValue(of([iClaim]));
 
