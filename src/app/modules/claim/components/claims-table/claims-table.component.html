@@ -8,13 +8,13 @@
   <!-- Дата подачи -->
   <ng-container matColumnDef="createdAt">
     <th mat-header-cell *matHeaderCellDef>Дата подачи</th>
-    <td mat-cell *matCellDef="let element">{{ element.createdAt | datetime }}</td>
+    <td mat-cell *matCellDef="let element">{{ element.runtime.createdAt | datetime }}</td>
   </ng-container>
 
   <!-- Срок выполнения -->
   <ng-container matColumnDef="finishedAtPlan">
     <th mat-header-cell *matHeaderCellDef>Дедлайн</th>
-    <td mat-cell *matCellDef="let element">{{ element.finishedAtPlan | datetime }}</td>
+    <td mat-cell *matCellDef="let element">{{ element.runtime.finishedAtPlan | datetime }}</td>
   </ng-container>
 
   <!-- Приоритет -->

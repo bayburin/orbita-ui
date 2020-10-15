@@ -1,8 +1,8 @@
 import { ClaimPriorities } from '@modules/claim/models/claim/claim.model';
 import { ClaimStatuses } from '@modules/claim/models/claim/claim.model';
 import { IClaim } from '@modules/claim/interfaces/claim.interface';
-import { ITimeInfoBuilder } from './i-time-info.builder';
-import { ITimeInfo } from '@modules/claim/interfaces/time-info.interface';
+import { IRuntimeBuilder } from './i-runtime.builder';
+import { IRuntime } from '@modules/claim/interfaces/runtime.interface';
 
 export class IClaimBuilder {
   private claim: IClaim;
@@ -17,7 +17,7 @@ export class IClaimBuilder {
       status: ClaimStatuses.OPENED,
       priority: ClaimPriorities.DEFAULT,
       claim_user: { },
-      time_info: new ITimeInfoBuilder().build(),
+      runtime: new IRuntimeBuilder().build(),
       attrs: { },
       rating: null
     };
@@ -75,8 +75,8 @@ export class IClaimBuilder {
     return this;
   }
 
-  time_info(timeInfo: ITimeInfo): IClaimBuilder {
-    this.claim.claim_user = timeInfo;
+  runtime(runtime: IRuntime): IClaimBuilder {
+    this.claim.claim_user = runtime;
 
     return this;
   }

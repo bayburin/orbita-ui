@@ -1,6 +1,6 @@
 import { ClaimStatuses } from '@modules/claim/models/claim/claim.model';
 import { ClaimPriorities } from '@modules/claim/models/claim/claim.model';
-import { ITimeInfo } from './time-info.interface';
+import { IRuntime } from './runtime.interface';
 import { IWork } from './work.interface';
 
 export interface IClaim {
@@ -12,10 +12,8 @@ export interface IClaim {
   status: ClaimStatuses;
   priority: ClaimPriorities;
   claim_user: any; // TODO: Заменить на IUser
-  time_info: ITimeInfo;
+  runtime: IRuntime;
   attrs: any;
   rating: number;
-  created_at?: string; // ! TODO: Убрать
-  finished_at_plan?: string; // ! TODO: Убрать
   works?: IWork[];
 }

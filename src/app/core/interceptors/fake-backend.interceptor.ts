@@ -29,7 +29,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     //       mobile_tel: null,
     //       domain: 'BayburinRF'
     //     },
-    //     time_info: {
+    //     runtime: {
     //       created_at: '04-05-2020 18:34',
     //       updated_at: '04-05-2020 18:34',
     //       finished_at_plan: '07-05-2020',

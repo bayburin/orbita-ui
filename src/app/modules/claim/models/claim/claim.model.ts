@@ -2,6 +2,7 @@ import * as moment from 'moment';
 
 import { Work } from '@modules/claim/models/work/work.model';
 import { IClaim } from '@modules/claim/interfaces/claim.interface';
+import { Runtime } from './runtime.model';
 
 export enum ClaimStatuses {
   OPENED = 'opened', // Открыта
@@ -28,8 +29,7 @@ export class Claim {
   attrs: any;
   rating: number;
   works: Work[] = [];
-  createdAt: moment.Moment;
-  finishedAtPlan: moment.Moment;
+  runtime: Runtime;
 
   constructor(claim: IClaim) {
     this.id = claim.id;
@@ -41,7 +41,5 @@ export class Claim {
     this.priority = claim.priority;
     this.attrs = claim.attrs;
     this.rating = claim.rating;
-    this.createdAt = moment(claim.created_at); // ! TODO: убрать
-    this.finishedAtPlan = moment(claim.finished_at_plan); // ! TODO: убрать
   }
 }
