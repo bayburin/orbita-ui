@@ -24,7 +24,7 @@ describe('ClaimsTableComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ClaimsTableComponent);
     component = fixture.componentInstance;
-    claims = [new ClaimFactory().create(new IClaimBuilder().build())];
+    claims = [ClaimFactory.create(new IClaimBuilder().build())];
     component.dataSource = new MatTableDataSource(claims);
     selected = claims[0];
 

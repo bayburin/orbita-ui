@@ -1,5 +1,6 @@
 import * as moment from 'moment';
 
+import { Work } from '@modules/claim/models/work/work.model';
 import { IClaim } from '@modules/claim/interfaces/claim.interface';
 
 export enum ClaimStatuses {
@@ -26,11 +27,11 @@ export class Claim {
   priority: ClaimPriorities;
   attrs: any;
   rating: number;
-  works: any[]; // TODO: Тут должен быть класс Work.
+  works: Work[] = [];
   createdAt: moment.Moment;
   finishedAtPlan: moment.Moment;
 
-  constructor(claim: IClaim = { } as IClaim) {
+  constructor(claim: IClaim) {
     this.id = claim.id;
     this.serviceId = claim.service_id;
     this.claimTemplateId = claim.claim_template_id;
@@ -40,8 +41,7 @@ export class Claim {
     this.priority = claim.priority;
     this.attrs = claim.attrs;
     this.rating = claim.rating;
-    this.works = claim.works || [];
-    this.createdAt = moment(claim.created_at);
-    this.finishedAtPlan = moment(claim.finished_at_plan);
+    this.createdAt = moment(claim.created_at); // ! TODO: убрать
+    this.finishedAtPlan = moment(claim.finished_at_plan); // ! TODO: убрать
   }
 }

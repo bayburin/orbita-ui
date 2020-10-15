@@ -1,9 +1,15 @@
-import { ModelFactory } from '@shared/factories/model.factory';
 import { Claim } from '@modules/claim/models/claim/claim.model';
 import { IClaim } from '@modules/claim/interfaces/claim.interface';
+import { Work } from '@modules/claim/models/work/work.model';
 
-export class ClaimFactory extends ModelFactory<Claim, IClaim> {
-  constructor() {
-    super(Claim);
+export class ClaimFactory {
+  static create(attrs: IClaim = { } as IClaim): Claim {
+    const claim = new Claim(attrs);
+
+    if (attrs.works) {
+      claim.works = attrs.works.map(work => new Work(work));
+    }
+
+    return claim;
   }
 }

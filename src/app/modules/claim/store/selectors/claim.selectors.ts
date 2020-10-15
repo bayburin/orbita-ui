@@ -34,16 +34,14 @@ export const getEntityClaim = createSelector(
   getSelected,
   getEntities,
   (selectedId, entities) => {
-    return new ClaimFactory().create({ ...entities[selectedId] });
+    return ClaimFactory.create({ ...entities[selectedId] });
   }
 );
 
 export const getAllClaims = createSelector(
   getAll,
   (iClaims) => {
-    const factory = new ClaimFactory();
-
-    return iClaims.map(iClaim => factory.create({ ...iClaim }));
+    return iClaims.map(iClaim => ClaimFactory.create({ ...iClaim }));
   }
 );
 

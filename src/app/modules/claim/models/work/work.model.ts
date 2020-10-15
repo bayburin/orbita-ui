@@ -1,4 +1,4 @@
-export class Worker {
+export class Work {
   id: number;
   claimId: number;
   title: string;

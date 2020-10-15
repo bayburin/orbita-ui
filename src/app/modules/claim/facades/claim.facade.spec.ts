@@ -14,7 +14,6 @@ describe('ClaimFacade', () => {
   let actions$: Observable<Action>;
   let facade: ClaimFacade;
   let store: MockStore<State>;
-  const factory = new ClaimFactory();
   const initialState = {
     [CLAIM_FEATURE_KEY]: {
       ids: [],
@@ -40,7 +39,7 @@ describe('ClaimFacade', () => {
 
   describe('#constructor', () => {
     it('should call "ClaimSelectors.getAll" selector', () => {
-      const selectResult = [factory.create({})];
+      const selectResult = [ClaimFactory.create()];
 
       store.overrideSelector(ClaimSelectors.getAllClaims, selectResult);
 
@@ -50,7 +49,7 @@ describe('ClaimFacade', () => {
     });
 
     it('should call "ClaimSelectors.getEntity" selector', () => {
-      const selectResult = factory.create({});
+      const selectResult = ClaimFactory.create();
 
       store.overrideSelector(ClaimSelectors.getEntityClaim, selectResult);
 

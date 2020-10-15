@@ -19,7 +19,7 @@ describe('ClaimWorkflowInfoComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ClaimWorkflowInfoComponent);
     component = fixture.componentInstance;
-    component.claim = new ClaimFactory().create();
+    component.claim = ClaimFactory.create();
     fixture.detectChanges();
   });
 

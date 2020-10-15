@@ -17,7 +17,6 @@ describe('ClaimSelectors', () => {
     loaded: false,
     error: null
   };
-  const factory = new ClaimFactory();
 
   beforeEach(() => {
     const today = moment('2015-10-19').toDate();
@@ -46,10 +45,10 @@ describe('ClaimSelectors', () => {
   });
 
   it('should return single entity if call getEntity', () => {
-    expect(ClaimSelectors.getEntityClaim.projector(selected, entities)).toEqual(factory.create(entities[selected]));
+    expect(ClaimSelectors.getEntityClaim.projector(selected, entities)).toEqual(ClaimFactory.create(entities[selected]));
   });
 
   it('should return array of claims if call getAllClaims', () => {
-    expect(ClaimSelectors.getAllClaims.projector(arrEntities)).toEqual(arrEntities.map(el => factory.create(el)));
+    expect(ClaimSelectors.getAllClaims.projector(arrEntities)).toEqual(arrEntities.map(el => ClaimFactory.create(el)));
   });
 });
