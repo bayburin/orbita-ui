@@ -2,7 +2,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ClaimWorkflowInfoComponent } from './claim-workflow-info.component';
-import { ClaimFactory } from '@modules/claim/factories/claim.factory';
+import { ClaimFactory } from '@modules/claim/factories/claim/claim.factory';
 
 describe('ClaimWorkflowInfoComponent', () => {
   let component: ClaimWorkflowInfoComponent;

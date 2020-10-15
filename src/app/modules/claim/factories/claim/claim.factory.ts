@@ -1,7 +1,7 @@
 import { Claim } from '@modules/claim/models/claim/claim.model';
 import { IClaim } from '@modules/claim/interfaces/claim.interface';
 import { Work } from '@modules/claim/models/work/work.model';
-import { Runtime } from '../models/claim/runtime.model';
+import { Runtime } from '@modules/claim/models/runtime/runtime.model';
 
 export class ClaimFactory {
   /**

@@ -1,7 +1,7 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 
 import * as fromClaims from '@modules/claim/store/reducers/claim.reducer';
-import { ClaimFactory } from '@modules/claim/factories/claim.factory';
+import { ClaimFactory } from '@modules/claim/factories/claim/claim.factory';
 
 export const selectClaims = createFeatureSelector<fromClaims.State>(fromClaims.CLAIM_FEATURE_KEY);
 

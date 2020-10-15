@@ -1,8 +1,6 @@
-import * as moment from 'moment';
-
 import { Work } from '@modules/claim/models/work/work.model';
 import { IClaim } from '@modules/claim/interfaces/claim.interface';
-import { Runtime } from './runtime.model';
+import { Runtime } from '@modules/claim/models/runtime/runtime.model';
 
 export enum ClaimStatuses {
   OPENED = 'opened', // Открыта

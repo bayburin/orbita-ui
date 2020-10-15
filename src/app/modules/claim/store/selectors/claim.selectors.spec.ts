@@ -1,6 +1,6 @@
 import * as moment from 'moment';
 
-import { ClaimFactory } from '@modules/claim/factories/claim.factory';
+import { ClaimFactory } from '@modules/claim/factories/claim/claim.factory';
 import { IClaimBuilder } from '@modules/claim/builders/i-claim.builder';
 import * as ClaimSelectors from '@modules/claim/store/selectors/claim.selectors';
 

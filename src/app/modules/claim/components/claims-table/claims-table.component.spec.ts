@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 
 import { ClaimsTableComponent } from './claims-table.component';
 import { Claim } from '@modules/claim/models/claim/claim.model';
-import { ClaimFactory } from '@modules/claim/factories/claim.factory';
+import { ClaimFactory } from '@modules/claim/factories/claim/claim.factory';
 import { IClaimBuilder } from '@modules/claim/builders/i-claim.builder';
 
 describe('ClaimsTableComponent', () => {

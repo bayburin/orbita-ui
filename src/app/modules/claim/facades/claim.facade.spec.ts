@@ -8,7 +8,7 @@ import * as ClaimActions from '@modules/claim/store/actions/claim.actions';
 import * as ClaimSelectors from '@modules/claim/store/selectors/claim.selectors';
 import { CLAIM_FEATURE_KEY, State } from '@modules/claim/store/reducers/claim.reducer';
 import { ClaimFacade } from '@modules/claim/facades/claim.facade';
-import { ClaimFactory } from '@modules/claim/factories/claim.factory';
+import { ClaimFactory } from '@modules/claim/factories/claim/claim.factory';
 
 describe('ClaimFacade', () => {
   let actions$: Observable<Action>;

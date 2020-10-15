@@ -10,7 +10,7 @@ describe('Claim', () => {
   });
 
   describe('Constructor', () => {
-    it('should create instance of Question', () => {
+    it('should create instance of Claim', () => {
       expect(new Claim(iClaim)).toBeTruthy();
     });
 

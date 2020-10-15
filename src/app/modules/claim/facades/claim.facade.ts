@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import * as fromClaims from '@modules/claim/store/reducers/claim.reducer';
 import * as ClaimActions from '@modules/claim/store/actions/claim.actions';
 import * as ClaimSelectors from '@modules/claim/store/selectors/claim.selectors';
-import { Claim } from '../models/claim/claim.model';
+import { Claim } from '@modules/claim/models/claim/claim.model';
 
 @Injectable({
   providedIn: 'root'

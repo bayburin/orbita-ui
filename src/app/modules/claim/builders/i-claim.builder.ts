@@ -3,6 +3,7 @@ import { ClaimStatuses } from '@modules/claim/models/claim/claim.model';
 import { IClaim } from '@modules/claim/interfaces/claim.interface';
 import { IRuntimeBuilder } from './i-runtime.builder';
 import { IRuntime } from '@modules/claim/interfaces/runtime.interface';
+import { IWork } from '@modules/claim/interfaces/work.interface';
 
 export class IClaimBuilder {
   private claim: IClaim;
@@ -12,14 +13,15 @@ export class IClaimBuilder {
       id: 1,
       service_id: 1,
       claim_template_id: 1,
-      service_name: 'Печать',
-      claim_template_name: 'Заявка на печать КД',
+      service_name: 'Service Name',
+      claim_template_name: 'Claim Template Name',
       status: ClaimStatuses.OPENED,
       priority: ClaimPriorities.DEFAULT,
       claim_user: { },
       runtime: new IRuntimeBuilder().build(),
       attrs: { },
-      rating: null
+      rating: null,
+      works: []
     };
   }
 
@@ -89,6 +91,12 @@ export class IClaimBuilder {
 
   rating(rating: number): IClaimBuilder {
     this.claim.rating = rating;
+
+    return this;
+  }
+
+  works(works: IWork[]): IClaimBuilder {
+    this.claim.works = works;
 
     return this;
   }
