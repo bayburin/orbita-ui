@@ -1,5 +1,4 @@
-import { ClaimPriorities } from '@modules/claim/models/claim/claim.model';
-import { ClaimStatuses } from '@modules/claim/models/claim/claim.model';
+import { ClaimPriorities, ClaimStatuses } from '@modules/claim/interfaces/claim.interface';
 import { IClaim } from '@modules/claim/interfaces/claim.interface';
 import { IRuntimeBuilder } from './i-runtime.builder';
 import { IRuntime } from '@modules/claim/interfaces/runtime.interface';

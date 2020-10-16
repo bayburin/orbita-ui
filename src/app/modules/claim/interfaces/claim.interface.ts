@@ -1,7 +1,19 @@
-import { ClaimStatuses } from '@modules/claim/models/claim/claim.model';
-import { ClaimPriorities } from '@modules/claim/models/claim/claim.model';
 import { IRuntime } from './runtime.interface';
 import { IWork } from './work.interface';
+
+export enum ClaimStatuses {
+  OPENED = 'opened', // Открыта
+  AT_WORK = 'at_work', // В работе
+  CANCELED = 'canceled', // Отменена
+  APPROVED = 'approved', // Согласована
+  REOPENED = 'reopened' // Переоткрыта
+}
+
+export enum ClaimPriorities {
+  DEFAULT = 'default',
+  LOW = 'low',
+  HIGH = 'high'
+}
 
 export interface IClaim {
   id: number;
