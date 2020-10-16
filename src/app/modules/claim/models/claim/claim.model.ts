@@ -1,4 +1,5 @@
-import { ClaimStatuses, ClaimPriorities } from '@modules/claim/interfaces/claim.interface';
+import { ClaimStatuses } from '@modules/claim/enums/claim-statuses.enum';
+import { ClaimPriorities } from '@modules/claim/enums/claim-priorities.enum';
 import { Work } from '@modules/claim/models/work/work.model';
 import { IClaim } from '@modules/claim/interfaces/claim.interface';
 import { Runtime } from '@modules/claim/models/runtime/runtime.model';

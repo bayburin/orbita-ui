@@ -1,6 +1,6 @@
 import * as moment from 'moment';
 
-import { ActionTypes } from '@modules/claim/interfaces/history.interface';
+import { HistoryActionTypes } from '@modules/claim/interfaces/history.interface';
 import { IHistory } from '@modules/claim/interfaces/history.interface';
 
 export class History {
@@ -8,7 +8,7 @@ export class History {
   workId: number;
   userId: number;
   action: string;
-  actionType: ActionTypes;
+  actionType: HistoryActionTypes;
   createdAt: moment.Moment;
 
   constructor(history: IHistory) {

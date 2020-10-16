@@ -1,4 +1,4 @@
-export enum ActionTypes {
+export enum HistoryActionTypes {
   ACTION = 'action',
   COMMENT = 'comment',
   ADD_WORKER = 'add_worker',
@@ -11,6 +11,6 @@ export interface IHistory {
   work_id: number;
   user_id: number;
   action: string;
-  action_type: ActionTypes;
+  action_type: HistoryActionTypes;
   created_at: string;
 }

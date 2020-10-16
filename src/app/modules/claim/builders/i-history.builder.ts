@@ -1,4 +1,4 @@
-import { IHistory, ActionTypes } from '@modules/claim/interfaces/history.interface';
+import { IHistory, HistoryActionTypes } from '@modules/claim/interfaces/history.interface';
 
 export class IHistoryBuilder {
   private history: IHistory;
@@ -9,7 +9,7 @@ export class IHistoryBuilder {
       work_id: 1,
       user_id: 1,
       action: 'Test action',
-      action_type: ActionTypes.ACTION,
+      action_type: HistoryActionTypes.ACTION,
       created_at: '04-05-2020 18:34',
     };
   }
@@ -42,7 +42,7 @@ export class IHistoryBuilder {
     return this;
   }
 
-  action_type(actionType: ActionTypes): IHistoryBuilder {
+  action_type(actionType: HistoryActionTypes): IHistoryBuilder {
     this.history.action_type = actionType;
 
     return this;

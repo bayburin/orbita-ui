@@ -3,6 +3,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { expandAnimation } from '@core/animations/expand.animation';
 import { Claim } from '@modules/claim/models/claim/claim.model';
 import { MatTableDataSource } from '@angular/material/table';
+import { claimPrioritiesMap } from '@modules/claim/enums/claim-priorities.enum';
+import { claimStatusesMap } from '@modules/claim/enums/claim-statuses.enum';
 
 @Component({
   selector: 'app-claims-table',
@@ -11,6 +13,8 @@ import { MatTableDataSource } from '@angular/material/table';
   animations: [expandAnimation]
 })
 export class ClaimsTableComponent {
+  claimPriorities = claimPrioritiesMap;
+  claimStatuses = claimStatusesMap;
   displayedColumns = ['id', 'createdAt', 'finishedAtPlan', 'priority', 'status', 'serviceName', 'description', 'workers', 'actions'];
   expandedEl: Claim | null;
   @Input() dataSource: MatTableDataSource<Claim>;
