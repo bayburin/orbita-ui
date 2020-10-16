@@ -7,6 +7,10 @@ export class Work {
   attrs: string;
   histories: History[] = [];
 
+  get lastHistory(): History {
+    return this.histories[this.histories.length - 1];
+  }
+
   constructor(work: any = {}) {
     this.id = work.id;
     this.claimId = work.claim_id;

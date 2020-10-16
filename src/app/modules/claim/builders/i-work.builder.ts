@@ -1,5 +1,6 @@
 import { IWork } from '@modules/claim/interfaces/work.interface';
 import { IHistory } from '@modules/claim/interfaces/history.interface';
+import { IHistoryBuilder } from '@modules/claim/builders/i-history.builder';
 
 export class IWorkBuilder {
   private work: IWork;
@@ -11,7 +12,7 @@ export class IWorkBuilder {
       title: 'Title',
       status: 'Status',
       attrs: { },
-      histories: []
+      histories: [new IHistoryBuilder().build()]
     };
   }
 

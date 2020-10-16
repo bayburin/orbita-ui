@@ -8,12 +8,11 @@
     <div class="last-action">
       <mat-card class="history-card">
         <div  class="history-card-header bg-success">
-          <!-- <span>{{ history.created_at }}</span> -->
-          <span>18.08.20 15:43</span>
+          <span>{{ work.lastHistory.createdAt | datetime }}</span>
           <mat-icon svgIcon="comment-outline" class="mat-18px"></mat-icon>
         </div>
         <div class="history-card-content">
-          <b>Байбурин Равиль</b> {{ work.histories[work.histories.length - 1].action }}
+          <b>Байбурин Равиль</b> {{ work.lastHistory.action }}
         </div>
       </mat-card>
     </div>
@@ -23,8 +22,7 @@
 
         <mat-card class="history-card">
           <div class="history-card-header">
-            <!-- <span>{{ history.created_at }}</span> -->
-            <span>18.08.20 15:43</span>
+            <span>{{ history.createdAt | datetime }}</span>
             <mat-icon svgIcon="comment-outline" color="accent" class="mat-18px"></mat-icon>
           </div>
           <div class="history-card-content">
