@@ -15,5 +15,5 @@ export interface IClaim {
   runtime: IRuntime;
   attrs: any;
   rating: number;
-  works?: IWork[];
+  works: IWork[];
 }

@@ -1,10 +1,11 @@
+import { History } from '@modules/claim/models/history/history.model';
 export class Work {
   id: number;
   claimId: number;
   title: string;
   status: string;
   attrs: string;
-  histories: [];
+  histories: History[] = [];
 
   constructor(work: any = {}) {
     this.id = work.id;
@@ -12,6 +13,5 @@ export class Work {
     this.title = work.title;
     this.status = work.status;
     this.attrs = work.attrs;
-    this.histories = work.histories;
   }
 }
