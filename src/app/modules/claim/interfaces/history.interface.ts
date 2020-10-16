@@ -1,10 +1,4 @@
-export enum HistoryActionTypes {
-  ACTION = 'action',
-  COMMENT = 'comment',
-  ADD_WORKER = 'add_worker',
-  POSTPONE = 'postpone',
-  CLOSE = 'close'
-}
+import { HistoryActionTypes } from '@modules/claim/enums/history-action-type.enum';
 
 export interface IHistory {
   id: number;

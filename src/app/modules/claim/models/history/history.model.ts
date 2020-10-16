@@ -1,6 +1,6 @@
 import * as moment from 'moment';
 
-import { HistoryActionTypes } from '@modules/claim/interfaces/history.interface';
+import { HistoryActionTypes } from '@modules/claim/enums/history-action-type.enum';
 import { IHistory } from '@modules/claim/interfaces/history.interface';
 
 export class History {

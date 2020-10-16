@@ -1,4 +1,5 @@
-import { IHistory, HistoryActionTypes } from '@modules/claim/interfaces/history.interface';
+import { IHistory } from '@modules/claim/interfaces/history.interface';
+import { HistoryActionTypes } from '@modules/claim/enums/history-action-type.enum';
 
 export class IHistoryBuilder {
   private history: IHistory;
