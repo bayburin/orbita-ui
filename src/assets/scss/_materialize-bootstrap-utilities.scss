@@ -11,3 +11,15 @@
   background-color: map-get($mat-red, 500) !important;
   color: $light-text-color !important;
 }
+
+.text-primary {
+  color: map-get($mat-main-primary, 500) !important;
+}
+
+.text-success {
+  color: map-get($mat-green, 500) !important;
+}
+
+.text-danger {
+  color: map-get($mat-red, 500) !important;
+}

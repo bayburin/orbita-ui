@@ -43,17 +43,23 @@ $claim-history-content-height: 500px;
       font-size: .8rem;
       max-height: $claim-history-card-height;
 
+      & > * {
+        padding: .25rem;
+      }
+
       .history-card-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         background-color: $default-background-color;
         border-bottom: 1px solid $border-color;
-        padding: .25rem;
       }
 
-      .history-card-content {
-        padding: .25rem;
+      .history-card-content { }
+
+      .history-card-additional-info {
+        font-size: .7rem;
+        text-align: right;
       }
     }
 
@@ -65,6 +71,7 @@ $claim-history-content-height: 500px;
       margin-bottom: $spacer;
       padding-bottom: $spacer;
       border-bottom: 1px solid $border-color;
+      height: $claim-history-card-height;
     }
   }
 }

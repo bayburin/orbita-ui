@@ -1,3 +1,4 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ClaimEditBlockComponent } from './claim-edit-block.component';
@@ -8,7 +9,8 @@ describe('ClaimEditBlockComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ClaimEditBlockComponent ]
+      declarations: [ClaimEditBlockComponent],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

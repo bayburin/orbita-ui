@@ -3,11 +3,12 @@
 </div>
 <div class="content">
   <span *ngFor="let work of claim.works" class="workflow-block">
-    <h3>{{ work.title }}</h3>
+    <h3 class="text-primary">{{ work.title }}</h3>
 
     <div class="last-action">
       <mat-card class="history-card" matRipple>
         <div class="history-card-header">
+          <span>{{ work.histories.length }}</span>
           <span>{{ work.lastHistory.createdAt | datetime }}</span>
           <mat-icon
             class="mat-18px"
@@ -17,14 +18,16 @@
         <div class="history-card-content">
           <b>Байбурин Равиль</b> {{ work.lastHistory.action }}
         </div>
+        <div *ngIf="claim.lastHistory === work.lastHistory" class="history-card-additional-info text-success">Последнее событие</div>
       </mat-card>
     </div>
 
     <div class="history-block">
-      <div *ngFor="let history of work.histories">
+      <div *ngFor="let history of work.histories; let index = index">
 
         <mat-card class="history-card" matRipple>
           <div class="history-card-header">
+            <span>{{ index + 1 }}</span>
             <span>{{ history.createdAt | datetime }}</span>
             <mat-icon
               class="mat-18px"

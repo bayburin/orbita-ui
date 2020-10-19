@@ -7,6 +7,9 @@ export class Work {
   attrs: string;
   histories: History[] = [];
 
+  /**
+   * Возвращает последний объект истории.
+   */
   get lastHistory(): History {
     return this.histories[this.histories.length - 1];
   }

@@ -1,3 +1,4 @@
+import { History } from '@modules/claim/models/history/history.model';
 import { ClaimStatuses } from '@modules/claim/enums/claim-statuses.enum';
 import { ClaimPriorities } from '@modules/claim/enums/claim-priorities.enum';
 import { Work } from '@modules/claim/models/work/work.model';
@@ -16,6 +17,22 @@ export class Claim {
   rating: number;
   works: Work[] = [];
   runtime: Runtime;
+
+  /**
+   * Возвращает самый последний объект истории из всех включенных работ.
+   */
+  get lastHistory(): History {
+    let last = null;
+
+    this.works.forEach(work => {
+      last = last || work.lastHistory;
+      if (work.lastHistory.createdAt.isSameOrAfter(last.createdAt)) {
+        last = work.lastHistory;
+      }
+    });
+
+    return last;
+  }
 
   constructor(claim: IClaim) {
     this.id = claim.id;

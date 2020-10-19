@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { Claim } from '@modules/claim/models/claim/claim.model';
 import { historyActionTypesMap } from '@modules/claim/enums/history-action-type.enum';
@@ -8,11 +8,9 @@ import { historyActionTypesMap } from '@modules/claim/enums/history-action-type.
   templateUrl: './claim-workflow-info.component.html',
   styleUrls: ['./claim-workflow-info.component.scss']
 })
-export class ClaimWorkflowInfoComponent implements OnInit {
+export class ClaimWorkflowInfoComponent {
   historyActionTypes = historyActionTypesMap;
   @Input() claim: Claim;
 
   constructor() { }
-
-  ngOnInit(): void {}
 }
