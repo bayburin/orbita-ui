@@ -13,13 +13,17 @@ import { ClaimsPageComponent } from './pages/claims-page/claims-page.component';
 import { ClaimsBlockComponent } from './containers/claims-block/claims-block.component';
 import { ClaimsTableComponent } from './components/claims-table/claims-table.component';
 import { ClaimWorkflowInfoComponent } from './components/claim-workflow-info/claim-workflow-info.component';
+import { ClaimPageComponent } from './pages/claim-page/claim-page.component';
+import { ClaimEditBlockComponent } from './containers/claim-edit-block/claim-edit-block.component';
 
 @NgModule({
   declarations: [
     ClaimsPageComponent,
     ClaimsBlockComponent,
     ClaimsTableComponent,
-    ClaimWorkflowInfoComponent
+    ClaimWorkflowInfoComponent,
+    ClaimPageComponent,
+    ClaimEditBlockComponent
   ],
   imports: [
     SharedModule,
