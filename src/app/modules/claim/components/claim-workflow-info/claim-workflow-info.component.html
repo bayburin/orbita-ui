@@ -6,10 +6,13 @@
     <h3>{{ work.title }}</h3>
 
     <div class="last-action">
-      <mat-card class="history-card">
-        <div  class="history-card-header bg-success">
+      <mat-card class="history-card" matRipple>
+        <div class="history-card-header">
           <span>{{ work.lastHistory.createdAt | datetime }}</span>
-          <mat-icon [svgIcon]="historyActionTypes[work.lastHistory.actionType].icon" class="mat-18px"></mat-icon>
+          <mat-icon
+            class="mat-18px"
+            [svgIcon]="historyActionTypes[work.lastHistory.actionType].icon"
+            [matTooltip]="historyActionTypes[work.lastHistory.actionType].title"></mat-icon>
         </div>
         <div class="history-card-content">
           <b>Байбурин Равиль</b> {{ work.lastHistory.action }}
@@ -20,10 +23,13 @@
     <div class="history-block">
       <div *ngFor="let history of work.histories">
 
-        <mat-card class="history-card">
+        <mat-card class="history-card" matRipple>
           <div class="history-card-header">
             <span>{{ history.createdAt | datetime }}</span>
-            <mat-icon [svgIcon]="historyActionTypes[history.actionType].icon" color="accent" class="mat-18px"></mat-icon>
+            <mat-icon
+              class="mat-18px"
+              [svgIcon]="historyActionTypes[history.actionType].icon"
+              [matTooltip]="historyActionTypes[history.actionType].title"></mat-icon>
           </div>
           <div class="history-card-content">
             <b>Байбурин Равиль</b> {{ history.action }}
