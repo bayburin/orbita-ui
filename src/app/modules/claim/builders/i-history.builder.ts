@@ -1,5 +1,4 @@
 import { IHistory } from '@modules/claim/interfaces/history.interface';
-import { HistoryActionTypes } from '@modules/claim/enums/history-action-type.enum';
 
 export class IHistoryBuilder {
   private history: IHistory;
@@ -9,8 +8,8 @@ export class IHistoryBuilder {
       id: 1,
       work_id: 1,
       user_id: 1,
+      event_type_id: 1,
       action: 'Test action',
-      action_type: HistoryActionTypes.ACTION,
       created_at: '04-05-2020 18:34',
     };
   }
@@ -37,14 +36,14 @@ export class IHistoryBuilder {
     return this;
   }
 
-  action(action: string): IHistoryBuilder {
-    this.history.action = action;
+  event_type_id(eventTypeId: number): IHistoryBuilder {
+    this.history.event_type_id = eventTypeId;
 
     return this;
   }
 
-  action_type(actionType: HistoryActionTypes): IHistoryBuilder {
-    this.history.action_type = actionType;
+  action(action: string): IHistoryBuilder {
+    this.history.action = action;
 
     return this;
   }

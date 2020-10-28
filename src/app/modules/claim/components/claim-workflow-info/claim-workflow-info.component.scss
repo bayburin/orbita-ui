@@ -21,12 +21,12 @@ $claim-history-content-height: 500px;
     max-height: $claim-history-content-height;
     overflow: scroll;
 
-    .workflow-block {
+    .work-block {
       min-width: $claim-history-card-width;
       width: $claim-history-card-width;
     }
 
-    .workflow-block + .workflow-block {
+    .work-block + .work-block {
       padding: 0 $spacer;
       border-left: 1px solid $border-color;
     }
@@ -35,6 +35,10 @@ $claim-history-content-height: 500px;
       display: flex;
       flex-direction: column;
       gap: $spacer;
+    }
+
+    .history-card-container:last-child {
+      margin-bottom: $spacer;
     }
 
     .history-card {

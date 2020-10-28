@@ -2,7 +2,7 @@
   <h3>ХОД РАБОТЫ</h3>
 </div>
 <div class="content">
-  <span *ngFor="let work of claim.works" class="workflow-block">
+  <span *ngFor="let work of claim.works" class="work-block">
     <h3 class="text-primary">{{ work.title }}</h3>
 
     <div class="last-action">
@@ -12,8 +12,8 @@
           <span>{{ work.lastHistory.createdAt | datetime }}</span>
           <mat-icon
             class="mat-18px"
-            [svgIcon]="historyActionTypes[work.lastHistory.actionType].icon"
-            [matTooltip]="historyActionTypes[work.lastHistory.actionType].title"></mat-icon>
+            [svgIcon]="eventTypeNames[work.lastHistory.eventType.name].icon"
+            [matTooltip]="work.lastHistory.eventType.description"></mat-icon>
         </div>
         <div class="history-card-content">
           <b>Байбурин Равиль</b> {{ work.lastHistory.action }}
@@ -23,7 +23,7 @@
     </div>
 
     <div class="history-block">
-      <div *ngFor="let history of work.histories; let index = index">
+      <div *ngFor="let history of work.histories; let index = index" class="history-card-container">
 
         <mat-card class="history-card" matRipple>
           <div class="history-card-header">
@@ -31,8 +31,8 @@
             <span>{{ history.createdAt | datetime }}</span>
             <mat-icon
               class="mat-18px"
-              [svgIcon]="historyActionTypes[history.actionType].icon"
-              [matTooltip]="historyActionTypes[history.actionType].title"></mat-icon>
+              [svgIcon]="eventTypeNames[history.eventType.name].icon"
+              [matTooltip]="history.eventType.description"></mat-icon>
           </div>
           <div class="history-card-content">
             <b>Байбурин Равиль</b> {{ history.action }}

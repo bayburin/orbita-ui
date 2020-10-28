@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { Claim } from '@modules/claim/models/claim/claim.model';
-import { historyActionTypesMap } from '@modules/claim/enums/history-action-type.enum';
+import { eventTypeNamesMap } from '@modules/claim/enums/event-type-names.enum';
 
 @Component({
   selector: 'app-claim-workflow-info',
@@ -9,7 +9,7 @@ import { historyActionTypesMap } from '@modules/claim/enums/history-action-type.
   styleUrls: ['./claim-workflow-info.component.scss']
 })
 export class ClaimWorkflowInfoComponent {
-  historyActionTypes = historyActionTypesMap;
+  eventTypeNames = eventTypeNamesMap;
   @Input() claim: Claim;
 
   constructor() { }
