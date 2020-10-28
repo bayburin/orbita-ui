@@ -3,22 +3,24 @@
 </div>
 <div class="content">
   <span *ngFor="let work of claim.works" class="work-block">
-    <h3 class="text-primary">{{ work.title }}</h3>
+    <h3 class="text-primary">{{ work.group.description }}</h3>
 
     <div class="last-action">
       <mat-card class="history-card" matRipple>
         <div class="history-card-header">
-          <span>{{ work.histories.length }}</span>
-          <span>{{ work.lastHistory.createdAt | datetime }}</span>
+          <span>Событие {{ work.histories.length }}</span>
           <mat-icon
             class="mat-18px"
             [svgIcon]="eventTypeNames[work.lastHistory.eventType.name].icon"
             [matTooltip]="work.lastHistory.eventType.description"></mat-icon>
         </div>
         <div class="history-card-content">
-          <b>Байбурин Равиль</b> {{ work.lastHistory.action }}
+          <b>Байбурин Равиль:</b> {{ work.lastHistory.action }}
         </div>
-        <div *ngIf="claim.lastHistory === work.lastHistory" class="history-card-additional-info text-success">Последнее событие</div>
+        <div class="history-card-additional-info">
+          <span>{{ work.lastHistory.createdAt | datetime }}</span>
+          <span *ngIf="claim.lastHistory === work.lastHistory" class="text-success">Последнее событие</span>
+        </div>
       </mat-card>
     </div>
 
@@ -27,16 +29,16 @@
 
         <mat-card class="history-card" matRipple>
           <div class="history-card-header">
-            <span>{{ index + 1 }}</span>
-            <span>{{ history.createdAt | datetime }}</span>
+            <span>Событие {{ index + 1 }}</span>
             <mat-icon
               class="mat-18px"
               [svgIcon]="eventTypeNames[history.eventType.name].icon"
               [matTooltip]="history.eventType.description"></mat-icon>
           </div>
           <div class="history-card-content">
-            <b>Байбурин Равиль</b> {{ history.action }}
+            <b>Байбурин Равиль:</b> {{ history.action }}
           </div>
+          <div class="history-card-additional-info">{{ history.createdAt | datetime }}</div>
         </mat-card>
 
       </div>

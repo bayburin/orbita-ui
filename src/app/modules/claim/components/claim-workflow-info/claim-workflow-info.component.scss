@@ -48,7 +48,7 @@ $claim-history-content-height: 500px;
       max-height: $claim-history-card-height;
 
       & > * {
-        padding: .25rem;
+        padding: .45rem;
       }
 
       .history-card-header {
@@ -59,11 +59,16 @@ $claim-history-content-height: 500px;
         border-bottom: 1px solid $border-color;
       }
 
-      .history-card-content { }
+      .history-card-content {}
 
       .history-card-additional-info {
         font-size: .7rem;
         text-align: right;
+
+        & > * {
+          line-height: .9rem;
+          display: block;
+        }
       }
     }
 

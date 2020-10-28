@@ -1,4 +1,5 @@
 import { IHistory } from './history.interface';
+import { IGroup } from './group.interface';
 
 export interface IWork {
   id: number;
@@ -7,4 +8,5 @@ export interface IWork {
   status: string;
   attrs: any;
   histories: IHistory[];
+  group: IGroup;
 }
