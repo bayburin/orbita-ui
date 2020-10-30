@@ -1,4 +1,5 @@
 import { IHistory } from '@modules/claim/interfaces/history.interface';
+import { IEventTypeBuilder } from './i-event-type.builder';
 
 export class IHistoryBuilder {
   private history: IHistory;
@@ -9,6 +10,7 @@ export class IHistoryBuilder {
       work_id: 1,
       user_id: 1,
       event_type_id: 1,
+      event_type: new IEventTypeBuilder().build(),
       action: 'Test action',
       created_at: '04-05-2020 18:34',
     };

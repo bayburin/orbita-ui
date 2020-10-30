@@ -1,5 +1,5 @@
 import { IHistory } from './history.interface';
-import { IGroup } from './group.interface';
+import { IGroup } from '@modules/user/interfaces/group.interface';
 
 export interface IWork {
   id: number;

@@ -1,6 +1,6 @@
 import { IWork } from '@modules/claim/interfaces/work.interface';
 import { History } from '@modules/claim/models/history/history.model';
-import { IGroup } from '@modules/claim/interfaces/group.interface';
+import { IGroup } from '@modules/user/interfaces/group.interface';
 export class Work {
   id: number;
   claimId: number;

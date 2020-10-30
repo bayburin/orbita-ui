@@ -20,7 +20,5 @@ export class History {
     this.eventTypeId = history.event_type_id;
     this.createdAt = moment(history.created_at);
     this.eventType = history.event_type;
-
-    console.log(this);
   }
 }
