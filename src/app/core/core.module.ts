@@ -10,6 +10,7 @@ import { environment } from '@env/environment';
 import { SharedModule } from '@shared/shared.module';
 import { AuthCenterModule } from '@iss/ng-auth-center';
 import { CoreRoutingModule } from './core-routing.module';
+import { Usermodule } from '@modules/user/user.module';
 
 import { HeaderComponent } from './components/header/header.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
@@ -30,7 +31,8 @@ import { JsonInterceptor } from './interceptors/json/json.interceptor';
     StoreModule.forRoot({}),
     EffectsModule.forRoot(),
     environment.production ? [] : StoreDevtoolsModule.instrument({ maxAge: 25 }),
-    AuthCenterModule.forRoot(environment.auth)
+    AuthCenterModule.forRoot(environment.auth),
+    Usermodule
   ],
   exports: [
     HeaderComponent,
