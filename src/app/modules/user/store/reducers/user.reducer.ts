@@ -27,3 +27,16 @@ const userReducer = createReducer(
 export function reducer(state: State | undefined, action: Action): State {
   return userReducer(state, action);
 }
+
+const {
+  selectIds,
+  selectEntities,
+  selectAll,
+  selectTotal,
+} = adapter.getSelectors();
+
+export const getIds = selectIds;
+export const getEntities = selectEntities;
+export const getAll = selectAll;
+export const getTotalCount = selectTotal;
+export const getSelected = (state: State) => state.selected;
