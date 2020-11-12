@@ -1,47 +1,52 @@
 <div class="header">
   <h3>ХОД РАБОТЫ</h3>
 </div>
-<div class="content">
-  <span *ngFor="let work of claim.works" class="work-block">
-    <h3 class="text-primary">{{ work.group.description }}</h3>
+<div *ngIf="claim.works.length; else worksEmpty">
+  <div class="content">
+    <span *ngFor="let work of claim.works" class="work-block">
+      <h3 class="text-primary">{{ work.group.description }}</h3>
 
-    <div class="last-action">
-      <mat-card class="history-card" matRipple>
-        <div class="history-card-header">
-          <span>Событие {{ work.histories.length }}</span>
-          <mat-icon
-            class="mat-18px"
-            [svgIcon]="eventTypeNames[work.lastHistory.eventType.name].icon"
-            [matTooltip]="work.lastHistory.eventType.description"></mat-icon>
-        </div>
-        <div class="history-card-content">
-          <b>Байбурин Равиль:</b> {{ work.lastHistory.action }}
-        </div>
-        <div class="history-card-additional-info">
-          <span>{{ work.lastHistory.createdAt | datetime }}</span>
-          <span *ngIf="claim.lastHistory === work.lastHistory" class="text-success">Последнее событие</span>
-        </div>
-      </mat-card>
-    </div>
-
-    <div class="history-block">
-      <div *ngFor="let history of work.histories; let index = index" class="history-card-container">
-
+      <div class="last-action">
         <mat-card class="history-card" matRipple>
           <div class="history-card-header">
-            <span>Событие {{ index + 1 }}</span>
+            <span>Событие {{ work.histories.length }}</span>
             <mat-icon
               class="mat-18px"
-              [svgIcon]="eventTypeNames[history.eventType.name].icon"
-              [matTooltip]="history.eventType.description"></mat-icon>
+              [svgIcon]="eventTypeNames[work.lastHistory.eventType.name].icon"
+              [matTooltip]="work.lastHistory.eventType.description"></mat-icon>
           </div>
           <div class="history-card-content">
-            <b>Байбурин Равиль:</b> {{ history.action }}
+            <b>Байбурин Равиль:</b> {{ work.lastHistory.action }}
           </div>
-          <div class="history-card-additional-info">{{ history.createdAt | datetime }}</div>
+          <div class="history-card-additional-info">
+            <span>{{ work.lastHistory.createdAt | datetime }}</span>
+            <span *ngIf="claim.lastHistory === work.lastHistory" class="text-success">Последнее событие</span>
+          </div>
         </mat-card>
-
       </div>
-    </div>
-  </span>
+
+      <div class="history-block">
+        <div *ngFor="let history of work.histories; let index = index" class="history-card-container">
+
+          <mat-card class="history-card" matRipple>
+            <div class="history-card-header">
+              <span>Событие {{ index + 1 }}</span>
+              <mat-icon
+                class="mat-18px"
+                [svgIcon]="eventTypeNames[history.eventType.name].icon"
+                [matTooltip]="history.eventType.description"></mat-icon>
+            </div>
+            <div class="history-card-content">
+              <b>Байбурин Равиль:</b> {{ history.action }}
+            </div>
+            <div class="history-card-additional-info">{{ history.createdAt | datetime }}</div>
+          </mat-card>
+
+        </div>
+      </div>
+    </span>
+  </div>
 </div>
+<ng-template #worksEmpty>
+  <h3 class="text-primary mt-2">ОТСУТСТВУЕТ</h3>
+</ng-template>
