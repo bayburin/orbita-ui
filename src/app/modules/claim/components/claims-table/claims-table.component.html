@@ -44,7 +44,9 @@
   <!-- Исполнители -->
   <ng-container matColumnDef="workers">
     <th mat-header-cell *matHeaderCellDef>Исполнители</th>
-    <td mat-cell *matCellDef="let element">О.Н. Баскакова<br>Л.А. Суспицына</td>
+    <td mat-cell *matCellDef="let element">
+      <div *ngFor="let worker of element.workers">{{ worker | middleName }}</div>
+    </td>
   </ng-container>
 
   <!-- Действия -->

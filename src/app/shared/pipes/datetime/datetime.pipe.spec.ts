@@ -10,7 +10,6 @@ describe('DatetimePipe', () => {
   });
 
   it('create an instance', () => {
-
     expect(pipe).toBeTruthy();
   });
 

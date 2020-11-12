@@ -1,5 +1,6 @@
 import { IHistory } from './history.interface';
 import { IGroup } from '@modules/user/interfaces/group.interface';
+import { IUserWork } from './user-work.interface';
 
 export interface IWork {
   id: number;
@@ -9,4 +10,5 @@ export interface IWork {
   attrs: any;
   histories: IHistory[];
   group: IGroup;
+  workers: IUserWork[];
 }

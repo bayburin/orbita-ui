@@ -1,6 +1,7 @@
 import { IWork } from '@modules/claim/interfaces/work.interface';
 import { History } from '@modules/claim/models/history/history.model';
 import { IGroup } from '@modules/user/interfaces/group.interface';
+import { IUser } from '@modules/user/interfaces/user.interface';
 export class Work {
   id: number;
   claimId: number;
@@ -9,6 +10,7 @@ export class Work {
   attrs: string;
   histories: History[] = [];
   group: IGroup;
+  workers: IUser[] = [];
 
   /**
    * Возвращает последний объект истории.

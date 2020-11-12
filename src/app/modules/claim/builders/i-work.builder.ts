@@ -1,7 +1,8 @@
 import { IWork } from '@modules/claim/interfaces/work.interface';
 import { IHistory } from '@modules/claim/interfaces/history.interface';
-import { IHistoryBuilder } from '@modules/claim/builders/i-history.builder';
+import { IHistoryBuilder } from './i-history.builder';
 import { IGroupBuilder } from '@modules/user/builders/i-group.builder';
+import { IUserWorkBuilder } from './i-user-work.builder';
 
 export class IWorkBuilder {
   private work: IWork;
@@ -14,7 +15,8 @@ export class IWorkBuilder {
       status: 'Status',
       attrs: { },
       histories: [new IHistoryBuilder().build()],
-      group: new IGroupBuilder().build()
+      group: new IGroupBuilder().build(),
+      workers: [new IUserWorkBuilder().build()]
     };
   }
 

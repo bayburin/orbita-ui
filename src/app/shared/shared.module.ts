@@ -4,6 +4,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MaterialModule } from './material.module';
 import { DatetimePipe } from './pipes/datetime/datetime.pipe';
+import { MiddleNamePipe } from './pipes/middle-name/middle-name.pipe';
 
 const modules: any[] = [
   CommonModule,
@@ -12,7 +13,8 @@ const modules: any[] = [
 ];
 
 const declarations: any[] = [
-  DatetimePipe
+  DatetimePipe,
+  MiddleNamePipe
 ];
 
 @NgModule({

@@ -2,6 +2,7 @@ import { createSelector, createFeatureSelector } from '@ngrx/store';
 
 import * as fromClaims from '@modules/claim/store/reducers/claim.reducer';
 import { ClaimFactory } from '@modules/claim/factories/claim/claim.factory';
+import * as UserSelectors from '@modules/user/store/selectors/user.selectors';
 
 export const selectClaims = createFeatureSelector<fromClaims.State>(fromClaims.CLAIM_FEATURE_KEY);
 
@@ -40,8 +41,9 @@ export const getEntityClaim = createSelector(
 
 export const getAllClaims = createSelector(
   getAll,
-  (iClaims) => {
-    return iClaims.map(iClaim => ClaimFactory.create({ ...iClaim }));
+  UserSelectors.getAll,
+  (iClaims, users) => {
+    return iClaims.map(iClaim => ClaimFactory.create({ ...iClaim }, users));
   }
 );
 
