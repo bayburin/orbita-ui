@@ -11,13 +11,9 @@ export interface State extends EntityState<IClaim> {
   error?: string | null;
 }
 
-export const initialState: State = {
-  ids: [],
-  entities: null,
-  selected: null
-};
-
 export const adapter: EntityAdapter<IClaim> = createEntityAdapter();
+
+export const initialState: State = adapter.getInitialState({ selected: null });
 
 const claimReducer = createReducer(
   initialState,
