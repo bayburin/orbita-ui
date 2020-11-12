@@ -17,7 +17,7 @@ describe('ClaimFacade', () => {
   const initialState = {
     [CLAIM_FEATURE_KEY]: {
       ids: [],
-      claims: null,
+      entities: { },
       selected: null,
       loading: false,
       loaded: false,

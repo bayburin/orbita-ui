@@ -20,8 +20,8 @@ export class ClaimEffects {
   loadClaims$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ClaimActions.loadAll),
-      withLatestFrom(this.store.select(ClaimSelectors.getEntities)),
-      filter(([action, claims]) => claims === null),
+      withLatestFrom(this.store.select(ClaimSelectors.getIds)),
+      filter(([action, claims]) => claims.length === 0),
       mergeMap(() => this.claimService.getClaims()
         .pipe(
           map(claims => ClaimActions.loadAllSuccess({ claims })),
