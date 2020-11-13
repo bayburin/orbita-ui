@@ -32,13 +32,15 @@
   <!-- Вид заявки -->
   <ng-container matColumnDef="serviceName">
     <th mat-header-cell *matHeaderCellDef>Вид заявки</th>
-    <td mat-cell *matCellDef="let element">{{ element.serviceName }}</td>
+    <td mat-cell *matCellDef="let element" [style.width]="'15%'">{{ element.serviceName }}</td>
   </ng-container>
 
   <!-- Описание -->
   <ng-container matColumnDef="description">
-    <th mat-header-cell *matHeaderCellDef>Описание</th>
-    <td mat-cell *matCellDef="let element">Лист запуска 6589-18.08.2020</td>
+    <th mat-header-cell *matHeaderCellDef>Подробности</th>
+    <td mat-cell *matCellDef="let element" [style.width]="'40%'">
+      <div *ngFor="let attr of element.attrs | keyvalue"><b>{{ attr.key }}:</b> {{ attr.value }}</div>
+    </td>
   </ng-container>
 
   <!-- Исполнители -->
