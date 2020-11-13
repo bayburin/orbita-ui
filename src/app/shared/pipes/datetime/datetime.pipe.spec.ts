@@ -18,4 +18,8 @@ describe('DatetimePipe', () => {
 
     expect(pipe.transform(datetime)).toEqual('08.02.13 09:30');
   });
+
+  it('should return empty string if datetime is null', () => {
+    expect(pipe.transform(null)).toEqual('');
+  });
 });
