@@ -12,7 +12,7 @@ const routes: Routes = [
     canActivate: [AuthCenterGuard]
   },
   {
-    path: ':id',
+    path: ':id/edit',
     component: ClaimPageComponent,
     canActivate: [AuthCenterGuard]
   }

@@ -26,7 +26,11 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              { "glob": "mdi.svg", "input": "node_modules/@mdi/angular-material/", "output": "./assets" }
+              {
+                "glob": "mdi.svg",
+                "input": "node_modules/@mdi/angular-material/",
+                "output": "./assets"
+              }
             ],
             "styles": [
               "node_modules/@iss/ng-auth-center/assets/styles.scss",
@@ -131,5 +135,8 @@
       }
     }
   },
-  "defaultProject": "orbita-ui"
+  "defaultProject": "orbita-ui",
+  "cli": {
+    "analytics": false
+  }
 }
