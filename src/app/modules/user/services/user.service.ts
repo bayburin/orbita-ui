@@ -9,7 +9,7 @@ import { IUser } from '@modules/user/interfaces/user.interface';
   providedIn: 'root'
 })
 export class UserService {
-  readonly api = `${environment.serverUrl}/api/v1/users`;
+  readonly api = `${environment.serverApi}/v1/users`;
 
   constructor(private http: HttpClient) { }
 

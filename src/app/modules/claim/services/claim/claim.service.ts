@@ -9,7 +9,7 @@ import { IClaim } from '@modules/claim/interfaces/claim.interface';
   providedIn: 'root'
 })
 export class ClaimService {
-  readonly api = `${environment.serverUrl}/api/v1/claims`;
+  readonly api = `${environment.serverApi}/v1/claims`;
 
   constructor(private http: HttpClient) {}
 

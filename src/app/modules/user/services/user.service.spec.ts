@@ -28,7 +28,7 @@ describe('UserService', () => {
 
   describe('#getUsers', () => {
     const claims = [new IUserBuilder().id(1).build(), new IUserBuilder().id(2).build()];
-    const api = `${environment.serverUrl}/api/v1/users`;
+    const api = `${environment.serverApi}/v1/users`;
 
     it('should return Observable with array of users', () => {
       service.getUsers().subscribe(result => {

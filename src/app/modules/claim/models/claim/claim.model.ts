@@ -27,7 +27,7 @@ export class Claim {
 
     this.works.forEach(work => {
       last = last || work.lastHistory;
-      if (work.lastHistory.createdAt.isSameOrAfter(last.createdAt)) {
+      if (work.lastHistory && work.lastHistory.createdAt.isSameOrAfter(last.createdAt)) {
         last = work.lastHistory;
       }
     });
@@ -49,5 +49,12 @@ export class Claim {
     this.priority = claim.priority;
     this.attrs = claim.attrs;
     this.rating = claim.rating;
+  }
+
+  /**
+   * Возвращает true, если в истории заявки присутствует какое-либо событие, связанное с работами.
+   */
+  isAnyWorkAction(): boolean {
+    return this.works.some(work => work.histories.length);
   }
 }

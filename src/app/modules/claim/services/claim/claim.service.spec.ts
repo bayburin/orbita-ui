@@ -28,7 +28,7 @@ describe('ClaimService', () => {
 
   describe('#getClaims', () => {
     const claims = [new IClaimBuilder().id(1).build(), new IClaimBuilder().id(2).build()];
-    const api = `${environment.serverUrl}/api/v1/claims`;
+    const api = `${environment.serverApi}/v1/claims`;
 
     it('should return Observable with array of claims', () => {
       service.getClaims().subscribe(result => {
