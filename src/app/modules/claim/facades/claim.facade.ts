@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { map } from 'rxjs/operators';
 
 import * as fromClaims from '@modules/claim/store/reducers/claim.reducer';
 import * as ClaimActions from '@modules/claim/store/actions/claim.actions';
 import * as ClaimSelectors from '@modules/claim/store/selectors/claim.selectors';
 import { Claim } from '@modules/claim/models/claim/claim.model';
+import { ClaimFactory } from '@modules/claim/factories/claim/claim.factory';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +17,8 @@ export class ClaimFacade {
   claim$: Observable<Claim>;
 
   constructor(private store: Store<fromClaims.State>) {
-    this.claims$ = store.select(ClaimSelectors.getAllClaims);
-    this.claim$ = store.select(ClaimSelectors.getEntityClaim);
+    this.claims$ = store.select(ClaimSelectors.getAll).pipe(map(claims => claims.map(claim => ClaimFactory.create(claim))));
+    this.claim$ = store.select(ClaimSelectors.getEntity).pipe(map(claim => ClaimFactory.create(claim)));
   }
 
   /**

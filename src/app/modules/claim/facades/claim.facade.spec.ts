@@ -9,6 +9,7 @@ import * as ClaimSelectors from '@modules/claim/store/selectors/claim.selectors'
 import { CLAIM_FEATURE_KEY, State } from '@modules/claim/store/reducers/claim.reducer';
 import { ClaimFacade } from '@modules/claim/facades/claim.facade';
 import { ClaimFactory } from '@modules/claim/factories/claim/claim.factory';
+import { IClaimBuilder } from '@modules/claim/builders/i-claim.builder';
 
 describe('ClaimFacade', () => {
   let actions$: Observable<Action>;
@@ -39,22 +40,22 @@ describe('ClaimFacade', () => {
 
   describe('#constructor', () => {
     it('should call "ClaimSelectors.getAll" selector', () => {
-      const selectResult = [ClaimFactory.create()];
+      const selectResult = [new IClaimBuilder().build()];
 
-      store.overrideSelector(ClaimSelectors.getAllClaims, selectResult);
+      store.overrideSelector(ClaimSelectors.getAll, selectResult);
 
       facade.claims$.subscribe(result => {
-        expect(result).toEqual(selectResult);
+        expect(result).toEqual(selectResult.map(el => ClaimFactory.create(el)));
       });
     });
 
     it('should call "ClaimSelectors.getEntity" selector', () => {
-      const selectResult = ClaimFactory.create();
+      const selectResult = new IClaimBuilder().build();
 
-      store.overrideSelector(ClaimSelectors.getEntityClaim, selectResult);
+      store.overrideSelector(ClaimSelectors.getEntity, selectResult);
 
       facade.claim$.subscribe(result => {
-        expect(result).toEqual(selectResult);
+        expect(result).toEqual(ClaimFactory.create(selectResult));
       });
     });
   });
