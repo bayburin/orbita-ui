@@ -14,9 +14,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     //   {
     //     id: 1,
     //     service_id: 1,
-    //     claim_template_id: 1,
+    //     app_template_id: 1,
     //     service_name: 'Печать',
-    //     claim_template_name: 'Заявка на печать КД',
+    //     app_template_name: 'Заявка на печать КД',
     //     status: 'opened',
     //     priority: 'high',
     //     claim_user: {

@@ -10,9 +10,9 @@ import { IUser } from '@modules/user/interfaces/user.interface';
 export class Claim {
   id: number;
   serviceId: number;
-  claimTemplateId: number;
+  appTemplateId: number;
   serviceName: string;
-  claimTemplateName: string;
+  appTemplateName: string;
   status: ClaimStatuses;
   priority: ClaimPriorities;
   attrs: any;
@@ -44,9 +44,9 @@ export class Claim {
   constructor(claim: IClaim) {
     this.id = claim.id;
     this.serviceId = claim.service_id;
-    this.claimTemplateId = claim.claim_template_id;
+    this.appTemplateId = claim.app_template_id;
     this.serviceName = claim.service_name;
-    this.claimTemplateName = claim.claim_template_name;
+    this.appTemplateName = claim.app_template_name;
     this.status = claim.status;
     this.priority = claim.priority;
     this.attrs = claim.attrs;

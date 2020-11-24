@@ -9,9 +9,9 @@ export class ISdRequestBuilder extends IClaimBuilder {
     super();
 
     this.claim.service_id = 1;
-    this.claim.claim_template_id = 1;
+    this.claim.app_template_id = 1;
     this.claim.service_name = 'Service Name';
-    this.claim.claim_template_name = 'Claim Template Name';
+    this.claim.app_template_name = 'Claim Template Name';
     this.claim.rating = null;
   }
 
@@ -25,8 +25,8 @@ export class ISdRequestBuilder extends IClaimBuilder {
     return this;
   }
 
-  claim_template_id(claimTemplateId: number): ISdRequestBuilder {
-    this.claim.claim_template_id = claimTemplateId;
+  app_template_id(appTemplateId: number): ISdRequestBuilder {
+    this.claim.app_template_id = appTemplateId;
 
     return this;
   }
@@ -37,8 +37,8 @@ export class ISdRequestBuilder extends IClaimBuilder {
     return this;
   }
 
-  claim_template_name(claimTemplateName: string): ISdRequestBuilder {
-    this.claim.claim_template_name = claimTemplateName;
+  app_template_name(appTemplateName: string): ISdRequestBuilder {
+    this.claim.app_template_name = appTemplateName;
 
     return this;
   }

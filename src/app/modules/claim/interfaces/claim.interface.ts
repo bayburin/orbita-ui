@@ -8,9 +8,9 @@ export interface IClaim {
   id: number;
   type: ClaimTypes;
   service_id: number;
-  claim_template_id: number;
+  app_template_id: number;
   service_name: string;
-  claim_template_name: string;
+  app_template_name: string;
   status: ClaimStatuses;
   priority: ClaimPriorities;
   claim_user: any; // TODO: Заменить на IUser

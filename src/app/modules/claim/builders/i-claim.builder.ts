@@ -14,9 +14,9 @@ export class IClaimBuilder {
       id: 1,
       type: ClaimTypes.SD_REQUEST,
       service_id: 1,
-      claim_template_id: 1,
+      app_template_id: 1,
       service_name: 'Service Name',
-      claim_template_name: 'Claim Template Name',
+      app_template_name: 'Claim Template Name',
       status: ClaimStatuses.OPENED,
       priority: ClaimPriorities.DEFAULT,
       claim_user: { },
@@ -43,8 +43,8 @@ export class IClaimBuilder {
     return this;
   }
 
-  claim_template_id(claimTemplateId: number): IClaimBuilder {
-    this.claim.claim_template_id = claimTemplateId;
+  app_template_id(appTemplateId: number): IClaimBuilder {
+    this.claim.app_template_id = appTemplateId;
 
     return this;
   }
@@ -55,8 +55,8 @@ export class IClaimBuilder {
     return this;
   }
 
-  claim_template_name(claimTemplateName: string): IClaimBuilder {
-    this.claim.claim_template_name = claimTemplateName;
+  app_template_name(appTemplateName: string): IClaimBuilder {
+    this.claim.app_template_name = appTemplateName;
 
     return this;
   }
