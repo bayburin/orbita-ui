@@ -17,8 +17,8 @@ export class ClaimFacade {
   claim$: Observable<Claim>;
 
   constructor(private store: Store<fromClaims.State>) {
-    this.claims$ = store.select(ClaimSelectors.getAll).pipe(map(claims => claims.map(claim => ClaimFactory.create(claim))));
-    this.claim$ = store.select(ClaimSelectors.getEntity).pipe(map(claim => ClaimFactory.create(claim)));
+    this.claims$ = store.select(ClaimSelectors.getAll).pipe(map(claims => claims.map(claim => ClaimFactory.create(claim.type, claim))));
+    this.claim$ = store.select(ClaimSelectors.getEntity).pipe(map(claim => ClaimFactory.create(claim.type, claim)));
   }
 
   /**

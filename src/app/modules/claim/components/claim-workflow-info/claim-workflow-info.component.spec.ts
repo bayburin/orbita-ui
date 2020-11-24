@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ClaimWorkflowInfoComponent } from './claim-workflow-info.component';
 import { ClaimFactory } from '@modules/claim/factories/claim/claim.factory';
+import { ClaimTypes } from '@modules/claim/enums/claim-types.enum';
 
 describe('ClaimWorkflowInfoComponent', () => {
   let component: ClaimWorkflowInfoComponent;
@@ -19,7 +20,7 @@ describe('ClaimWorkflowInfoComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ClaimWorkflowInfoComponent);
     component = fixture.componentInstance;
-    component.claim = ClaimFactory.create();
+    component.claim = ClaimFactory.create(ClaimTypes.SD_REQUEST);
     fixture.detectChanges();
   });
 

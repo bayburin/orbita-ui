@@ -4,6 +4,7 @@ import { IClaim } from '@modules/claim/interfaces/claim.interface';
 import { IRuntimeBuilder } from './i-runtime.builder';
 import { IRuntime } from '@modules/claim/interfaces/runtime.interface';
 import { IWork } from '@modules/claim/interfaces/work.interface';
+import { ClaimTypes } from '../enums/claim-types.enum';
 
 export class IClaimBuilder {
   protected claim: IClaim;
@@ -11,6 +12,7 @@ export class IClaimBuilder {
   constructor() {
     this.claim = {
       id: 1,
+      type: ClaimTypes.SD_REQUEST,
       service_id: 1,
       claim_template_id: 1,
       service_name: 'Service Name',

@@ -5,6 +5,7 @@ import { IClaim } from '@modules/claim/interfaces/claim.interface';
 import { Claim } from './claim.model';
 import { IWork } from '@modules/claim/interfaces/work.interface';
 import { HistoryFactory } from '@modules/claim/factories/history/history.factory';
+import { ClaimTypes } from '@modules/claim/enums/claim-types.enum';
 
 describe('Claim', () => {
   let iClaim: IClaim;
@@ -29,7 +30,7 @@ describe('Claim', () => {
     it('should return last element of "histories" array from all works', () => {
       const works = [new IWorkBuilder().build(), new IWorkBuilder().build()];
       iClaim = new IClaimBuilder().works(works).build();
-      const claim = ClaimFactory.create(iClaim);
+      const claim = ClaimFactory.create(ClaimTypes.SD_REQUEST, iClaim);
       const history = HistoryFactory.create(works[1].histories[0]);
 
       expect(claim.lastHistory).toEqual(history);
@@ -43,14 +44,14 @@ describe('Claim', () => {
     it('should return true if any work has any history', () => {
       works = [new IWorkBuilder().build(), new IWorkBuilder().build()];
       iClaim = new IClaimBuilder().works(works).build();
-      claim = ClaimFactory.create(iClaim);
+      claim = ClaimFactory.create(ClaimTypes.SD_REQUEST, iClaim);
 
       expect(claim.isAnyWorkAction()).toBeTrue();
     });
 
     it('should return false if no one history found', () => {
       iClaim = new IClaimBuilder().works([]).build();
-      claim = ClaimFactory.create(iClaim);
+      claim = ClaimFactory.create(ClaimTypes.SD_REQUEST, iClaim);
 
       expect(claim.isAnyWorkAction()).toBeFalse();
     });

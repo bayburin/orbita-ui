@@ -6,6 +6,7 @@ import { ClaimsTableComponent } from './claims-table.component';
 import { Claim } from '@modules/claim/models/claim/claim.model';
 import { ClaimFactory } from '@modules/claim/factories/claim/claim.factory';
 import { IClaimBuilder } from '@modules/claim/builders/i-claim.builder';
+import { ClaimTypes } from '@modules/claim/enums/claim-types.enum';
 
 describe('ClaimsTableComponent', () => {
   let component: ClaimsTableComponent;
@@ -24,7 +25,7 @@ describe('ClaimsTableComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ClaimsTableComponent);
     component = fixture.componentInstance;
-    claims = [ClaimFactory.create(new IClaimBuilder().build())];
+    claims = [ClaimFactory.create(ClaimTypes.SD_REQUEST, new IClaimBuilder().build())];
     component.dataSource = new MatTableDataSource(claims);
     selected = claims[0];
 

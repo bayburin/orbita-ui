@@ -10,6 +10,7 @@ import { CLAIM_FEATURE_KEY, State } from '@modules/claim/store/reducers/claim.re
 import { ClaimFacade } from '@modules/claim/facades/claim.facade';
 import { ClaimFactory } from '@modules/claim/factories/claim/claim.factory';
 import { IClaimBuilder } from '@modules/claim/builders/i-claim.builder';
+import { ClaimTypes } from '../enums/claim-types.enum';
 
 describe('ClaimFacade', () => {
   let actions$: Observable<Action>;
@@ -45,7 +46,7 @@ describe('ClaimFacade', () => {
       store.overrideSelector(ClaimSelectors.getAll, selectResult);
 
       facade.claims$.subscribe(result => {
-        expect(result).toEqual(selectResult.map(el => ClaimFactory.create(el)));
+        expect(result).toEqual(selectResult.map(el => ClaimFactory.create(ClaimTypes.SD_REQUEST, el)));
       });
     });
 
@@ -55,7 +56,7 @@ describe('ClaimFacade', () => {
       store.overrideSelector(ClaimSelectors.getEntity, selectResult);
 
       facade.claim$.subscribe(result => {
-        expect(result).toEqual(ClaimFactory.create(selectResult));
+        expect(result).toEqual(ClaimFactory.create(ClaimTypes.SD_REQUEST, selectResult));
       });
     });
   });

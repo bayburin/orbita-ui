@@ -1,5 +1,6 @@
 import { IClaimBuilder } from '@modules/claim/builders/i-claim.builder';
 import { ISdRequest } from '@modules/sd-request/interfaces/sd-request.interface';
+import { IWork } from '@modules/claim/interfaces/work.interface';
 
 export class ISdRequestBuilder extends IClaimBuilder {
   protected claim: ISdRequest;
@@ -18,32 +19,38 @@ export class ISdRequestBuilder extends IClaimBuilder {
     return this.claim;
   }
 
-  service_id(serviceId: number): IClaimBuilder {
+  service_id(serviceId: number): ISdRequestBuilder {
     this.claim.service_id = serviceId;
 
     return this;
   }
 
-  claim_template_id(claimTemplateId: number): IClaimBuilder {
+  claim_template_id(claimTemplateId: number): ISdRequestBuilder {
     this.claim.claim_template_id = claimTemplateId;
 
     return this;
   }
 
-  service_name(serviceName: string): IClaimBuilder {
+  service_name(serviceName: string): ISdRequestBuilder {
     this.claim.service_name = serviceName;
 
     return this;
   }
 
-  claim_template_name(claimTemplateName: string): IClaimBuilder {
+  claim_template_name(claimTemplateName: string): ISdRequestBuilder {
     this.claim.claim_template_name = claimTemplateName;
 
     return this;
   }
 
-  rating(rating: number): IClaimBuilder {
+  rating(rating: number): ISdRequestBuilder {
     this.claim.rating = rating;
+
+    return this;
+  }
+
+  works(works: IWork[]): ISdRequestBuilder {
+    this.claim.works = works;
 
     return this;
   }

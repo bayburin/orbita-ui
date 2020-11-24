@@ -1,3 +1,4 @@
+import { ClaimTypes } from '@modules/claim/enums/claim-types.enum';
 import { History } from '@modules/claim/models/history/history.model';
 import { ClaimStatuses } from '@modules/claim/enums/claim-statuses.enum';
 import { ClaimPriorities } from '@modules/claim/enums/claim-priorities.enum';
@@ -18,6 +19,7 @@ export class Claim {
   rating: number;
   works: Work[] = [];
   runtime: Runtime;
+  readonly type: ClaimTypes;
 
   /**
    * Возвращает самый последний объект истории из всех включенных работ.
