@@ -13,7 +13,7 @@ export class WorkFactory {
     if (attrs.histories) {
       work.histories = attrs.histories.map(hist => HistoryFactory.create(hist));
     }
-    if (attrs.workers) {
+    if (attrs.workers && users.length) {
       work.workers = attrs.workers.map(worker => users.find(u => u.id === worker.user_id));
     }
 

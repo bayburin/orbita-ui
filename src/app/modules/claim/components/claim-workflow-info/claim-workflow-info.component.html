@@ -26,7 +26,7 @@
       </div>
 
       <div class="history-block">
-        <h3 class="mt-2">СОБЫТИЯ ОТСУТСТВУЮТ</h3>
+        <h3 class="mt-2" *ngIf="!work.histories.length">Зафиксированных действий нет</h3>
         <div *ngFor="let history of work.histories; let index = index" class="history-card-container">
 
           <mat-card class="history-card" matRipple>

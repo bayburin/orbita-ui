@@ -7,7 +7,7 @@ export class ClaimFactory {
   /**
    * Создает объект заявки.
    */
-  static create(type: ClaimTypes, attrs: IClaim = { } as IClaim): ClaimModel {
-    return ClaimInitializer.for(type).create(attrs);
+  static create(type: ClaimTypes, attrs: IClaim = { } as IClaim, optional: any = {}): ClaimModel {
+    return ClaimInitializer.for(type).create(attrs, optional);
   }
 }
