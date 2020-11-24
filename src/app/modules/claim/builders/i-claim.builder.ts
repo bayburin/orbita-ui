@@ -6,7 +6,7 @@ import { IRuntime } from '@modules/claim/interfaces/runtime.interface';
 import { IWork } from '@modules/claim/interfaces/work.interface';
 
 export class IClaimBuilder {
-  private claim: IClaim;
+  protected claim: IClaim;
 
   constructor() {
     this.claim = {
