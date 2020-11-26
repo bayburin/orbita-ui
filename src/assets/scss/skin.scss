@@ -59,3 +59,9 @@ a {
 
 body { background-color: $default-background-color; }
 main { padding: $spacer; }
+
+.horizontal-list {
+  display: flex;
+  flex-direction: row;
+  gap: $spacer;
+}

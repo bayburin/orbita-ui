@@ -1,4 +1,4 @@
 export enum ClaimTypes {
-  SD_REQUEST = 'Application',
+  SD_REQUEST = 'SdRequest',
   CASE = 'Case'
 }

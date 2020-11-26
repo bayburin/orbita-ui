@@ -15,6 +15,7 @@ import { ClaimsTableComponent } from './components/claims-table/claims-table.com
 import { ClaimWorkflowInfoComponent } from './components/claim-workflow-info/claim-workflow-info.component';
 import { ClaimPageComponent } from './pages/claim-page/claim-page.component';
 import { ClaimEditBlockComponent } from './containers/claim-edit-block/claim-edit-block.component';
+import { FiltersComponent } from './components/filters/filters.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ClaimEditBlockComponent } from './containers/claim-edit-block/claim-edi
     ClaimsTableComponent,
     ClaimWorkflowInfoComponent,
     ClaimPageComponent,
-    ClaimEditBlockComponent
+    ClaimEditBlockComponent,
+    FiltersComponent
   ],
   imports: [
     SharedModule,

@@ -31,6 +31,20 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
+//
+// Form Controls
+//
+
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
 const modules: any[] = [
   MatToolbarModule,
   MatIconModule,
@@ -44,7 +58,16 @@ const modules: any[] = [
   MatSortModule,
   MatPaginatorModule,
   MatTooltipModule,
-  MatRippleModule
+  MatRippleModule,
+  MatAutocompleteModule,
+  MatCheckboxModule,
+  MatDatepickerModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatRadioModule,
+  MatSelectModule,
+  MatSliderModule,
+  MatSlideToggleModule
 ];
 
 @NgModule({

@@ -1,8 +1,5 @@
 <mat-card>
-  <mat-card-header>
-    <mat-card-title>Заявки</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <app-claims-table [dataSource]="dataSource" (onselect)="onSelect($event)"></app-claims-table>
-  </mat-card-content>
+  <app-filters class="d-block mb-4"></app-filters>
+  <app-claims-table [dataSource]="dataSource" (onselect)="onSelect($event)"></app-claims-table>
+  <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
 </mat-card>
