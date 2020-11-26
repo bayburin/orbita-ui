@@ -12,14 +12,14 @@
             <span>Событие {{ work.histories.length }}</span>
             <mat-icon
               class="mat-18px"
-              [svgIcon]="eventTypeNames[work.lastHistory.eventType.name]?.icon"
-              [matTooltip]="work.lastHistory.eventType.description"></mat-icon>
+              [svgIcon]="eventTypeNames[work.lastHistory?.eventType?.name]?.icon"
+              [matTooltip]="work.lastHistory?.eventType?.description"></mat-icon>
           </div>
           <div class="history-card-content">
-            <b>Байбурин Равиль:</b> {{ work.lastHistory.action }}
+            <b>Байбурин Равиль:</b> {{ work.lastHistory?.action }}
           </div>
           <div class="history-card-additional-info">
-            <span>{{ work.lastHistory.createdAt | datetime }}</span>
+            <span>{{ work.lastHistory?.createdAt | datetime }}</span>
             <span *ngIf="claim.lastHistory === work.lastHistory" class="text-success">Последнее событие</span>
           </div>
         </mat-card>

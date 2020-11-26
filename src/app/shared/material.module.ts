@@ -22,6 +22,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
+import { MatStepperModule } from '@angular/material/stepper';
 
 //
 // Data Table
@@ -67,7 +68,8 @@ const modules: any[] = [
   MatRadioModule,
   MatSelectModule,
   MatSliderModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
+  MatStepperModule
 ];
 
 @NgModule({

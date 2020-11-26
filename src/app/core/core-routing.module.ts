@@ -22,6 +22,10 @@ const routes: Routes = [
       {
         path: 'claims',
         loadChildren: () => import('../modules/claim/claim.module').then(m => m.ClaimModule)
+      },
+      {
+        path: 'sd-requests',
+        loadChildren: () => import('../modules/sd-request/sd-request.module').then(m => m.SdRequestModule)
       }
     ]
   }

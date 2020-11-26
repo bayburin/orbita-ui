@@ -13,5 +13,5 @@ export class ClaimWorkflowInfoComponent {
   eventTypeNames = eventTypeNamesMap;
   @Input() claim: Claim;
 
-  constructor() { }
+  constructor() {}
 }
