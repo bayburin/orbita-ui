@@ -48,6 +48,42 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     //   );
     // }
 
+    const employees = [
+      {
+        lastName: "БАЙБУРИН",
+        firstName: "РАВИЛЬ",
+        middleName: "ФАИЛЬЕВИЧ",
+        positionId: 6131,
+        id: 12880,
+        dateOfBirth: "1992-04-18",
+        sex: "М",
+        fullName: "Байбурин Равиль Фаильевич",
+        personnelNo: 17664,
+        departmentId: 10134,
+        departmentForAccounting: 714,
+        departmentForDocuments: "714",
+        deptForDocs: "714",
+        professionCode: 228242,
+        professionForAccounting: "ИНЖЕНЕР-ПРОГРАММИСТ 2 КАТЕГОРИИ",
+        professionForDocuments: "ИНЖЕНЕР-ПРОГРАММИСТ 2 КАТЕГОРИИ",
+        inVacation: false,
+        employeeStatusId: 0,
+        employeeStatus: "Основной",
+        struct: "7141",
+        computerName: ".........",
+        phone:["84-29"],
+        mobilePhone:[],
+        email:["bayburin@iss-reshetnev.ru"],
+        phoneText: "84-29",
+        emailText: "bayburin@iss-reshetnev.ru",
+        position: "3а-321а"
+      }
+    ];
+
+    if (req.url.endsWith('employees') && req.method === 'GET') {
+      return of(new HttpResponse({ body: employees, status: 200 }));
+    }
+
     return next.handle(req).pipe(
     //   materialize(),
     //   delay(1500),

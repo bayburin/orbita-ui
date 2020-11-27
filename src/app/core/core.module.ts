@@ -12,6 +12,7 @@ import { AuthCenterModule } from '@iss/ng-auth-center';
 import { CoreRoutingModule } from './core-routing.module';
 import { Usermodule } from '@modules/user/user.module';
 import { SdRequestModule } from '@modules/sd-request/sd-request.module';
+import { EmployeeModule } from '@modules/employee/employee.module';
 
 import { HeaderComponent } from './components/header/header.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
@@ -34,14 +35,15 @@ import { JsonInterceptor } from './interceptors/json/json.interceptor';
     environment.production ? [] : StoreDevtoolsModule.instrument({ maxAge: 25 }),
     AuthCenterModule.forRoot(environment.auth),
     Usermodule,
-    SdRequestModule
+    SdRequestModule,
+    EmployeeModule
   ],
   exports: [
     HeaderComponent,
     SidenavComponent
   ],
   providers: [
-    // { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JsonInterceptor, multi: true }
   ]
 })
