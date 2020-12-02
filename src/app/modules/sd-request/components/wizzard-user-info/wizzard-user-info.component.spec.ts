@@ -6,15 +6,15 @@ import { of, throwError } from 'rxjs';
 
 import { MaterialModule } from '@shared/material.module';
 import { WizzardUserInfoComponent, EmployeeGroup } from './wizzard-user-info.component';
-import { EmployeeService } from '@modules/employee/services/employee/employee.service';
-import { EmployeeServiceStub } from '@modules/employee/services/employee/employee.service.stub';
 import { IBaseEmployeeBuilder } from '@modules/employee/builders/i-base-employee.builder';
 import { IBaseEmployee } from '@modules/employee/interfaces/employee.interface';
+import { EmployeeFacade } from '@modules/employee/facades/employee.facade';
+import { EmployeeFacadeStub } from '@modules/employee/facades/employee.facade.stub';
 
 describe('WizzardUserInfoComponent', () => {
   let component: WizzardUserInfoComponent;
   let fixture: ComponentFixture<WizzardUserInfoComponent>;
-  let employeeService: EmployeeService;
+  let employeeFacade: EmployeeFacade;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -24,7 +24,7 @@ describe('WizzardUserInfoComponent', () => {
         ReactiveFormsModule
       ],
       declarations: [WizzardUserInfoComponent],
-      providers: [{ provide: EmployeeService, useClass: EmployeeServiceStub }],
+      providers: [{ provide: EmployeeFacade, useClass: EmployeeFacadeStub }],
       schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
@@ -33,7 +33,7 @@ describe('WizzardUserInfoComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(WizzardUserInfoComponent);
     component = fixture.componentInstance;
-    employeeService = TestBed.inject(EmployeeService);
+    employeeFacade = TestBed.inject(EmployeeFacade);
     const formBuilder = TestBed.inject(FormBuilder);
     component.sourceSnapshotForm = formBuilder.group({
       id_tn: [''],
@@ -73,7 +73,7 @@ describe('WizzardUserInfoComponent', () => {
           dept: employee.departmentForAccounting,
           employees: [employee]
         };
-        spyOn(employeeService, 'getEmployees').and.returnValue(of([employee]));
+        spyOn(employeeFacade, 'loadEmployees').and.returnValue(of([employee]));
 
         component.employeeGroups$.subscribe(result => {
           expect(result).toEqual([resultGroup]);
@@ -83,9 +83,9 @@ describe('WizzardUserInfoComponent', () => {
         component.searchEmployee.setValue('test');
       });
 
-      describe('when UserService raise error', () => {
+      describe('when EmployeeFacade raise error', () => {
         beforeEach(() => {
-          spyOn(employeeService, 'getEmployees').and.callFake(() => throwError(new Error('Server Error')));
+          spyOn(employeeFacade, 'loadEmployees').and.callFake(() => throwError(new Error('Server Error')));
         });
 
         it('should return empty arrray', (done) => {

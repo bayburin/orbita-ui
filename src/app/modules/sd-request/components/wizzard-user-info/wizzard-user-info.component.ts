@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { mergeMap, map, startWith, debounceTime, filter, catchError } from 'rxjs/operators';
 
 import { DynamicErrorStateMatcher } from '@shared/material/dynamic-error-state-matcher';
-import { EmployeeService } from '@modules/employee/services/employee/employee.service';
+import { EmployeeFacade } from '@modules/employee/facades/employee.facade';
 import { IBaseEmployee } from '@modules/employee/interfaces/employee.interface';
 import { gendersMap } from '@modules/employee/enums/gender.enum';
 import { Genders } from '@modules/employee/enums/gender.enum';
@@ -64,7 +64,7 @@ export class WizzardUserInfoComponent implements OnInit {
     return this.selectedEmployee.sex;
   }
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(private employeeFacade: EmployeeFacade) { }
 
   ngOnInit(): void {
     this.searchEmployee = new FormControl();
@@ -122,7 +122,7 @@ export class WizzardUserInfoComponent implements OnInit {
       filter(term => this.isNumber(term) ? true : term && term.length >= 2),
       debounceTime(300),
       mergeMap(term => {
-        return this.employeeService.getEmployees(this.isNumber(term) ? 'personnelNo' : 'fullName', term)
+        return this.employeeFacade.loadEmployees(term)
           .pipe(catchError(error => {
             // TODO: Добавить вывод ошибки через всплывающее окно.
             this.searchEmployee.setErrors({ serverError: true});
