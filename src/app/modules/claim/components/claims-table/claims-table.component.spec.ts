@@ -1,12 +1,17 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatTableDataSource } from '@angular/material/table';
+import { RouterTestingModule } from '@angular/router/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
+import { MaterialModule } from '@shared/material.module';
 import { ClaimsTableComponent } from './claims-table.component';
 import { Claim } from '@modules/claim/models/claim/claim.model';
 import { ClaimFactory } from '@modules/claim/factories/claim/claim.factory';
 import { IClaimBuilder } from '@modules/claim/builders/i-claim.builder';
 import { ClaimTypes } from '@modules/claim/enums/claim-types.enum';
+import { DatetimePipe } from '@shared/pipes/datetime/datetime.pipe';
 
 describe('ClaimsTableComponent', () => {
   let component: ClaimsTableComponent;
@@ -16,7 +21,13 @@ describe('ClaimsTableComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ClaimsTableComponent],
+      imports: [
+        RouterTestingModule,
+        MaterialModule,
+        HttpClientTestingModule,
+        NoopAnimationsModule
+      ],
+      declarations: [ClaimsTableComponent, DatetimePipe],
       schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();

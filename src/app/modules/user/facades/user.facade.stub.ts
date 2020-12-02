@@ -1,9 +1,10 @@
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { IUser } from '@modules/user/interfaces/user.interface';
+import { IUserBuilder } from '@modules/user/builders/i-user.builder';
 
-export class ClaimFacadeStub {
-  users$: Observable<IUser[]> = new Observable();
+export class UserFacadeStub {
+  users$: Observable<IUser[]> = new BehaviorSubject([new IUserBuilder().build()]);
 
   loadUsers(): void { }
 }

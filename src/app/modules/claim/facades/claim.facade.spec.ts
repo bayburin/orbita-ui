@@ -11,11 +11,14 @@ import { ClaimFacade } from '@modules/claim/facades/claim.facade';
 import { ClaimFactory } from '@modules/claim/factories/claim/claim.factory';
 import { IClaimBuilder } from '@modules/claim/builders/i-claim.builder';
 import { ClaimTypes } from '../enums/claim-types.enum';
+import { UserFacade } from '@modules/user/facades/user.facade';
+import { UserFacadeStub } from '@modules/user/facades/user.facade.stub';
 
 describe('ClaimFacade', () => {
   let actions$: Observable<Action>;
   let facade: ClaimFacade;
   let store: MockStore<State>;
+  let userFacade: UserFacade;
   const initialState = {
     [CLAIM_FEATURE_KEY]: {
       ids: [],
@@ -30,6 +33,7 @@ describe('ClaimFacade', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        { provide: UserFacade, useClass: UserFacadeStub },
         provideMockActions(() => actions$),
         provideMockStore({ initialState }),
       ]
@@ -37,6 +41,7 @@ describe('ClaimFacade', () => {
 
     store = TestBed.inject(MockStore);
     facade = TestBed.inject(ClaimFacade);
+    userFacade = TestBed.inject(UserFacade);
   });
 
   describe('#constructor', () => {
