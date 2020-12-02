@@ -13,8 +13,20 @@ export class EmployeeService {
 
   constructor(private http: HttpClient) { }
 
-  getEmployees(filter?: { fio: string; }): Observable<IBaseEmployee[]> {
-    const params = filter ? new HttpParams().set('fio', filter.fio) : {};
+  /**
+   * Получает список работников.
+   *
+   * @param key - имя фильтра
+   * @param value - начение фильтра
+   */
+  getEmployees(key?: string, value?: string): Observable<IBaseEmployee[]> {
+    let params = {};
+
+    if (key) {
+      params = new HttpParams()
+                 .set('key', key)
+                 .set('value', value);
+    }
 
     return this.http.get<IBaseEmployee[]>(this.api, { params });
   }

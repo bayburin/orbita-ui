@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
+
+import { IBaseEmployee } from '@modules/employee/interfaces/employee.interface';
+import { WizzardUserInfoComponent } from '@modules/sd-request/components/wizzard-user-info/wizzard-user-info.component';
 
 @Component({
   selector: 'app-wizzard',
@@ -7,18 +11,39 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./wizzard.component.scss']
 })
 export class WizzardComponent implements OnInit {
-  isLinear = false;
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
+  searchEmployee: FormControl;
+  sdRequestForm: FormGroup;
+  employees$: Observable<IBaseEmployee[]>;
+  @ViewChild(WizzardUserInfoComponent) userInfoComponent: WizzardUserInfoComponent;
 
-  constructor(private _formBuilder: FormBuilder) {}
+  get form() {
+    return this.sdRequestForm.controls;
+  }
 
-  ngOnInit() {
-    this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required]
+  get sourceSnapshotForm(): FormGroup {
+    return this.form.source_snapshot as FormGroup;
+  }
+
+  constructor(private formBuilder: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.sdRequestForm = this.formBuilder.group({
+      source_snapshot: this.formBuilder.group({
+        id_tn: [''],
+        tn: [''],
+        fio: [''],
+        dept: [''],
+        email: [''],
+        tel: [''],
+        mobile: ['']
+      })
     });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
+  }
+
+  /**
+   * Сохраняет форму
+   */
+  onSubmit(): void {
+    console.log(this.sdRequestForm.getRawValue());
   }
 }

@@ -1,0 +1,10 @@
+@import '~assets/scss/variables';
+
+.step-block {
+  display: block;
+  margin-top: 1.5 * $spacer;
+}
+
+.step-actions {
+  margin-top: $spacer;
+}

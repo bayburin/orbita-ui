@@ -1,0 +1,102 @@
+<div [formGroup]="sourceSnapshotForm" class="search-employee-step">
+  <div class="block">
+    <mat-form-field class=" d-block search-employee">
+      <mat-label>Поиск пользователя</mat-label>
+      <input matInput placeholder="ФИО или табельный номер" [formControl]="searchEmployee" [matAutocomplete]="autoEmployee"
+        [errorStateMatcher]="dynamicMatcher">
+      <mat-hint align="end">Для ФИО минимум 3 символа</mat-hint>
+      <mat-error *ngIf="searchEmployee.hasError('serverError')">Ошибка поиска. Введите данные вручную.</mat-error>
+      <button *ngIf="searchEmployee.value" mat-icon-button matSuffix (click)="clearEmployee()" [disabled]="isManually.value">
+        <mat-icon svgIcon="close"></mat-icon>
+      </button>
+      <mat-autocomplete #autoEmployee="matAutocomplete" [displayWith]="displayEmployeeFn" [autoActiveFirstOption]="true"
+        (optionSelected)="employeeSelected($event.option.value)">
+        <mat-optgroup *ngFor="let group of employeeGroups$ | async">
+          отдел {{ group.dept }}
+          <mat-option *ngFor="let employee of group.employees" [value]="employee">{{ employee.fullName }}</mat-option>
+        </mat-optgroup>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-slide-toggle [formControl]="isManually">Ввести данные о пользователе вручную</mat-slide-toggle>
+  </div>
+
+  <div class="block" fxLayout.lt-md="column">
+    <div *ngIf="isManually.value" class="input-block">
+      <mat-form-field>
+        <mat-label>Табельный номер</mat-label>
+        <input matInput placeholder="Табельный номер" formControlName="tn" required>
+        <mat-error>Не может быть пустым</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>ФИО</mat-label>
+        <input matInput placeholder="ФИО" formControlName="fio" required>
+        <mat-error>Не может быть пустым</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Подразделение</mat-label>
+        <input matInput placeholder="Подразделение" formControlName="dept" required>
+        <mat-error>Не может быть пустым</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="input-block">
+      <mat-form-field>
+        <mat-label>Электронная почта</mat-label>
+        <input matInput placeholder="Электронная почта" formControlName="email">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Рабочий телефон</mat-label>
+        <input matInput placeholder="Рабочий телефон" formControlName="tel">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Сотовый телефон</mat-label>
+        <input type="tel" matInput placeholder="555-555-1234" formControlName="mobile">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <ng-container *ngIf="searchEmployee.value && tn">
+    <mat-divider class="block position-static"></mat-divider>
+    <div class="block employee-card-wrapper">
+      <mat-card class="employee-card mat-elevation-z2" matRipple>
+        <mat-card-header>
+          <img mat-card-avatar [src]="genders[gender]?.image">
+          <mat-card-title>{{ fio }}</mat-card-title>
+          <mat-card-subtitle>{{ profession | lowercase }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="employee-card-content">
+            <div class="column">
+              <table class="content-table">
+                <tr>
+                  <td class="header" width="25%">таб. №</td>
+                  <td>{{ tn }}</td>
+                </tr>
+                <tr>
+                  <td class="header">отдел</td>
+                  <td>{{ dept }}</td>
+                </tr>
+              </table>
+            </div>
+            <div class="column">
+              <table class="content-table">
+                <tr>
+                  <td class="header" width="25%">email</td>
+                  <td>{{ email }}</td>
+                </tr>
+                <tr>
+                  <td class="header">тел.</td>
+                  <td>{{ tel }}</td>
+                </tr>
+                <tr>
+                  <td class="header">сот.</td>
+                  <td>{{ mobile }}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </ng-container>
+</div>

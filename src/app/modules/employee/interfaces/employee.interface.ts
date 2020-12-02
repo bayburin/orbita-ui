@@ -1,4 +1,4 @@
-export type gender = 'М' | 'Ж';
+import { Genders } from '@modules/employee/enums/gender.enum';
 
 export interface IBaseEmployee {
   lastName: string;
@@ -6,7 +6,7 @@ export interface IBaseEmployee {
   middleName: string;
   id: number;
   dateOfBirth: string;
-  sex: gender;
+  sex: Genders;
   fullName: string;
   personnelNo: number;
   departmentForAccounting: number;

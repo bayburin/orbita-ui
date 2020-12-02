@@ -5,7 +5,7 @@ import { environment } from '@env/environment';
 import { EmployeeService } from './employee.service';
 import { IBaseEmployee } from '@modules/employee/interfaces/employee.interface';
 
-fdescribe('EmployeeService', () => {
+describe('EmployeeService', () => {
   let service: EmployeeService;
   let httpMock: HttpTestingController;
 

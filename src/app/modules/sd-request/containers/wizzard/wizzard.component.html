@@ -3,12 +3,13 @@
     <mat-card-title>Мастер создания заявки</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <form [formGroup]="firstFormGroup">
-      <mat-horizontal-stepper [linear]="isLinear" #stepper>
+    <form [formGroup]="sdRequestForm" (ngSubmit)="onSubmit()">
+      <mat-horizontal-stepper #stepper>
         <mat-step label="Данные о пользователе">
-          Данные о пользователе
-          <div>
+          <app-wizzard-user-info class="step-block" [sourceSnapshotForm]="sourceSnapshotForm"></app-wizzard-user-info>
+          <div class="step-actions">
             <button mat-raised-button matStepperNext>Далее</button>
+            <button type="submit" mat-raised-button>Сохранить</button>
           </div>
         </mat-step>
         <mat-step label="Описание проблемы">
