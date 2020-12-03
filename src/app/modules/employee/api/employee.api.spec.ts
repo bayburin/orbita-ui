@@ -2,11 +2,11 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { environment } from '@env/environment';
-import { UserService } from './user.service';
-import { IUserBuilder } from '@modules/user/builders/i-user.builder';
+import { EmployeeApi } from './employee.api';
+import { IBaseEmployee } from '@modules/employee/interfaces/employee.interface';
 
-describe('UserService', () => {
-  let service: UserService;
+describe('EmployeeApi', () => {
+  let service: EmployeeApi;
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
@@ -14,7 +14,7 @@ describe('UserService', () => {
       imports: [HttpClientTestingModule]
     });
 
-    service = TestBed.inject(UserService);
+    service = TestBed.inject(EmployeeApi);
     httpMock = TestBed.inject(HttpTestingController);
   });
 
@@ -26,19 +26,19 @@ describe('UserService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('#getUsers', () => {
-    const claims = [new IUserBuilder().id(1).build(), new IUserBuilder().id(2).build()];
-    const api = `${environment.serverApi}/v1/users`;
+  describe('#getEmployees', () => {
+    const employees = [{ id: 1 } as IBaseEmployee, { id: 2 } as IBaseEmployee];
+    const api = `${environment.serverApi}/v1/employees`;
 
-    it('should return Observable with array of users', () => {
-      service.getUsers().subscribe(result => {
-        expect(result).toEqual(claims);
+    it('should return Observable with array of claims', () => {
+      service.getEmployees().subscribe(result => {
+        expect(result).toEqual(employees);
       });
 
       httpMock.expectOne({
         method: 'GET',
         url: api
-      }).flush(claims);
+      }).flush(employees);
     });
   });
 });

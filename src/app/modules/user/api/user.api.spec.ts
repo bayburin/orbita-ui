@@ -2,11 +2,11 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { environment } from '@env/environment';
-import { ClaimService } from './claim.service';
-import { IClaimBuilder } from '@modules/claim/builders/i-claim.builder';
+import { UserApi } from './user.api';
+import { IUserBuilder } from '@modules/user/builders/i-user.builder';
 
-describe('ClaimService', () => {
-  let service: ClaimService;
+describe('UserApi', () => {
+  let service: UserApi;
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
@@ -14,7 +14,7 @@ describe('ClaimService', () => {
       imports: [HttpClientTestingModule]
     });
 
-    service = TestBed.inject(ClaimService);
+    service = TestBed.inject(UserApi);
     httpMock = TestBed.inject(HttpTestingController);
   });
 
@@ -26,12 +26,12 @@ describe('ClaimService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('#getClaims', () => {
-    const claims = [new IClaimBuilder().id(1).build(), new IClaimBuilder().id(2).build()];
-    const api = `${environment.serverApi}/v1/claims`;
+  describe('#getUsers', () => {
+    const claims = [new IUserBuilder().id(1).build(), new IUserBuilder().id(2).build()];
+    const api = `${environment.serverApi}/v1/users`;
 
-    it('should return Observable with array of claims', () => {
-      service.getClaims().subscribe(result => {
+    it('should return Observable with array of users', () => {
+      service.getUsers().subscribe(result => {
         expect(result).toEqual(claims);
       });
 

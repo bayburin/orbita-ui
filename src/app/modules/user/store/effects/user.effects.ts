@@ -4,7 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { mergeMap, catchError, map, withLatestFrom, filter, tap } from 'rxjs/operators';
 
-import { UserService } from '@modules/user/services/user.service';
+import { UserApi } from '@modules/user/services/user.api';
 import { State } from '@modules/user/store/reducers/user.reducer';
 import * as UserActions from '@modules/user/store/actions/user.actions';
 import * as UserSelectors from '@modules/user/store/selectors/user.selectors';
@@ -13,7 +13,7 @@ import * as UserSelectors from '@modules/user/store/selectors/user.selectors';
 export class UserEffects {
   constructor(
     private actions$: Actions,
-    private userService: UserService,
+    private userService: UserApi,
     private store: Store<State>
   ) { }
 

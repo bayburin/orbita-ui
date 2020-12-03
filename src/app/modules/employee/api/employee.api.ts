@@ -8,7 +8,7 @@ import { IBaseEmployee } from '@modules/employee/interfaces/employee.interface';
 @Injectable({
   providedIn: 'root'
 })
-export class EmployeeService {
+export class EmployeeApi {
   readonly api = `${environment.serverApi}/v1/employees`;
 
   constructor(private http: HttpClient) { }

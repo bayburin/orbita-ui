@@ -2,11 +2,11 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { environment } from '@env/environment';
-import { EmployeeService } from './employee.service';
-import { IBaseEmployee } from '@modules/employee/interfaces/employee.interface';
+import { ClaimApi } from './claim.api';
+import { IClaimBuilder } from '@modules/claim/builders/i-claim.builder';
 
-describe('EmployeeService', () => {
-  let service: EmployeeService;
+describe('ClaimApi', () => {
+  let service: ClaimApi;
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
@@ -14,7 +14,7 @@ describe('EmployeeService', () => {
       imports: [HttpClientTestingModule]
     });
 
-    service = TestBed.inject(EmployeeService);
+    service = TestBed.inject(ClaimApi);
     httpMock = TestBed.inject(HttpTestingController);
   });
 
@@ -26,19 +26,19 @@ describe('EmployeeService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('#getEmployees', () => {
-    const employees = [{ id: 1 } as IBaseEmployee, { id: 2 } as IBaseEmployee];
-    const api = `${environment.serverApi}/v1/employees`;
+  describe('#getClaims', () => {
+    const claims = [new IClaimBuilder().id(1).build(), new IClaimBuilder().id(2).build()];
+    const api = `${environment.serverApi}/v1/claims`;
 
     it('should return Observable with array of claims', () => {
-      service.getEmployees().subscribe(result => {
-        expect(result).toEqual(employees);
+      service.getClaims().subscribe(result => {
+        expect(result).toEqual(claims);
       });
 
       httpMock.expectOne({
         method: 'GET',
         url: api
-      }).flush(employees);
+      }).flush(claims);
     });
   });
 });

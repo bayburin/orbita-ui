@@ -8,7 +8,7 @@ import { IClaim } from '@modules/claim/interfaces/claim.interface';
 @Injectable({
   providedIn: 'root'
 })
-export class ClaimService {
+export class ClaimApi {
   readonly api = `${environment.serverApi}/v1/claims`;
 
   constructor(private http: HttpClient) {}

@@ -8,7 +8,7 @@ import { IUser } from '@modules/user/interfaces/user.interface';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserApi {
   readonly api = `${environment.serverApi}/v1/users`;
 
   constructor(private http: HttpClient) { }
