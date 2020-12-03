@@ -1,0 +1,20 @@
+@import '~assets/scss/variables';
+
+.description-problem-step {
+  display: flex;
+  flex-direction: column;
+
+  & > .block {
+    width: 100%;
+  }
+
+  .block + .block {
+    margin-top: 2 * $spacer;
+  }
+}
+
+.search-service,
+.description {
+  width: 100%;
+  max-width: 600px;
+}

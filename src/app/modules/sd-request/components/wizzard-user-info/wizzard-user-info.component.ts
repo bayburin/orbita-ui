@@ -80,7 +80,7 @@ export class WizzardUserInfoComponent implements OnInit {
   }
 
   /**
-   * Событие выбора пользователя у компонента autocomplete
+   * Событие выбора работника у компонента autocomplete
    *
    * @param employee - выбранный работник
    */
@@ -97,7 +97,7 @@ export class WizzardUserInfoComponent implements OnInit {
   }
 
   /**
-   * Выводит для пользователя в строке option компонента autocomplete.
+   * Выводит ФИО работника в строке option компонента autocomplete.
    *
    * @param employee - работник из списка найденных
    */
@@ -106,15 +106,15 @@ export class WizzardUserInfoComponent implements OnInit {
   }
 
   /**
-   * Очищает поле поиска пользователя и поля формы, которая отправится на сервер.
+   * Очищает поле поиска работника и соответствующие поля формы, которая отправится на сервер.
    */
   clearEmployee(): void {
-    this.searchEmployee.setValue([]);
+    this.searchEmployee.setValue(null);
     this.employeeSelected({ } as IBaseEmployee);
   }
 
   /**
-   * Подписывается на поле поиска пользователя и возвращает массив, сгруппированный по отделам.
+   * Подписывается на поле поиска работника и возвращает массив, сгруппированный по отделам.
    */
   private createSearchEmployeeSubscription(): void {
     this.employeeGroups$ = this.searchEmployee.valueChanges.pipe(

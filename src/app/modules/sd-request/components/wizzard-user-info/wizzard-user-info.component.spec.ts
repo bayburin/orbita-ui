@@ -152,7 +152,7 @@ describe('WizzardUserInfoComponent', () => {
     });
 
     it('should set empty array to "searchEmployee" attribute', () => {
-      expect(component.searchEmployee.value).toEqual([]);
+      expect(component.searchEmployee.value).toEqual(null);
     });
 
     it('should call "employeeSelected" method with empty object', () => {

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { IBaseEmployee } from '@modules/employee/interfaces/employee.interface';
@@ -28,15 +28,20 @@ export class WizzardComponent implements OnInit {
 
   ngOnInit(): void {
     this.sdRequestForm = this.formBuilder.group({
+      service_id: [''],
+      service_name: [''],
+      attrs: this.formBuilder.group({
+        description: ['', Validators.required]
+      }),
       source_snapshot: this.formBuilder.group({
         id_tn: [''],
-        tn: [''],
-        fio: [''],
-        dept: [''],
+        tn: ['', Validators.required],
+        fio: ['', Validators.required],
+        dept: ['', Validators.required],
         email: [''],
         tel: [''],
         mobile: ['']
-      })
+      }),
     });
   }
 

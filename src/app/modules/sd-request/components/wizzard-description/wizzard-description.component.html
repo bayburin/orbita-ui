@@ -1,0 +1,24 @@
+<div [formGroup]="sdRequestForm" class="description-problem-step">
+  <div class="block">
+    <mat-form-field class="d-block search-service">
+      <mat-label>Выбор услуги</mat-label>
+      <input matInput placeholder="Название услуги" [formControl]="searchService" [matAutocomplete]="autoService"
+        [errorStateMatcher]="dynamicMatcher">
+      <mat-error *ngIf="searchService.hasError('serverError')">Ошибка поиска. Введите данные вручную.</mat-error>
+      <button *ngIf="searchService.value" mat-icon-button matSuffix (click)="clearService()" [disabled]="isNoService.value">
+        <mat-icon svgIcon="close"></mat-icon>
+      </button>
+      <mat-autocomplete #autoService="matAutocomplete" [displayWith]="displayServiceFn" [autoActiveFirstOption]="true"
+        (optionSelected)="serviceSelected($event.option.value)">
+        <mat-option *ngFor="let service of services$ | async" [value]="service">{{ service.name }}</mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-slide-toggle [formControl]="isNoService">Обращение работника не связано с перечисленными услугами</mat-slide-toggle>
+  </div>
+  <div class="block" formGroupName="attrs">
+    <mat-form-field class="description">
+      <mat-label>Описание проблемы</mat-label>
+      <textarea matInput name="description" rows="5" placeholder="Что случилось у пользователя" formControlName="description"></textarea>
+    </mat-form-field>
+  </div>
+</div>
