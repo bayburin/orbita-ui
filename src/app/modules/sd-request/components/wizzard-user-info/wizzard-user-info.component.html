@@ -10,7 +10,7 @@
         <mat-icon svgIcon="close"></mat-icon>
       </button>
       <mat-autocomplete #autoEmployee="matAutocomplete" [displayWith]="displayEmployeeFn" [autoActiveFirstOption]="true"
-        (optionSelected)="employeeSelected($event.option.value)">
+        (optionSelected)="selectEmployee($event.option.value)">
         <mat-optgroup *ngFor="let group of employeeGroups$ | async">
           отдел {{ group.dept }}
           <mat-option *ngFor="let employee of group.employees" [value]="employee">{{ employee.fullName }}</mat-option>

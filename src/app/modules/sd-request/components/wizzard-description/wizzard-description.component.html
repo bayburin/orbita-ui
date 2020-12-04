@@ -9,7 +9,7 @@
         <mat-icon svgIcon="close"></mat-icon>
       </button>
       <mat-autocomplete #autoService="matAutocomplete" [displayWith]="displayServiceFn" [autoActiveFirstOption]="true"
-        (optionSelected)="serviceSelected($event.option.value)">
+        (optionSelected)="selectService($event.option.value)">
         <mat-option *ngFor="let service of services$ | async" [value]="service">{{ service.name }}</mat-option>
       </mat-autocomplete>
     </mat-form-field>

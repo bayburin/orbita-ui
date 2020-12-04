@@ -1,11 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { DynamicErrorStateMatcher } from '@shared/material/dynamic-error-state-matcher';
-import { catchError, startWith, map, mergeMap, tap, filter } from 'rxjs/operators';
-import { ServiceDeskApi } from '@modules/sd-request/api/service-desk/service-desk.api';
 import { IService } from '@modules/sd-request/interfaces/service.interface';
+import { NewSdRequestFormService } from '@modules/sd-request/services/new-sd-request-form/new-sd-request-form.service';
 
 @Component({
   selector: 'app-wizzard-description',
@@ -17,22 +16,15 @@ export class WizzardDescriptionComponent implements OnInit {
   services$: Observable<IService[]>;
   isNoService: FormControl;
   dynamicMatcher = new DynamicErrorStateMatcher();
-  serviceList$: Observable<IService[]>;
+  avaliableServices$: Observable<IService[]>;
   @Input() sdRequestForm: FormGroup;
 
-  constructor(private sdApi: ServiceDeskApi) { }
+  constructor(private formService: NewSdRequestFormService) { }
 
   ngOnInit(): void {
-    this.searchService = new FormControl();
-    this.isNoService = new FormControl(false);
-    this.isNoService.valueChanges.subscribe(isManually => {
-      if (isManually) {
-        this.searchService.disable();
-      } else {
-        this.searchService.enable();
-      }
-    });
-    this.createSearchServiceSubscription();
+    this.searchService = this.formService.searchService;
+    this.isNoService = this.formService.isNoService;
+    this.services$ = this.formService.services$;
   }
 
   /**
@@ -40,11 +32,8 @@ export class WizzardDescriptionComponent implements OnInit {
    *
    * @param service - выбранный работник
    */
-  serviceSelected(service: IService): void {
-    this.sdRequestForm.patchValue({
-      service_id: service.id,
-      service_name: service.name
-    });
+  selectService(service: IService): void {
+    this.formService.service = service;
   }
 
   /**
@@ -57,36 +46,9 @@ export class WizzardDescriptionComponent implements OnInit {
   }
 
   /**
-   * Очищает поле поиска услуги и соответствующие поля формы, которая отправится на сервер.
+   * Очищает компонент autocomplete, указывающее выбранную услугу.
    */
   clearService(): void {
-    this.searchService.setValue(null);
-    this.serviceSelected({ } as IService);
-  }
-
-  /**
-   * Подписывается на поле поиска услуги и возвращает массив.
-   */
-  private createSearchServiceSubscription(): void {
-    this.serviceList$ = this.sdApi.getServices().pipe(catchError(error => {
-      // TODO: Добавить вывод ошибки через всплывающее окно.
-      this.searchService.setErrors({ serverError: true});
-
-      return of([]);
-    }));
-
-    this.services$ = this.searchService.valueChanges.pipe(
-      startWith(''),
-      filter(term => typeof term === 'string'),
-      mergeMap(term => {
-        return this.serviceList$.pipe(map(services => {
-          if (!term) {
-            return services;
-          }
-
-          return services.filter(service => service.name.toLowerCase().includes(term.toLowerCase()));
-        }));
-      })
-    );
+    this.formService.clearService();
   }
 }
