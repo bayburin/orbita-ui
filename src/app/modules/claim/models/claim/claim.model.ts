@@ -7,7 +7,7 @@ import { IClaim } from '@modules/claim/interfaces/claim.interface';
 import { Runtime } from '@modules/claim/models/runtime/runtime.model';
 import { IUser } from '@modules/user/interfaces/user.interface';
 
-export class Claim {
+export abstract class Claim {
   id: number;
   serviceId: number;
   appTemplateId: number;

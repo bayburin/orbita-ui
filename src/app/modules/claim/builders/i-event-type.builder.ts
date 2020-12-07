@@ -1,42 +1,49 @@
+import * as faker from 'faker';
+
+import { ModelBuilder } from '@shared/builders/model.builder';
 import { EventTypeNames } from '@modules/claim/enums/event-type-names.enum';
 import { IEventType } from '@modules/claim/interfaces/event-type.interface';
 
-export class IEventTypeBuilder {
-  eventType: IEventType;
-
+export class IEventTypeBuilder extends ModelBuilder<IEventType> {
   constructor() {
-    this.eventType = {
-      id: 1,
+    super();
+
+    this.model = {
+      id: null,
       name: EventTypeNames.WORKFLOW,
-      description: 'test',
-      icon: 'test-icon'
+      description: '',
+      icon: ''
     };
   }
 
-  build(): IEventType {
-    return this.eventType;
+  testBuild(): IEventType {
+    this.model.id = this.model.id || faker.random.number();
+    this.model.name = this.model.name || faker.random.word();
+    this.model.description = this.model.description || faker.random.word();
+
+    return this.model;
   }
 
   id(id: number): IEventTypeBuilder {
-    this.eventType.id = id;
+    this.model.id = id;
 
     return this;
   }
 
   name(name: EventTypeNames): IEventTypeBuilder {
-    this.eventType.name = name;
+    this.model.name = name;
 
     return this;
   }
 
   description(description: string): IEventTypeBuilder {
-    this.eventType.description = description;
+    this.model.description = description;
 
     return this;
   }
 
   icon(icon: string): IEventTypeBuilder {
-    this.eventType.icon = icon;
+    this.model.icon = icon;
 
     return this;
   }

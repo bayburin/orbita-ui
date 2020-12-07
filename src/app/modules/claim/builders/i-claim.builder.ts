@@ -1,22 +1,21 @@
+import { ClaimInterface } from '@modules/claim/types/claim.types';
+import { ModelBuilder } from '@shared/builders/model.builder';
 import { ClaimStatuses } from '@modules/claim/enums/claim-statuses.enum';
 import { ClaimPriorities } from '@modules/claim/enums/claim-priorities.enum';
-import { IClaim } from '@modules/claim/interfaces/claim.interface';
 import { IRuntimeBuilder } from './i-runtime.builder';
-import { IRuntime } from '@modules/claim/interfaces/runtime.interface';
-import { IWork } from '@modules/claim/interfaces/work.interface';
-import { ClaimTypes } from '../enums/claim-types.enum';
+import { IWorkBuilder } from '@modules/claim/builders/i-work.builder';
 
-export class IClaimBuilder {
-  protected claim: IClaim;
-
+export abstract class IClaimBuilder<T extends ClaimInterface> extends ModelBuilder<T> {
   constructor() {
-    this.claim = {
-      id: 1,
-      type: ClaimTypes.SD_REQUEST,
-      service_id: 1,
-      app_template_id: 1,
-      service_name: 'Service Name',
-      app_template_name: 'Claim Template Name',
+    super();
+
+    this.model = {
+      id: null,
+      type: null,
+      service_id: null,
+      app_template_id: null,
+      service_name: '',
+      app_template_name: '',
       status: ClaimStatuses.OPENED,
       priority: ClaimPriorities.DEFAULT,
       claim_user: { },
@@ -24,82 +23,14 @@ export class IClaimBuilder {
       attrs: { },
       rating: null,
       works: []
-    };
+    } as T;
   }
 
-  build(): IClaim {
-    return this.claim;
-  }
+  testBuild(): T {
+    this.model.id = this.model.id || 1;
+    this.model.works = this.model.works.length > 0 ? this.model.works : [new IWorkBuilder().testBuild()];
+    this.model.runtime = this.model.runtime.created_at ? this.model.runtime : new IRuntimeBuilder().testBuild();
 
-  id(id: number): IClaimBuilder {
-    this.claim.id = id;
-
-    return this;
-  }
-
-  service_id(serviceId: number): IClaimBuilder {
-    this.claim.service_id = serviceId;
-
-    return this;
-  }
-
-  app_template_id(appTemplateId: number): IClaimBuilder {
-    this.claim.app_template_id = appTemplateId;
-
-    return this;
-  }
-
-  service_name(serviceName: string): IClaimBuilder {
-    this.claim.service_name = serviceName;
-
-    return this;
-  }
-
-  app_template_name(appTemplateName: string): IClaimBuilder {
-    this.claim.app_template_name = appTemplateName;
-
-    return this;
-  }
-
-  status(status: ClaimStatuses): IClaimBuilder {
-    this.claim.status = status;
-
-    return this;
-  }
-
-  priority(priority: ClaimPriorities): IClaimBuilder {
-    this.claim.priority = priority;
-
-    return this;
-  }
-
-  claim_user(claimUser: any): IClaimBuilder {
-    this.claim.claim_user = claimUser;
-
-    return this;
-  }
-
-  runtime(runtime: IRuntime): IClaimBuilder {
-    this.claim.claim_user = runtime;
-
-    return this;
-  }
-
-  attrs(attrs: any): IClaimBuilder {
-    this.claim.attrs = attrs;
-
-    return this;
-  }
-
-  rating(rating: number): IClaimBuilder {
-    this.claim.rating = rating;
-
-    return this;
-  }
-
-  works(works: IWork[]): IClaimBuilder {
-    this.claim.works = works;
-
-    return this;
+    return this.model;
   }
 }

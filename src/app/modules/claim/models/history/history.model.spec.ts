@@ -6,7 +6,7 @@ describe('History', () => {
   let iHistory: IHistory;
 
   beforeEach(() => {
-    iHistory = new IHistoryBuilder().build();
+    iHistory = new IHistoryBuilder().testBuild();
   });
 
   describe('Constructor', () => {

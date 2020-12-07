@@ -4,7 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { mergeMap, catchError, map, withLatestFrom, filter, tap } from 'rxjs/operators';
 
-import { UserApi } from '@modules/user/services/user.api';
+import { UserApi } from '@modules/user/api/user.api';
 import { State } from '@modules/user/store/reducers/user.reducer';
 import * as UserActions from '@modules/user/store/actions/user.actions';
 import * as UserSelectors from '@modules/user/store/selectors/user.selectors';
@@ -13,7 +13,7 @@ import * as UserSelectors from '@modules/user/store/selectors/user.selectors';
 export class UserEffects {
   constructor(
     private actions$: Actions,
-    private userService: UserApi,
+    private userApi: UserApi,
     private store: Store<State>
   ) { }
 
@@ -22,7 +22,7 @@ export class UserEffects {
       ofType(UserActions.loadAll),
       withLatestFrom(this.store.select(UserSelectors.getIds)),
       filter(([action, users]) => users.length === 0),
-      mergeMap(() => this.userService.getUsers()
+      mergeMap(() => this.userApi.getUsers()
         .pipe(
           map(users => UserActions.loadAllSuccess({ users })),
           catchError(error => of(UserActions.loadAllFailure({ error })))

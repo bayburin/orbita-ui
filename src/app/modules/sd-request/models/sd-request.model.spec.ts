@@ -7,7 +7,7 @@ describe('SdRequest', () => {
 
   describe('Constructor', () => {
     beforeEach(() => {
-      attrs = new ISdRequestBuilder().build();
+      attrs = new ISdRequestBuilder().testBuild();
     });
 
     it('should create instance of SdRequest', () => {

@@ -92,7 +92,7 @@ describe('NewSdRequestFormService', () => {
 
   describe('"service" setter', () => {
     it('should set form attributes from selected service', () => {
-      const sdService: IService = new IServiceBuilder().build();
+      const sdService: IService = new IServiceBuilder().testBuild();
       service.service = sdService;
 
       service.sdRequestForm$.subscribe(form => {
@@ -122,7 +122,7 @@ describe('NewSdRequestFormService', () => {
 
   describe('"services$" getter', () => {
     it('should return list of services which includes term', fakeAsync(() => {
-      const services = [new IServiceBuilder().name('First').build(), new IServiceBuilder().name('Second').build()];
+      const services = [new IServiceBuilder().name('First').testBuild(), new IServiceBuilder().name('Second').testBuild()];
       service.avaliableServices$ = of(services);
 
       service.services$.pipe(debounceTime(300)).subscribe(result => {

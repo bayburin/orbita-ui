@@ -1,16 +1,28 @@
+import * as faker from 'faker';
+
+import { ModelBuilder } from '@shared/builders/model.builder';
 import { IService } from '@modules/sd-request/interfaces/service.interface';
 
-export class IServiceBuilder {
-  protected service: IService;
-
+export class IServiceBuilder extends ModelBuilder<IService> {
   constructor() {
-    this.service = {
-      id: 1,
-      name: 'TestService'
+    super();
+
+    this.model = {
+      id: null,
+      name: ''
     };
   }
 
-  build(): IService {
-    return this.service;
+  testBuild(): IService {
+    this.model.id = this.model.id || faker.random.number();
+    this.model.name = this.model.name || faker.random.word();
+
+    return this.model;
+  }
+
+  name(name: string): IServiceBuilder {
+    this.model.name = name;
+
+    return this;
   }
 }

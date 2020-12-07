@@ -36,7 +36,7 @@ describe('UserFacade', () => {
 
   describe('#constructor', () => {
     it('should call "UserSelectors.getAll" selector', () => {
-      const selectResult = [new IUserBuilder().build()];
+      const selectResult = [new IUserBuilder().testBuild()];
 
       store.overrideSelector(UserSelectors.getAll, selectResult);
 

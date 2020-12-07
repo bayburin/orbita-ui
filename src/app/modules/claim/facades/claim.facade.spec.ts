@@ -1,5 +1,5 @@
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { Observable, of } from 'rxjs';
+import { Observable, of, combineLatest } from 'rxjs';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Action } from '@ngrx/store';
@@ -9,10 +9,10 @@ import * as ClaimSelectors from '@modules/claim/store/selectors/claim.selectors'
 import { CLAIM_FEATURE_KEY, State } from '@modules/claim/store/reducers/claim.reducer';
 import { ClaimFacade } from '@modules/claim/facades/claim.facade';
 import { ClaimFactory } from '@modules/claim/factories/claim/claim.factory';
-import { IClaimBuilder } from '@modules/claim/builders/i-claim.builder';
-import { ClaimTypes } from '../enums/claim-types.enum';
+import { ClaimTypes } from '@modules/claim/enums/claim-types.enum';
 import { UserFacade } from '@modules/user/facades/user.facade';
 import { UserFacadeStub } from '@modules/user/facades/user.facade.stub';
+import { ISdRequestBuilder } from '@modules/sd-request/builders/i-sd-request.builder';
 
 describe('ClaimFacade', () => {
   let actions$: Observable<Action>;
@@ -46,17 +46,16 @@ describe('ClaimFacade', () => {
 
   describe('#constructor', () => {
     it('should call "ClaimSelectors.getAll" selector', () => {
-      const selectResult = [new IClaimBuilder().build()];
+      const selectResult = [new ISdRequestBuilder().testBuild()];
 
       store.overrideSelector(ClaimSelectors.getAll, selectResult);
-
-      facade.claims$.subscribe(result => {
-        expect(result).toEqual(selectResult.map(el => ClaimFactory.create(ClaimTypes.SD_REQUEST, el)));
+      combineLatest([facade.claims$, userFacade.users$]).subscribe(data => {
+        expect(data[0]).toEqual(selectResult.map(el => ClaimFactory.create(ClaimTypes.SD_REQUEST, el, { users:  data[1] })));
       });
     });
 
     it('should call "ClaimSelectors.getEntity" selector', () => {
-      const selectResult = new IClaimBuilder().build();
+      const selectResult = new ISdRequestBuilder().testBuild();
 
       store.overrideSelector(ClaimSelectors.getEntity, selectResult);
 

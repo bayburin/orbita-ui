@@ -42,7 +42,7 @@ describe('WizzardDescriptionComponent', () => {
 
   describe('#selectService', () => {
     it('should call "service" setter for NewSdRequestFormService service', () => {
-      const service = new IServiceBuilder().build();
+      const service = new IServiceBuilder().testBuild();
       const spy = spyOnProperty(formService, 'service', 'set');
 
       component.selectService(service);
@@ -53,7 +53,7 @@ describe('WizzardDescriptionComponent', () => {
 
   describe('#displayServiceFn', () => {
     it('should return "name" attribute of service', () => {
-      const service = new IServiceBuilder().name('Test').build();
+      const service = new IServiceBuilder().testBuild();
 
       expect(component.displayServiceFn(service)).toEqual(service.name);
     });

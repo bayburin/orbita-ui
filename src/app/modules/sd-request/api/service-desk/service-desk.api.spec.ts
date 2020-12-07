@@ -27,7 +27,7 @@ describe('ServiceDeskApi', () => {
   });
 
   describe('#getServices', () => {
-    const services = [new IServiceBuilder().build()];
+    const services = [new IServiceBuilder().testBuild()];
     const api = `${environment.serviceDeskApi}/v1/services`;
 
     it('should return Observable with array of claims', () => {

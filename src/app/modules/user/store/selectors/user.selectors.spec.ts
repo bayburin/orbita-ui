@@ -5,7 +5,7 @@ import * as UserSelectors from '@modules/user/store/selectors/user.selectors';
 
 describe('UserSelectors', () => {
   const ids = [1, 2];
-  const entities = { 1: new IUserBuilder().id(1).build(), 2: new IUserBuilder().id(2).build() };
+  const entities = { 1: new IUserBuilder().id(1).testBuild(), 2: new IUserBuilder().id(2).testBuild() };
   const arrEntities = Object.values(entities).map(val => val);
   const selected = 1;
   const initialState = {

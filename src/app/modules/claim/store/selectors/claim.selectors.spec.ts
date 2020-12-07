@@ -1,11 +1,11 @@
 import * as moment from 'moment';
 
-import { IClaimBuilder } from '@modules/claim/builders/i-claim.builder';
+import { ISdRequestBuilder } from '@modules/sd-request/builders/i-sd-request.builder';
 import * as ClaimSelectors from '@modules/claim/store/selectors/claim.selectors';
 
 describe('ClaimSelectors', () => {
   const ids = [1, 2];
-  const entities = { 1: new IClaimBuilder().id(1).build(), 2: new IClaimBuilder().id(2).build() };
+  const entities = { 1: new ISdRequestBuilder().id(1).build(), 2: new ISdRequestBuilder().id(2).build() };
   const arrEntities = Object.values(entities).map(val => val);
   const selected = 1;
   const initialState = {

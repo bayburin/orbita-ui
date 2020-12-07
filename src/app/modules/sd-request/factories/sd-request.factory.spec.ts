@@ -18,15 +18,15 @@ describe('SdRequestFactory', () => {
     });
 
     it('should create instance of Runtime if attribute "runtime" exist', () => {
-      const iRequest = new ISdRequestBuilder().build();
+      const iRequest = new ISdRequestBuilder().testBuild();
       const request = factory.create(iRequest);
 
       expect(request.runtime).toBeInstanceOf(Runtime);
     });
 
     it('should create array of Work if array "works" exist', () => {
-      const work = new IWorkBuilder().build();
-      const iRequest = new ISdRequestBuilder().works([work]).build();
+      const work = new IWorkBuilder().testBuild();
+      const iRequest = new ISdRequestBuilder().works([work]).testBuild();
       const request = factory.create(iRequest);
 
       request.works.forEach(w => {

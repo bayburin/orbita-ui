@@ -7,7 +7,7 @@ describe('Work', () => {
   let iWork: IWork;
 
   beforeEach(() => {
-    iWork = new IWorkBuilder().build();
+    iWork = new IWorkBuilder().testBuild();
   });
 
   describe('Constructor', () => {

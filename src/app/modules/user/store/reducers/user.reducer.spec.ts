@@ -34,7 +34,7 @@ describe('userReducer', () => {
 
   describe('loadAllSuccess', () => {
     it('should set ids and users values with paylod value', () => {
-      const users = [new IUserBuilder().id(1).build(), new IUserBuilder().id(2).build()];
+      const users = [new IUserBuilder().id(1).testBuild(), new IUserBuilder().id(2).testBuild()];
 
       payload = { users };
       action = UserActions.loadAllSuccess(payload);

@@ -13,8 +13,8 @@ describe('WorkFactory', () => {
     });
 
     it('should create array of History if array "histories" exist', () => {
-      const history = new IHistoryBuilder().build();
-      const iWork = new IWorkBuilder().histories([history]).build();
+      const history = new IHistoryBuilder().testBuild();
+      const iWork = new IWorkBuilder().histories([history]).testBuild();
       const work = factory.create(iWork);
 
       work.histories.forEach(hist => {

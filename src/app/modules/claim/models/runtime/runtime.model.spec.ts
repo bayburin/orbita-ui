@@ -8,7 +8,7 @@ describe('Runtime', () => {
   let iRuntime: IRuntime;
 
   beforeEach(() => {
-    iRuntime = new IRuntimeBuilder().build();
+    iRuntime = new IRuntimeBuilder().testBuild();
   });
 
   describe('Constructor', () => {

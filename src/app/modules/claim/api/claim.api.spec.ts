@@ -3,7 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 import { environment } from '@env/environment';
 import { ClaimApi } from './claim.api';
-import { IClaimBuilder } from '@modules/claim/builders/i-claim.builder';
+import { ISdRequestBuilder } from '@modules/sd-request/builders/i-sd-request.builder';
 
 describe('ClaimApi', () => {
   let service: ClaimApi;
@@ -27,7 +27,7 @@ describe('ClaimApi', () => {
   });
 
   describe('#getClaims', () => {
-    const claims = [new IClaimBuilder().id(1).build(), new IClaimBuilder().id(2).build()];
+    const claims = [new ISdRequestBuilder().id(1).build(), new ISdRequestBuilder().id(2).build()];
     const api = `${environment.serverApi}/v1/claims`;
 
     it('should return Observable with array of claims', () => {

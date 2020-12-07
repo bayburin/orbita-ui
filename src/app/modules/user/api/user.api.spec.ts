@@ -27,7 +27,7 @@ describe('UserApi', () => {
   });
 
   describe('#getUsers', () => {
-    const claims = [new IUserBuilder().id(1).build(), new IUserBuilder().id(2).build()];
+    const claims = [new IUserBuilder().id(1).testBuild(), new IUserBuilder().id(2).testBuild()];
     const api = `${environment.serverApi}/v1/users`;
 
     it('should return Observable with array of users', () => {
