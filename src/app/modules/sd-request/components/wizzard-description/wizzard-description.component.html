@@ -1,24 +1,53 @@
 <div [formGroup]="sdRequestForm" class="description-problem-step">
-  <div class="block">
-    <mat-form-field class="d-block search-service">
-      <mat-label>Выбор услуги</mat-label>
-      <input matInput placeholder="Название услуги" [formControl]="searchService" [matAutocomplete]="autoService"
-        [errorStateMatcher]="dynamicMatcher">
-      <mat-error *ngIf="searchService.hasError('serverError')">Ошибка поиска. Введите данные вручную.</mat-error>
-      <button *ngIf="searchService.value" mat-icon-button matSuffix (click)="clearService()" [disabled]="isNoService.value">
-        <mat-icon svgIcon="close"></mat-icon>
-      </button>
-      <mat-autocomplete #autoService="matAutocomplete" [displayWith]="displayServiceFn" [autoActiveFirstOption]="true"
-        (optionSelected)="selectService($event.option.value)">
-        <mat-option *ngFor="let service of services$ | async" [value]="service">{{ service.name }}</mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-    <mat-slide-toggle [formControl]="isNoService">Обращение работника не связано с перечисленными услугами</mat-slide-toggle>
+  <div class="column">
+    <div class="block">
+      <mat-form-field class="d-block search-service">
+        <mat-label>Выбор услуги</mat-label>
+        <input matInput placeholder="Название услуги" [formControl]="searchService" [matAutocomplete]="autoService"
+          [errorStateMatcher]="dynamicMatcher">
+        <mat-error *ngIf="searchService.hasError('serverError')">Ошибка поиска. Введите данные вручную.</mat-error>
+        <button *ngIf="searchService.value" mat-icon-button matSuffix (click)="clearService()" [disabled]="isNoService.value">
+          <mat-icon svgIcon="close"></mat-icon>
+        </button>
+        <mat-autocomplete #autoService="matAutocomplete" [displayWith]="displayServiceFn" [autoActiveFirstOption]="true"
+          (optionSelected)="selectService($event.option.value)">
+          <mat-option *ngFor="let service of services$ | async" [value]="service">{{ service.name }}</mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-slide-toggle [formControl]="isNoService">Обращение работника не связано с перечисленными услугами</mat-slide-toggle>
+    </div>
+    <div class="block" formGroupName="attrs">
+      <mat-form-field class="description">
+        <mat-label>Описание проблемы</mat-label>
+        <textarea matInput name="description" rows="5" placeholder="Что случилось у пользователя" formControlName="description"></textarea>
+      </mat-form-field>
+    </div>
   </div>
-  <div class="block" formGroupName="attrs">
-    <mat-form-field class="description">
-      <mat-label>Описание проблемы</mat-label>
-      <textarea matInput name="description" rows="5" placeholder="Что случилось у пользователя" formControlName="description"></textarea>
-    </mat-form-field>
+  <div class="column">
+    <div class="block" formGroupName="attrs">
+      <mat-card class="mat-elevation-z2 dropzone" appDndFiles (fileDropped)="onFileDropped($event)">
+        <input #filesRef type="file" multiple id="fileDrop" name="files" (change)="fileHandler($event)" multiple="true">
+        <mat-icon class="mat-72px" svgIcon="upload"></mat-icon>
+        <h3>Перетащите файлы сюда</h3>
+        <h3>или</h3>
+        <button mat-raised-button (click)="filesRef.click()">
+          <mat-icon class="mat-18px" svgIcon="file-document-multiple-outline"></mat-icon>
+          Выберите файл
+        </button>
+      </mat-card>
+      <div class="file-list" *ngIf="files.length">
+        <mat-list>
+          <div mat-subheader>Выбранные файлы:</div>
+          <mat-list-item *ngFor="let file of files; let i = index">
+            <mat-icon mat-list-icon svgIcon="file-outline"></mat-icon>
+            <div mat-line>{{ file.file.name }}</div>
+            <div mat-line>{{ file.file.size | formatBytes }}</div>
+            <button mat-icon-button (click)="deleteFile(file.file)">
+              <mat-icon svgIcon="trash-can-outline" matTooltip="Удалить файл"></mat-icon>
+            </button>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
   </div>
 </div>

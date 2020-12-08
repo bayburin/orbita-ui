@@ -9,7 +9,6 @@ describe('MiddleNamePipe', () => {
     pipe = new MiddleNamePipe();
   });
 
-
   it('create an instance', () => {
     expect(pipe).toBeTruthy();
   });

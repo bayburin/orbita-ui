@@ -173,4 +173,61 @@ describe('NewSdRequestFormService', () => {
       expect(spy).toHaveBeenCalledWith({ });
     });
   });
+
+  describe('#addAttachments', () => {
+    let file: File;
+    let fileList: FileList;
+
+    beforeEach(() => {
+      file = new File([new Blob()], 'image.png');
+      fileList = {
+        0: file,
+        length: 1,
+        item: (index: number) => file
+      };
+    });
+
+    it('should add FileGroup object to form', () => {
+      const resultData = 'resultData';
+
+      spyOn((service as any), 'convertToBase64').and.returnValue(of(resultData));
+      service.addAttachments(fileList);
+
+      service.sdRequestForm$.subscribe(form => {
+        expect(form.get('attachments').value).toEqual([{ file, data: resultData }]);
+      });
+    });
+
+    it('should not remove old files', () => {
+      service.addAttachments(fileList);
+      service.addAttachments(fileList);
+
+      service.sdRequestForm$.subscribe(form => {
+        expect(form.get('attachments').value.slice().length).toEqual(2);
+      });
+    });
+  });
+
+  describe('#removeAttachment', () => {
+    let file: File;
+    let fileList: FileList;
+
+    beforeEach(() => {
+      file = new File([new Blob()], 'image.png');
+      fileList = {
+        0: file,
+        length: 1,
+        item: (index: number) => file
+      };
+      service.addAttachments(fileList);
+    });
+
+    it('should remove file from form', () => {
+      service.removeAttachment(file);
+
+      service.sdRequestForm$.subscribe(form => {
+        expect(form.get('attachments').value.slice().length).toEqual(0);
+      });
+    });
+  });
 });

@@ -65,3 +65,9 @@ main { padding: $spacer; }
   flex-direction: row;
   gap: $spacer;
 }
+
+main {
+  i, svg {
+    color: $icon-color;
+  }
+}

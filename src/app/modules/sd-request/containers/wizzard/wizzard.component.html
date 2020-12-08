@@ -9,7 +9,6 @@
           <app-wizzard-user-info class="step-block" [sourceSnapshotForm]="sourceSnapshotForm"></app-wizzard-user-info>
           <div class="step-actions">
             <button mat-raised-button matStepperNext>Далее</button>
-            <button type="submit" mat-raised-button>Сохранить</button>
           </div>
         </mat-step>
         <mat-step label="Описание проблемы">
@@ -37,6 +36,7 @@
           </div>
         </mat-step>
       </mat-horizontal-stepper>
+      <button type="submit" mat-raised-button>Сохранить</button>
     </form>
   </mat-card-content>
 </mat-card>

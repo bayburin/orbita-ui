@@ -13,6 +13,7 @@ export class NewSdRequestFormServiceStub {
       attrs: new FormGroup({
         description: new FormControl('', [Validators.required]),
       }),
+      attachments: new FormControl([]),
       source_snapshot: new FormGroup({
         id_tn: new FormControl(''),
         tn: new FormControl('', [Validators.required]),
@@ -21,7 +22,7 @@ export class NewSdRequestFormServiceStub {
         email: new FormControl(''),
         tel: new FormControl(''),
         mobile: new FormControl('')
-      }),
+      })
     })
   );
   sdRequestForm$: Observable<FormGroup> = this.sdRequestForm.asObservable();
@@ -40,4 +41,6 @@ export class NewSdRequestFormServiceStub {
   save(): void { }
   clearEmployee(): void { }
   clearService(): void { }
+  addAttachments(files: FileList): void { }
+  removeAttachment(): void { }
 }

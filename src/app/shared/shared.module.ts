@@ -6,6 +6,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material.module';
 import { DatetimePipe } from './pipes/datetime/datetime.pipe';
 import { MiddleNamePipe } from './pipes/middle-name/middle-name.pipe';
+import { FormatBytesPipe } from './pipes/format-bytes/format-bytes.pipe';
+import { DndFilesDirective } from './directives/dnd-files/dnd-files.directive';
 
 const modules: any[] = [
   CommonModule,
@@ -17,7 +19,9 @@ const modules: any[] = [
 
 const declarations: any[] = [
   DatetimePipe,
-  MiddleNamePipe
+  MiddleNamePipe,
+  FormatBytesPipe,
+  DndFilesDirective
 ];
 
 @NgModule({

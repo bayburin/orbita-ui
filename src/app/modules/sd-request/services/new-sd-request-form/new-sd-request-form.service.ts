@@ -13,6 +13,11 @@ export interface EmployeeGroup {
   employees: IBaseEmployee[];
 }
 
+export interface FileGroup {
+  file: File;
+  data: string | ArrayBuffer;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -33,6 +38,7 @@ export class NewSdRequestFormService {
         tel: [''],
         mobile: ['']
       }),
+      attachments: [[]]
     })
   );
   sdRequestForm$: Observable<FormGroup> = this.sdRequestForm.asObservable();
@@ -175,6 +181,39 @@ export class NewSdRequestFormService {
   }
 
   /**
+   * Добавляет указанные файлы к форме.
+   *
+   * @param files - массив файлов
+   */
+  addAttachments(files: FileList): void {
+    const currentForm = this.sdRequestForm.getValue();
+    const attachments = currentForm.get('attachments') as FormControl;
+    const currentArr = attachments.value.slice();
+    const newArr: FileGroup[] = [];
+
+    for (const file of Array.from(files)) {
+      const fileObj: FileGroup = {
+        file,
+        data: null
+      };
+
+      this.convertToBase64(file).subscribe(data => fileObj.data = data);
+      newArr.push(fileObj);
+    }
+
+    attachments.setValue([...currentArr, ...newArr]);
+  }
+
+  removeAttachment(file: File): void {
+    const currentForm = this.sdRequestForm.getValue();
+    const attachments = currentForm.get('attachments') as FormControl;
+    const currentArr = attachments.value.slice();
+    const newArr = currentArr.filter((el: FileGroup) => el.file !== file);
+
+    attachments.setValue(newArr);
+  }
+
+  /**
    * Проверяет, содержит ли полученная строка только числа.
    */
   private isNumber(str: string): boolean {
@@ -215,5 +254,22 @@ export class NewSdRequestFormService {
 
       return of([]);
     }));
+  }
+
+  /**
+   * Конвертирует файл в base64.
+   *
+   * @param file - преоразуемый файл.
+   */
+  private convertToBase64(file: File): Observable<string | ArrayBuffer> {
+    return new Observable(subscriber => {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        subscriber.next(reader.result);
+        subscriber.complete();
+      };
+      reader.readAsDataURL(file);
+    });
   }
 }

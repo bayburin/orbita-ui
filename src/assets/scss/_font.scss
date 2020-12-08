@@ -17,7 +17,7 @@
   line-height: $size !important;
 }
 
-$sizes: 18px, 24px, 36px, 48px;
+$sizes: 18px, 24px, 36px, 48px, 60px, 72px;
 @each $size in $sizes {
   .mat-#{$size} {
     @include mat-icon-size($size)

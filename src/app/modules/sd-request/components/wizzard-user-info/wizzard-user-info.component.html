@@ -2,8 +2,8 @@
   <div class="block">
     <mat-form-field class="d-block search-employee">
       <mat-label>Поиск пользователя</mat-label>
-      <input matInput placeholder="ФИО или табельный номер" [formControl]="searchEmployee" [matAutocomplete]="autoEmployee"
-        [errorStateMatcher]="dynamicMatcher">
+      <input matInput name="searchEmployee" placeholder="ФИО или табельный номер" [formControl]="searchEmployee"
+        [matAutocomplete]="autoEmployee" [errorStateMatcher]="dynamicMatcher">
       <mat-hint align="end">Для ФИО минимум 3 символа</mat-hint>
       <mat-error *ngIf="searchEmployee.hasError('serverError')">Ошибка поиска. Введите данные вручную.</mat-error>
       <button *ngIf="searchEmployee.value" mat-icon-button matSuffix (click)="clearEmployee()" [disabled]="isManually.value">
@@ -24,17 +24,17 @@
     <div *ngIf="isManually.value" class="input-block">
       <mat-form-field>
         <mat-label>Табельный номер</mat-label>
-        <input matInput placeholder="Табельный номер" formControlName="tn" required>
+        <input matInput name="tn" placeholder="Табельный номер" formControlName="tn" required>
         <mat-error>Не может быть пустым</mat-error>
       </mat-form-field>
       <mat-form-field>
         <mat-label>ФИО</mat-label>
-        <input matInput placeholder="ФИО" formControlName="fio" required>
+        <input matInput name="fio" placeholder="ФИО" formControlName="fio" required>
         <mat-error>Не может быть пустым</mat-error>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Подразделение</mat-label>
-        <input matInput placeholder="Подразделение" formControlName="dept" required>
+        <input matInput name="dept" placeholder="Подразделение" formControlName="dept" required>
         <mat-error>Не может быть пустым</mat-error>
       </mat-form-field>
     </div>
@@ -42,15 +42,15 @@
     <div class="input-block">
       <mat-form-field>
         <mat-label>Электронная почта</mat-label>
-        <input matInput placeholder="Электронная почта" formControlName="email">
+        <input matInput name="email" placeholder="Электронная почта" formControlName="email">
       </mat-form-field>
       <mat-form-field>
         <mat-label>Рабочий телефон</mat-label>
-        <input matInput placeholder="Рабочий телефон" formControlName="tel">
+        <input matInput name="tel" placeholder="Рабочий телефон" formControlName="tel">
       </mat-form-field>
       <mat-form-field>
         <mat-label>Сотовый телефон</mat-label>
-        <input type="tel" matInput placeholder="555-555-1234" formControlName="mobile">
+        <input type="tel" matInput name="mobile" placeholder="555-555-1234" formControlName="mobile">
       </mat-form-field>
     </div>
   </div>

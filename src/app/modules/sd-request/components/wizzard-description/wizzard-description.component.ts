@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { DynamicErrorStateMatcher } from '@shared/material/dynamic-error-state-matcher';
 import { IService } from '@modules/sd-request/interfaces/service.interface';
 import { NewSdRequestFormService } from '@modules/sd-request/services/new-sd-request-form/new-sd-request-form.service';
+import { FileGroup } from '@modules/sd-request/services/new-sd-request-form/new-sd-request-form.service';
 
 @Component({
   selector: 'app-wizzard-description',
@@ -18,6 +19,10 @@ export class WizzardDescriptionComponent implements OnInit {
   dynamicMatcher = new DynamicErrorStateMatcher();
   avaliableServices$: Observable<IService[]>;
   @Input() sdRequestForm: FormGroup;
+
+  get files(): FileGroup[] {
+    return this.sdRequestForm.get('attachments').value.slice();
+  }
 
   constructor(private formService: NewSdRequestFormService) { }
 
@@ -50,5 +55,32 @@ export class WizzardDescriptionComponent implements OnInit {
    */
   clearService(): void {
     this.formService.clearService();
+  }
+
+  /**
+   * Обрабатывает загруженные файлы.
+   *
+   * @param fileInput - событие выбора файла.
+   */
+  fileHandler(event: Event): void {
+    this.formService.addAttachments((event.target as HTMLInputElement).files);
+  }
+
+  /**
+   * Обрабатывает файлы, полученные через механизм Drag & Drop.
+   *
+   * @param files - список полученных файлов.
+   */
+  onFileDropped(files: FileList): void {
+    this.formService.addAttachments(files);
+  }
+
+  /**
+   * Удаляет файл из списка.
+   *
+   * @param file - удаляемый файл
+   */
+  deleteFile(file: File): void {
+    this.formService.removeAttachment(file);
   }
 }
