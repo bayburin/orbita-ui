@@ -11,7 +11,7 @@ import { IClaim } from '@modules/claim/interfaces/claim.interface';
 export class ClaimApi {
   readonly api = `${environment.serverApi}/v1/claims`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   /**
    * Получает с сервера список заявок.
