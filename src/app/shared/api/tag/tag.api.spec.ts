@@ -5,7 +5,7 @@ import { environment } from '@env/environment';
 import { TagApi } from './tag.api';
 import { ITagBuilder } from '@shared/builders/tag.builder';
 
-fdescribe('TagApi', () => {
+describe('TagApi', () => {
   let service: TagApi;
   let httpMock: HttpTestingController;
 

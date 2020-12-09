@@ -1,11 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { MatChipInputEvent } from '@angular/material/chips';
 
 import { DynamicErrorStateMatcher } from '@shared/material/dynamic-error-state-matcher';
 import { IService } from '@modules/sd-request/interfaces/service.interface';
 import { NewSdRequestFormService } from '@modules/sd-request/services/new-sd-request-form/new-sd-request-form.service';
 import { FileGroup } from '@modules/sd-request/services/new-sd-request-form/new-sd-request-form.service';
+import { ITag } from '@shared/interfaces/tag.interface';
 
 @Component({
   selector: 'app-wizzard-description',
@@ -18,10 +20,16 @@ export class WizzardDescriptionComponent implements OnInit {
   isNoService: FormControl;
   dynamicMatcher = new DynamicErrorStateMatcher();
   avaliableServices$: Observable<IService[]>;
+  tags$: Observable<ITag[]>;
   @Input() sdRequestForm: FormGroup;
+  @ViewChild('tagInput', { static: true }) tagInput: ElementRef;
 
   get files(): FileGroup[] {
-    return this.sdRequestForm.get('attachments').value.slice();
+    return this.sdRequestForm.get('attachments').value;
+  }
+
+  get tags(): any[] {
+    return this.sdRequestForm.get('tags').value;
   }
 
   constructor(private formService: NewSdRequestFormService) { }
@@ -30,6 +38,7 @@ export class WizzardDescriptionComponent implements OnInit {
     this.searchService = this.formService.searchService;
     this.isNoService = this.formService.isNoService;
     this.services$ = this.formService.services$;
+    this.tags$ = this.formService.tags$;
   }
 
   /**
@@ -83,4 +92,28 @@ export class WizzardDescriptionComponent implements OnInit {
   deleteFile(file: File): void {
     this.formService.removeAttachment(file);
   }
+
+  // /**
+  //  * Добавляет тег в список выбранных.
+  //  *
+  //  * @param event - событие выбора тега.
+  //  */
+  // addTag(event: MatChipInputEvent): void {
+  //   const value = event.value;
+  //   const tagsForm = this.sdRequestForm.get('tags') as FormControl;
+  //   const currentArr = tagsForm.value.slice();
+
+  //   this.tagInput.nativeElement.value = '';
+
+  //   tagsForm.setValue([...currentArr, value]);
+  // }
+
+  // selectTag(tag) {
+  //   const tagsForm = this.sdRequestForm.get('tags') as FormControl;
+  //   const currentArr = tagsForm.value.slice();
+
+  //   this.tagInput.nativeElement.value = '';
+
+  //   tagsForm.setValue([...currentArr, tag]);
+  // }
 }

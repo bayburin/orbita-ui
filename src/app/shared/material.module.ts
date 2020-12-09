@@ -14,6 +14,7 @@ import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTooltipModule, MAT_TOOLTIP_DEFAULT_OPTIONS } from '@angular/material/tooltip';
+import { MatChipsModule } from '@angular/material/chips';
 
 /**
  * Layout
@@ -69,7 +70,8 @@ const modules: any[] = [
   MatSelectModule,
   MatSliderModule,
   MatSlideToggleModule,
-  MatStepperModule
+  MatStepperModule,
+  MatChipsModule
 ];
 
 @NgModule({

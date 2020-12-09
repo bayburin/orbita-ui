@@ -22,6 +22,21 @@
         <textarea matInput name="description" rows="5" placeholder="Что случилось у пользователя" formControlName="description"></textarea>
       </mat-form-field>
     </div>
+    <div class="block">
+      <!-- <mat-form-field class="tags">
+        <mat-label>Теги</mat-label>
+        <mat-chip-list #tagChipList formControlName="tags">
+          <mat-chip *ngFor="let tag of tags" removable="false">
+            {{ tag }}
+            <mat-icon matChipRemove svgIcon="close"></mat-icon>
+          </mat-chip>
+          <input #tagInput [matAutocomplete]="autoTags" [matChipInputFor]="tagChipList" (matChipInputTokenEnd)="addTag($event)">
+        </mat-chip-list>
+        <mat-autocomplete #autoTags="matAutocomplete" (optionSelected)="selectTag($event.option.value)">
+          <mat-option *ngFor="let tag of tags$ | async" [value]="tag">{{ tag }}</mat-option>
+        </mat-autocomplete>
+      </mat-form-field> -->
+    </div>
   </div>
   <div class="column">
     <div class="block" formGroupName="attrs">

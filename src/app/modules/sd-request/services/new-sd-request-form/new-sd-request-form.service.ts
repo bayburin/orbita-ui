@@ -7,6 +7,7 @@ import { EmployeeApi } from '@modules/employee/api/employee.api';
 import { IBaseEmployee } from '@modules/employee/interfaces/employee.interface';
 import { IService } from '@modules/sd-request/interfaces/service.interface';
 import { ServiceDeskApi } from '@modules/sd-request/api/service-desk/service-desk.api';
+import { ITag } from '@shared/interfaces/tag.interface';
 
 export interface EmployeeGroup {
   dept: number;
@@ -38,7 +39,8 @@ export class NewSdRequestFormService {
         tel: [''],
         mobile: ['']
       }),
-      attachments: [[]]
+      attachments: [[]],
+      tags: [[{ name: 'свободная_заявка' }]]
     })
   );
   sdRequestForm$: Observable<FormGroup> = this.sdRequestForm.asObservable();
@@ -145,6 +147,13 @@ export class NewSdRequestFormService {
         }));
       })
     );
+  }
+
+  /**
+   * Возвращает доступный список тегов.
+   */
+  get tags$(): Observable<ITag[]> {
+    return of([]);
   }
 
   constructor(
