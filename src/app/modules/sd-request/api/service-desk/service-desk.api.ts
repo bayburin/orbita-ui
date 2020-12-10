@@ -9,7 +9,7 @@ import { IService } from '@modules/sd-request/interfaces/service.interface';
   providedIn: 'root'
 })
 export class ServiceDeskApi {
-  readonly api = `${environment.serviceDeskApi}/v1`;
+  readonly api = `${environment.serviceDeskApi}/v2`;
 
   constructor(private http: HttpClient) { }
 

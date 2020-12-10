@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   serverApi: 'https://orbita-dev.iss-reshetnev.ru/api',
-  serviceDeskApi: 'https://sd-center.iss-reshetnev.ru/api',
+  serviceDeskApi: 'https://inv-dev.iss-reshetnev.ru/api',
   auth: {
     clientId: '86',
     // redirectUrl: 'https://localhost.iss-reshetnev.ru:4200/oauth2/callback',
