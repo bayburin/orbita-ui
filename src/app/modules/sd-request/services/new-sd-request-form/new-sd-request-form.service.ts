@@ -46,6 +46,7 @@ export class NewSdRequestFormService {
   sdRequestForm$: Observable<FormGroup> = this.sdRequestForm.asObservable();
   selectedEmployee: IBaseEmployee;
   searchEmployee: FormControl = new FormControl();
+  selectedService: IService;
   searchService: FormControl = new FormControl();
   isUserInfoManually: FormControl = new FormControl(false);
   isNoService: FormControl = new FormControl(false);
@@ -69,20 +70,14 @@ export class NewSdRequestFormService {
       email: employee.emailText,
       tel: employee.phoneText
     });
-    this.sdRequestForm.next(currentForm);
   }
 
   /**
    * Записывает данные выбранной услуги в атрибуты формы.
    */
   set service(service: IService) {
-    const currentForm = this.sdRequestForm.getValue();
-
-    currentForm.patchValue({
-      service_id: service.id,
-      service_name: service.name
-    });
-    this.sdRequestForm.next(currentForm);
+    this.selectedService = service;
+    this.updateServiceForm(service);
   }
 
   /**
@@ -249,8 +244,10 @@ export class NewSdRequestFormService {
     this.isNoService.valueChanges.subscribe(isNoService => {
       if (isNoService) {
         this.searchService.disable();
+        this.updateServiceForm(null);
       } else {
         this.searchService.enable();
+        this.service = this.selectedService;
       }
     });
   }
@@ -279,6 +276,15 @@ export class NewSdRequestFormService {
         subscriber.complete();
       };
       reader.readAsDataURL(file);
+    });
+  }
+
+  private updateServiceForm(service: IService | null) {
+    const currentForm = this.sdRequestForm.getValue();
+
+    currentForm.patchValue({
+      service_id: service?.id || null,
+      service_name: service?.name || null
     });
   }
 }

@@ -51,16 +51,42 @@ describe('NewSdRequestFormService', () => {
   });
 
   describe('"searchService" input', () => {
-    it('should disable "input" if "isNoService" enabled', () => {
+    beforeEach(() => {
       service.isNoService.setValue(true);
-
-      expect(service.searchService.disabled).toBeTrue();
     });
 
-    it('should enable "input" if "isNoService" disabled', () => {
-      service.isNoService.setValue(false);
+    describe('when "isNoService" enabled', () => {
+      it('should disable "input"', () => {
+        expect(service.searchService.disabled).toBeTrue();
+      });
 
-      expect(service.searchService.disabled).toBeFalse();
+      it('should set null to service fields of form', () => {
+        service.sdRequestForm$.subscribe(form => {
+          expect(form.get('service_id').value).toBeNull();
+          expect(form.get('service_name').value).toBeNull();
+        });
+      });
+    });
+
+    describe('when "isNoService" disabled', () => {
+      let sdService: IService;
+
+      beforeEach(() => {
+        sdService = new IServiceBuilder().testBuild();
+        service.service = sdService;
+        service.isNoService.setValue(false);
+      });
+
+      it('should enable "input" ', () => {
+        expect(service.searchService.disabled).toBeFalse();
+      });
+
+      it('should fill service fields with service data', () => {
+        service.sdRequestForm$.subscribe(form => {
+          expect(form.get('service_id').value).toEqual(sdService.id);
+          expect(form.get('service_name').value).toEqual(sdService.name);
+        });
+      });
     });
   });
 
