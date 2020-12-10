@@ -28,7 +28,7 @@ describe('ServiceDeskApi', () => {
 
   describe('#getServices', () => {
     const services = [new IServiceBuilder().testBuild()];
-    const api = `${environment.serviceDeskApi}/v1/services`;
+    const api = `${environment.serviceDeskApi}/v2/services`;
 
     it('should return Observable with array of claims', () => {
       service.getServices().subscribe(result => {
