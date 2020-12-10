@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { IServiceBuilder } from '@modules/sd-request/builders/i-service.builder';
 
 import { environment } from '@env/environment';
-import { ServiceDeskApi } from './service-desk.api';
+import { SvtApi } from './svt.api';
+import { ISvtItemBuilder } from '@modules/sd-request/builders/i-svt-item.builder';
 
-describe('ServiceDeskApi', () => {
-  let service: ServiceDeskApi;
+describe('SvtApi', () => {
+  let service: SvtApi;
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
@@ -14,7 +14,7 @@ describe('ServiceDeskApi', () => {
       imports: [HttpClientTestingModule]
     });
 
-    service = TestBed.inject(ServiceDeskApi);
+    service = TestBed.inject(SvtApi);
     httpMock = TestBed.inject(HttpTestingController);
   });
 
@@ -27,18 +27,19 @@ describe('ServiceDeskApi', () => {
   });
 
   describe('#getServices', () => {
-    const services = [new IServiceBuilder().testBuild()];
-    const api = `${environment.serviceDeskApi}/v2/services`;
+    const items = [new ISvtItemBuilder().testBuild()];
+    const idTn = 12345;
+    const api = `${environment.svtApi}/user_isses/${idTn}/items`;
 
-    it('should return Observable with array of services', () => {
-      service.getServices().subscribe(result => {
-        expect(result).toEqual(services);
+    it('should return Observable with array of equipments', () => {
+      service.getUserItems(idTn).subscribe(result => {
+        expect(result).toEqual(items);
       });
 
       httpMock.expectOne({
         method: 'GET',
         url: api
-      }).flush(services);
+      }).flush(items);
     });
   });
 });

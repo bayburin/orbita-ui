@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+import { materialize, dematerialize, delay } from 'rxjs/operators';
 
 import { IService } from '@modules/sd-request/interfaces/service.interface';
 import { IClaim } from '@modules/claim/interfaces/claim.interface';
-import { materialize, dematerialize, delay } from 'rxjs/operators';
+import { ISvtItem } from '@modules/sd-request/interfaces/svt-item.interface';
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -139,19 +140,60 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     //   return of(new HttpResponse({ body: employees, status: 200 }));
     // }
 
-    const services: IService[] = [
+    // const services: IService[] = [
+    //   {
+    //     id: 1,
+    //     name: 'АСУ ФЭЗ'
+    //   },
+    //   {
+    //     id: 2,
+    //     name: 'Ремонт и обслуживание компьютера'
+    //   }
+    // ];
+
+    // if (req.url.endsWith('services') && req.method === 'GET') {
+    //   return of(new HttpResponse({ body: services, status: 200 }));
+    // }
+
+    const svtItems: ISvtItem[] = [
       {
-        id: 1,
-        name: 'АСУ ФЭЗ'
+        item_id: 100002872,
+        type_id: 2,
+        workplace_id: 1205,
+        model_id: null,
+        item_model: "UNIT",
+        invent_num: "764196",
+        serial_num: null,
+        status: "in_workplace",
+        short_item_model: "UNIT",
+        type: {
+          type_id: 2,
+          name: "pc",
+          short_description: "Системный блок",
+          long_description: "Системный блок (включая неттопы)",
+        }
       },
       {
-        id: 2,
-        name: 'Ремонт и обслуживание компьютера'
+        item_id: 100020248,
+        type_id: 4,
+        workplace_id: 1205,
+        model_id: 1647,
+        item_model: "Dell U2715H",
+        invent_num: "741866",
+        serial_num: "CN0GH85DTV20087H0BTL",
+        status:" in_workplace",
+        short_item_model: "Dell U2715H",
+        type: {
+          type_id: 4,
+          name: "monitor",
+          short_description: "Монитор",
+          long_description: "Монитор (телевизор)",
+        }
       }
     ];
 
-    if (req.url.endsWith('services') && req.method === 'GET') {
-      return of(new HttpResponse({ body: services, status: 200 }));
+    if(req.url.endsWith('items') && req.method === 'GET') {
+      return of(new HttpResponse({ body: svtItems, status: 200 }));
     }
 
     return next.handle(req).pipe(

@@ -43,7 +43,7 @@ import { JsonInterceptor } from './interceptors/json/json.interceptor';
     SidenavComponent
   ],
   providers: [
-    // { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JsonInterceptor, multi: true }
   ]
 })
