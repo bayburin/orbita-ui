@@ -26,7 +26,7 @@ describe('SvtApi', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('#getServices', () => {
+  describe('#getUserItems', () => {
     const items = [new ISvtItemBuilder().testBuild()];
     const idTn = 12345;
     const api = `${environment.svtApi}/user_isses/${idTn}/items`;
@@ -39,6 +39,23 @@ describe('SvtApi', () => {
       httpMock.expectOne({
         method: 'GET',
         url: api
+      }).flush(items);
+    });
+  });
+
+  describe('#getAnyItems', () => {
+    const items = [new ISvtItemBuilder().testBuild()];
+    const term = '12345';
+    const api = `${environment.svtApi}/api/v1/items`;
+
+    it('should return Observable with array of equipments', () => {
+      service.getAnyItems(term).subscribe(result => {
+        expect(result).toEqual(items);
+      });
+
+      httpMock.expectOne({
+        method: 'GET',
+        url: `${api}?filter=${term}`
       }).flush(items);
     });
   });
