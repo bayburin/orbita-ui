@@ -12,11 +12,16 @@ import { IBaseEmployee } from '@modules/employee/interfaces/employee.interface';
 import { IBaseEmployeeBuilder } from '@modules/employee/builders/i-base-employee.builder';
 import { IService } from '@modules/sd-request/interfaces/service.interface';
 import { IServiceBuilder } from '@modules/sd-request/builders/i-service.builder';
+import { SvtApi } from '@modules/sd-request/api/svt/svt.api';
+import { SvtApiStub } from '@modules/sd-request/api/svt/svt.api.stub';
+import { ISvtItem } from '@modules/sd-request/interfaces/svt-item.interface';
+import { ISvtItemBuilder } from '@modules/sd-request/builders/i-svt-item.builder';
 
 
 describe('NewSdRequestFormService', () => {
   let service: NewSdRequestFormService;
   let employeeApi: EmployeeApi;
+  let svtItemApi: SvtApi;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -24,12 +29,14 @@ describe('NewSdRequestFormService', () => {
       providers: [
         FormBuilder,
         { provide: EmployeeApi, useClass: EmployeeApiStub },
-        { provide: ServiceDeskApi, useClass: ServiceDeskApiStub }
+        { provide: ServiceDeskApi, useClass: ServiceDeskApiStub },
+        { provide: SvtApi, useClass: SvtApiStub }
       ]
     });
 
     service = TestBed.inject(NewSdRequestFormService);
     employeeApi = TestBed.inject(EmployeeApi);
+    svtItemApi = TestBed.inject(SvtApi);
   });
 
   it('should be created', () => {
@@ -90,12 +97,44 @@ describe('NewSdRequestFormService', () => {
     });
   });
 
-  describe('"sourceSnapshot" setter', () => {
+  describe('"searchSvtItem" input', () => {
+    beforeEach(() => {
+      service.isNoSvtItem.setValue(true);
+    });
+
+    describe('when "isNoSvtItem" enabled', () => {
+      it('should disable "input"', () => {
+        expect(service.searchSvtItem.disabled).toBeTrue();
+      });
+
+      it('should set null to svtItem fields of form', () => {
+        service.sdRequestForm$.subscribe(form => {
+          const ssForm = form.get('source_snapshot') as FormGroup;
+
+          expect(ssForm.get('invent_num').value).toBeUndefined();
+          expect(ssForm.get('svt_item_id').value).toBeUndefined();
+          expect(ssForm.get('svt_item').value).toEqual('');
+        });
+      });
+    });
+
+    describe('when "isNoSvtItem" disabled', () => {
+      it('should enable "input" ', () => {
+        const svtItem = new ISvtItemBuilder().testBuild();
+        service.svtItem = svtItem;
+        service.isNoSvtItem.setValue(false);
+
+        expect(service.searchService.disabled).toBeFalse();
+      });
+    });
+  });
+
+  describe('"employee" setter', () => {
     let employee: IBaseEmployee;
 
     beforeEach(() => {
       employee = new IBaseEmployeeBuilder().build();
-      service.sourceSnapshot = employee;
+      service.employee = employee;
     });
 
     it('should set "selectedEmployee" attribute', () => {
@@ -117,13 +156,44 @@ describe('NewSdRequestFormService', () => {
   });
 
   describe('"service" setter', () => {
-    it('should set form attributes from selected service', () => {
-      const sdService: IService = new IServiceBuilder().testBuild();
-      service.service = sdService;
+    let sdService: IService;
 
+    beforeEach(() => {
+      sdService = new IServiceBuilder().testBuild();
+      service.service = sdService;
+    });
+
+    it('should set "selectedService" attribute', () => {
+      expect(service.selectedService).toEqual(sdService);
+    });
+
+    it('should set form attributes from selected service', () => {
       service.sdRequestForm$.subscribe(form => {
         expect(form.get('service_id').value).toEqual(sdService.id);
         expect(form.get('service_name').value).toEqual(sdService.name);
+      });
+    });
+  });
+
+  describe('"svtItem" setter', () => {
+    let svtItem: ISvtItem;
+
+    beforeEach(() => {
+      svtItem = new ISvtItemBuilder().testBuild();
+      service.svtItem = svtItem;
+    });
+
+    it('should set "selectedSvtItem" attribute', () => {
+      expect(service.selectedSvtItem).toEqual(svtItem);
+    });
+
+    it('should set form attributes from selected item', () => {
+      service.sdRequestForm$.subscribe(form => {
+        const ssForm = form.get('source_snapshot') as FormGroup;
+
+        expect(ssForm.get('invent_num').value).toEqual(svtItem.invent_num);
+        expect(ssForm.get('svt_item_id').value).toEqual(svtItem.item_id);
+        expect(ssForm.get('svt_item').value).toEqual(`${svtItem.type.short_description} ${svtItem.item_model}`);
       });
     });
   });
@@ -160,35 +230,82 @@ describe('NewSdRequestFormService', () => {
     }));
   });
 
+  describe('"anySvtItems$" getter', () => {
+    let spy: jasmine.Spy;
+
+    beforeEach(() => {
+      spy = spyOn(svtItemApi, 'getAnyItems');
+    });
+
+    it('should return list of svt items which includes term', (done) => {
+      const svtItems = [new ISvtItemBuilder().short_item_model('First').testBuild(), new ISvtItemBuilder().short_item_model('Second').testBuild()];
+      spy.and.returnValue(of(svtItems));
+
+      service.anySvtItems$.subscribe(result => {
+        expect(result).toEqual(svtItems);
+        done();
+      });
+
+      service.searchSvtItem.setValue('test');
+    });
+
+    it('should call "getAnyItems" method of SvtItemApi service with received term', (done) => {
+      const term = 'test_term';
+      spy.and.returnValue(of([]));
+
+      service.anySvtItems$.subscribe(() => {
+        expect(spy).toHaveBeenCalledWith(term);
+        done();
+      });
+
+      service.searchSvtItem.setValue(term);
+    });
+  });
+
+  describe('"userSvtItems$" getter', () => {
+    it('should reutrn list of svt items which belongs to user', (done) => {
+      const svtItems = [new ISvtItemBuilder().short_item_model('First').testBuild(), new ISvtItemBuilder().short_item_model('Second').testBuild()];
+      spyOn(svtItemApi, 'getUserItems').and.returnValue(of(svtItems));
+
+      service.userSvtItems$.subscribe(result => {
+        expect(result).toEqual(svtItems);
+        done();
+      });
+
+      const ssForm = service.form.get('source_snapshot') as FormGroup;
+      ssForm.get('id_tn').setValue('test');
+    });
+  });
+
   describe('#save', () => {
     it('should save form', () => {
       // TODO: Сделать тест
     });
   });
 
-  describe('#clearEmployee', () => {
+  describe('#clearSearchEmployee', () => {
     let spy: jasmine.Spy;
 
     beforeEach(() => {
-      spy = spyOnProperty(service, 'sourceSnapshot', 'set');
-      service.clearEmployee();
+      spy = spyOnProperty(service, 'employee', 'set');
+      service.clearSearchEmployee();
     });
 
     it('should set empty array to "searchEmployee" attribute', () => {
       expect(service.searchEmployee.value).toEqual(null);
     });
 
-    it('should call "sourceSnapshot" setter with empty object', () => {
+    it('should call "employee" setter with empty object', () => {
       expect(spy).toHaveBeenCalledWith({ });
     });
   });
 
-  describe('#clearService', () => {
+  describe('#clearSearchService', () => {
     let spy: jasmine.Spy;
 
     beforeEach(() => {
       spy = spyOnProperty(service, 'service', 'set');
-      service.clearService();
+      service.clearSearchService();
     });
 
     it('should set empty array to "searchService" attribute', () => {
@@ -196,6 +313,23 @@ describe('NewSdRequestFormService', () => {
     });
 
     it('should call "service" setter with empty object', () => {
+      expect(spy).toHaveBeenCalledWith({ });
+    });
+  });
+
+  describe('#clearSearchSvtItem', () => {
+    let spy: jasmine.Spy;
+
+    beforeEach(() => {
+      spy = spyOnProperty(service, 'svtItem', 'set');
+      service.clearSearchSvtItem();
+    });
+
+    it('should set empty array to "searchSvtItem" attribute', () => {
+      expect(service.searchSvtItem.value).toEqual(null);
+    });
+
+    it('should call "stvItem" setter with empty object', () => {
       expect(spy).toHaveBeenCalledWith({ });
     });
   });

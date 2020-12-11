@@ -6,6 +6,7 @@ import { NewSdRequestPageComponent } from './pages/new-sd-request-page/new-sd-re
 import { WizzardComponent } from './containers/wizzard/wizzard.component';
 import { WizzardUserInfoComponent } from './components/wizzard-user-info/wizzard-user-info.component';
 import { WizzardDescriptionComponent } from './components/wizzard-description/wizzard-description.component';
+import { WizzardSvtComponent } from './components/wizzard-svt/wizzard-svt.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { WizzardDescriptionComponent } from './components/wizzard-description/wi
     NewSdRequestPageComponent,
     WizzardComponent,
     WizzardUserInfoComponent,
-    WizzardDescriptionComponent
+    WizzardDescriptionComponent,
+    WizzardSvtComponent
   ]
 })
 export class SdRequestModule { }

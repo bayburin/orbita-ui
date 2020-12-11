@@ -1,3 +1,4 @@
+import { ISvtItem } from '@modules/sd-request/interfaces/svt-item.interface';
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { BehaviorSubject, Observable, of } from 'rxjs';
@@ -8,6 +9,7 @@ import { IBaseEmployee } from '@modules/employee/interfaces/employee.interface';
 import { IService } from '@modules/sd-request/interfaces/service.interface';
 import { ServiceDeskApi } from '@modules/sd-request/api/service-desk/service-desk.api';
 import { ITag } from '@shared/interfaces/tag.interface';
+import { SvtApi } from '@modules/sd-request/api/svt/svt.api';
 
 export interface EmployeeGroup {
   dept: number;
@@ -31,13 +33,16 @@ export class NewSdRequestFormService {
         description: ['', Validators.required]
       }),
       source_snapshot: this.formBuilder.group({
-        id_tn: [''],
-        tn: ['', Validators.required],
+        id_tn: [null],
+        tn: [null, Validators.required],
         fio: ['', Validators.required],
         dept: ['', Validators.required],
         email: [''],
         tel: [''],
-        mobile: ['']
+        mobile: [''],
+        invent_num: [''],
+        svt_item_id: [null],
+        svt_item: ['']
       }),
       attachments: [[]],
       tags: [[{ name: 'свободная_заявка' }]]
@@ -50,16 +55,19 @@ export class NewSdRequestFormService {
   searchService: FormControl = new FormControl();
   isUserInfoManually: FormControl = new FormControl(false);
   isNoService: FormControl = new FormControl(false);
+  isNoSvtItem: FormControl = new FormControl(false);
   avaliableServices$: Observable<IService[]> = of([]);
+  searchSvtItem: FormControl = new FormControl();
+  selectedSvtItem: ISvtItem;
+  svtItemList: FormControl = new FormControl();
 
   /**
    * Записывает данные выбранного работника в атрибуты формы.
    *
    * @employee - работник
    */
-  set sourceSnapshot(employee: IBaseEmployee) {
-    const currentForm = this.sdRequestForm.getValue();
-    const sourceSnapshotForm = currentForm.get('source_snapshot') as FormGroup;
+  set employee(employee: IBaseEmployee) {
+    const sourceSnapshotForm = this.form.get('source_snapshot') as FormGroup;
 
     this.selectedEmployee = employee;
     sourceSnapshotForm.patchValue({
@@ -78,6 +86,21 @@ export class NewSdRequestFormService {
   set service(service: IService) {
     this.selectedService = service;
     this.updateServiceForm(service);
+  }
+
+  /**
+   * Записывает данные выбранной ВТ в атрибуты формы.
+   */
+  set svtItem(svtItem: ISvtItem) {
+    this.selectedSvtItem = svtItem;
+    this.updateSvtItem(svtItem);
+  }
+
+  /**
+   * Возвращает экземпляр формы
+   */
+  get form(): FormGroup {
+    return this.sdRequestForm.getValue();
   }
 
   /**
@@ -145,6 +168,32 @@ export class NewSdRequestFormService {
   }
 
   /**
+   * Подписывается на поле поиска ВТ и возвращает массив найденной техники.
+   */
+  get anySvtItems$(): Observable<ISvtItem[]> {
+    return this.searchSvtItem.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      mergeMap(term => {
+        return this.svtApi.getAnyItems(term)
+          .pipe(catchError(error => {
+            // TODO: Добавить вывод ошибки через всплывающее окно.
+            this.searchSvtItem.setErrors({ serverError: true});
+
+            return of([]);
+          }));
+      })
+    );
+  }
+
+  get userSvtItems$(): Observable<ISvtItem[]> {
+    return this.form.get('source_snapshot').get('id_tn').valueChanges.pipe(
+      debounceTime(300),
+      mergeMap(idTn => this.svtApi.getUserItems(idTn))
+    );
+  }
+
+  /**
    * Возвращает доступный список тегов.
    */
   get tags$(): Observable<ITag[]> {
@@ -154,10 +203,12 @@ export class NewSdRequestFormService {
   constructor(
     private formBuilder: FormBuilder,
     private employeeApi: EmployeeApi,
-    private sdApi: ServiceDeskApi
+    private sdApi: ServiceDeskApi,
+    private svtApi: SvtApi
   ) {
     this.processingIsUserInfoManually();
     this.processingIsNoService();
+    this.processingIsNoSvtItem();
     this.loadServices();
   }
 
@@ -165,23 +216,31 @@ export class NewSdRequestFormService {
    * Сохраняет форму.
    */
   save(): void {
-    console.log(this.sdRequestForm.getValue().getRawValue());
+    console.log(this.form.getRawValue());
   }
 
   /**
    * Очищает поле поиска работника и соответствующие поля формы, которая отправится на сервер.
    */
-  clearEmployee(): void {
+  clearSearchEmployee(): void {
     this.searchEmployee.setValue(null);
-    this.sourceSnapshot = { } as IBaseEmployee;
+    this.employee = { } as IBaseEmployee;
   }
 
   /**
    * Очищает поле поиска услуги и соответствующие поля формы, которая отправится на сервер.
    */
-  clearService(): void {
+  clearSearchService(): void {
     this.searchService.setValue(null);
     this.service = { } as IService;
+  }
+
+  /**
+   * Очищает поле поиска ВТ и соответствующие поля формы, которая отправится на сервер.
+   */
+  clearSearchSvtItem(): void {
+    this.searchSvtItem.setValue(null);
+    this.svtItem = { } as ISvtItem;
   }
 
   /**
@@ -190,8 +249,7 @@ export class NewSdRequestFormService {
    * @param files - массив файлов
    */
   addAttachments(files: FileList): void {
-    const currentForm = this.sdRequestForm.getValue();
-    const attachments = currentForm.get('attachments') as FormControl;
+    const attachments = this.form.get('attachments') as FormControl;
     const currentArr = attachments.value.slice();
     const newArr: FileGroup[] = [];
 
@@ -209,8 +267,7 @@ export class NewSdRequestFormService {
   }
 
   removeAttachment(file: File): void {
-    const currentForm = this.sdRequestForm.getValue();
-    const attachments = currentForm.get('attachments') as FormControl;
+    const attachments = this.form.get('attachments') as FormControl;
     const currentArr = attachments.value.slice();
     const newArr = currentArr.filter((el: FileGroup) => el.file !== file);
 
@@ -252,6 +309,23 @@ export class NewSdRequestFormService {
     });
   }
 
+  /**
+   * Подписывается на поле "isNoSvtItem" и по результатам активирует/отключает поле "userSvtItems".
+   */
+  private processingIsNoSvtItem(): void {
+    this.isNoSvtItem.valueChanges.subscribe(isNoSvtItem => {
+      if (isNoSvtItem) {
+        this.searchSvtItem.disable();
+        this.svtItemList.disable();
+        this.svtItem = { } as ISvtItem;
+      } else {
+        this.searchSvtItem.enable();
+        this.svtItemList.enable();
+        this.svtItem = this.selectedSvtItem;
+      }
+    });
+  }
+
   // TODO: Перенести данные в стор.
   private loadServices(): void {
     this.avaliableServices$ = this.sdApi.getServices().pipe(catchError(error => {
@@ -279,12 +353,25 @@ export class NewSdRequestFormService {
     });
   }
 
-  private updateServiceForm(service: IService | null) {
-    const currentForm = this.sdRequestForm.getValue();
-
-    currentForm.patchValue({
+  /**
+   * Обновляет поля формы, связанной с выбранной услугой.
+   *
+   * @param service - услуга
+   */
+  private updateServiceForm(service: IService) {
+    this.form.patchValue({
       service_id: service?.id || null,
       service_name: service?.name || null
+    });
+  }
+
+  private updateSvtItem(svtItem: ISvtItem) {
+    const sourceSnapshotForm = this.form.get('source_snapshot') as FormGroup;
+
+    sourceSnapshotForm.patchValue({
+      invent_num: svtItem.invent_num,
+      svt_item_id: svtItem.item_id,
+      svt_item: svtItem.type ? `${svtItem.type.short_description} ${svtItem.item_model}` : ''
     });
   }
 }

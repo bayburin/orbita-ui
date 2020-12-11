@@ -1,0 +1,39 @@
+<div [formGroup]="sourceSnapshotForm" class="svt-step">
+  <div class="block">
+    <mat-slide-toggle [formControl]="isNoSvtItem">Обращение работника не связано ни с одним из перечисленных устройств</mat-slide-toggle>
+    <mat-selection-list [multiple]="false" class="svt-step" [formControl]="svtItemList" (selectionChange)="selectSvtItem($event.option.value)">
+      <div *ngIf="userSvtItems$ | async as userSvtItems">
+        <div *ngIf="userSvtItems.length > 0">
+          <div mat-subheader>Список устройств, закрепленных за работником</div>
+          <mat-list-option *ngFor="let item of userSvtItems" [value]="item">
+            <mat-icon mat-list-icon svgIcon="desktop-classic"></mat-icon>
+            <div mat-line>{{ item.type.short_description }} {{ item.short_item_model }}</div>
+            <div mat-line>Инвентарный: {{ item.invent_num }} </div>
+          </mat-list-option>
+          <mat-divider class="position-static"></mat-divider>
+        </div>
+      </div>
+      <mat-form-field class="search-svt-item">
+        <mat-label>Поиск среди всей вычислительной техники</mat-label>
+        <input name="search_svt_item" matInput [formControl]="searchSvtItem" placeholder="Инвентарный номер или штрих-код">
+        <mat-error *ngIf="searchSvtItem.hasError('serverError')">Ошибка поиска. Введите данные вручную.</mat-error>
+        <button *ngIf="searchSvtItem.value" matSuffix mat-icon-button (click)="clearSearchSvtItem()" [disabled]="isNoSvtItem.value">
+          <mat-icon svgIcon="close"></mat-icon>
+        </button>
+      </mat-form-field>
+      <div *ngIf="anySvtItems$ | async as anySvtItems">
+        <div *ngIf="anySvtItems.length > 0 && searchSvtItem.value">
+          <div mat-subheader>Список всех найденных устройств</div>
+          <mat-list-option *ngFor="let item of anySvtItems" [value]="item">
+            <mat-icon mat-list-icon svgIcon="desktop-classic"></mat-icon>
+            <div mat-line>{{ item.short_item_model }}</div>
+            <div mat-line>Инвентарный: {{ item.item_id }}</div>
+          </mat-list-option>
+        </div>
+        <div *ngIf="!anySvtItems.length && searchSvtItem.value">
+          <div mat-subheader>Ничего не найдено</div>
+        </div>
+      </div>
+    </mat-selection-list>
+  </div>
+</div>

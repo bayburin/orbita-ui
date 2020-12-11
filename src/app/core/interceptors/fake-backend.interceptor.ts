@@ -192,8 +192,49 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       }
     ];
 
-    if(req.url.endsWith('items') && req.method === 'GET') {
+    if(new RegExp('user_isses/\\d+/items$').test(req.url) && req.method === 'GET') {
       return of(new HttpResponse({ body: svtItems, status: 200 }));
+    }
+
+    const anyItems: ISvtItem[] = [
+      {
+        item_id: 123456,
+        type_id: 2,
+        workplace_id: 1205,
+        model_id: null,
+        item_model: "UNIT X1",
+        invent_num: "374821",
+        serial_num: null,
+        status: "in_workplace",
+        short_item_model: "UNIT X1",
+        type: {
+          type_id: 2,
+          name: "pc",
+          short_description: "Системный блок",
+          long_description: "Системный блок (включая неттопы)",
+        }
+      },
+      {
+        item_id: 654321,
+        type_id: 4,
+        workplace_id: 1205,
+        model_id: 1647,
+        item_model: "Samsung S23UVG",
+        invent_num: "675985",
+        serial_num: "CN0GH85DTV20087H0BTL",
+        status:" in_workplace",
+        short_item_model: "Samsung S23UVG",
+        type: {
+          type_id: 4,
+          name: "monitor",
+          short_description: "Монитор",
+          long_description: "Монитор (телевизор)",
+        }
+      }
+    ];
+
+    if (req.url.endsWith('api/v1/items') && req.method === 'GET') {
+      return of(new HttpResponse({ body: anyItems, status: 200 }));
     }
 
     return next.handle(req).pipe(

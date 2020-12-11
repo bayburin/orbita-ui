@@ -1,12 +1,12 @@
 <div [formGroup]="sourceSnapshotForm" class="search-employee-step">
   <div class="block">
     <mat-form-field class="d-block search-employee">
-      <mat-label>Поиск пользователя</mat-label>
+      <mat-label>Поиск работника</mat-label>
       <input matInput name="searchEmployee" placeholder="ФИО или табельный номер" [formControl]="searchEmployee"
         [matAutocomplete]="autoEmployee" [errorStateMatcher]="dynamicMatcher">
       <mat-hint align="end">Для ФИО минимум 3 символа</mat-hint>
       <mat-error *ngIf="searchEmployee.hasError('serverError')">Ошибка поиска. Введите данные вручную.</mat-error>
-      <button *ngIf="searchEmployee.value" mat-icon-button matSuffix (click)="clearEmployee()" [disabled]="isManually.value">
+      <button *ngIf="searchEmployee.value" mat-icon-button matSuffix (click)="clearSearchEmployee()" [disabled]="isManually.value">
         <mat-icon svgIcon="close"></mat-icon>
       </button>
       <mat-autocomplete #autoEmployee="matAutocomplete" [displayWith]="displayEmployeeFn" [autoActiveFirstOption]="true"

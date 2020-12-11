@@ -63,11 +63,11 @@ describe('WizzardDescriptionComponent', () => {
     });
   });
 
-  describe('#clearService', () => {
-    it('should call empty "clearService" method for NewSdRequestFormService service', () => {
-      const spy = spyOn(formService, 'clearService');
+  describe('#clearSearchService', () => {
+    it('should call empty "clearSearchService" method for NewSdRequestFormService service', () => {
+      const spy = spyOn(formService, 'clearSearchService');
 
-      component.clearService();
+      component.clearSearchService();
 
       expect(spy).toHaveBeenCalled();
     });

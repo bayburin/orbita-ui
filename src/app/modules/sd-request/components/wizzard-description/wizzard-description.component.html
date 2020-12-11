@@ -6,7 +6,7 @@
         <input matInput placeholder="Название услуги" [formControl]="searchService" [matAutocomplete]="autoService"
           [errorStateMatcher]="dynamicMatcher">
         <mat-error *ngIf="searchService.hasError('serverError')">Ошибка поиска. Введите данные вручную.</mat-error>
-        <button *ngIf="searchService.value" mat-icon-button matSuffix (click)="clearService()" [disabled]="isNoService.value">
+        <button *ngIf="searchService.value" mat-icon-button matSuffix (click)="clearSearchService()" [disabled]="isNoService.value">
           <mat-icon svgIcon="close"></mat-icon>
         </button>
         <mat-autocomplete #autoService="matAutocomplete" [displayWith]="displayServiceFn" [autoActiveFirstOption]="true"

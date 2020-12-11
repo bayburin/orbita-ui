@@ -62,8 +62,8 @@ export class WizzardDescriptionComponent implements OnInit {
   /**
    * Очищает компонент autocomplete, указывающее выбранную услугу.
    */
-  clearService(): void {
-    this.formService.clearService();
+  clearSearchService(): void {
+    this.formService.clearSearchService();
   }
 
   /**

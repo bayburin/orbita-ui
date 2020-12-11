@@ -5,21 +5,21 @@
   <mat-card-content>
     <form [formGroup]="sdRequestForm" (ngSubmit)="onSubmit()">
       <mat-horizontal-stepper #stepper>
-        <mat-step label="Данные о пользователе">
+        <mat-step label="Данные о работнике">
           <app-wizzard-user-info class="step-block" [sourceSnapshotForm]="sourceSnapshotForm"></app-wizzard-user-info>
           <div class="step-actions">
             <button mat-raised-button matStepperNext>Далее</button>
           </div>
         </mat-step>
         <mat-step label="Описание проблемы">
-          <app-wizzard-description [sdRequestForm]="sdRequestForm" class="step-block"></app-wizzard-description>
-          <div>
+          <app-wizzard-description class="step-block" [sdRequestForm]="sdRequestForm" ></app-wizzard-description>
+          <div class="step-actions">
             <button mat-raised-button matStepperNext>Далее</button>
           </div>
         </mat-step>
         <mat-step label="Данные о ВТ">
-          Данные о ВТ
-          <div>
+          <app-wizzard-svt class="step-block" [sourceSnapshotForm]="sourceSnapshotForm"></app-wizzard-svt>
+          <div class="step-actions">
             <button mat-raised-button matStepperNext>Далее</button>
           </div>
         </mat-step>

@@ -36,4 +36,10 @@ export class ISvtItemBuilder extends ModelBuilder<ISvtItem> {
 
     return this.model;
   }
+
+  short_item_model(short_item_model: string): ISvtItemBuilder {
+    this.model.short_item_model = short_item_model;
+
+    return this;
+  }
 }

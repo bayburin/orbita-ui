@@ -41,9 +41,9 @@ describe('WizzardUserInfoComponent', () => {
   });
 
   describe('#selectEmployee', () => {
-    it('should call "sourceSnapshot" setter for NewSdRequestFormService service', () => {
+    it('should call "employee" setter for NewSdRequestFormService service', () => {
       const employee = new IBaseEmployeeBuilder().build();
-      const spy = spyOnProperty(formService, 'sourceSnapshot', 'set');
+      const spy = spyOnProperty(formService, 'employee', 'set');
 
       component.selectEmployee(employee);
 
@@ -63,10 +63,11 @@ describe('WizzardUserInfoComponent', () => {
     });
   });
 
-  describe('#clearEmployee', () => {
-    it('should call empty "clearEmployee" method for NewSdRequestFormService service', () => {
-      const spy = spyOn(formService, 'clearEmployee');
-      component.clearEmployee();
+  describe('#clearSearchEmployee', () => {
+    it('should call empty "clearSearchEmployee" method for NewSdRequestFormService service', () => {
+      const spy = spyOn(formService, 'clearSearchEmployee');
+
+      component.clearSearchEmployee();
 
       expect(spy).toHaveBeenCalled();
     });

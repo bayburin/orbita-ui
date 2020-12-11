@@ -68,7 +68,7 @@ export class WizzardUserInfoComponent implements OnInit {
    * @param employee - выбранный работник
    */
   selectEmployee(employee: IBaseEmployee): void {
-    this.formService.sourceSnapshot = employee;
+    this.formService.employee = employee;
   }
 
   /**
@@ -83,8 +83,8 @@ export class WizzardUserInfoComponent implements OnInit {
   /**
    * Очищает компонент autocomplete, указывающее выбранного работника.
    */
-  clearEmployee(): void {
-    this.formService.clearEmployee();
+  clearSearchEmployee(): void {
+    this.formService.clearSearchEmployee();
   }
 }
 
