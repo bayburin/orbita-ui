@@ -1,8 +1,9 @@
 import { ISvtItem } from '@modules/sd-request/interfaces/svt-item.interface';
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, combineLatest } from 'rxjs';
 import { mergeMap, map, startWith, debounceTime, filter, catchError } from 'rxjs/operators';
+import { MatListOption } from '@angular/material/list';
 
 import { EmployeeApi } from '@modules/employee/api/employee.api';
 import { IBaseEmployee } from '@modules/employee/interfaces/employee.interface';
@@ -10,6 +11,10 @@ import { IService } from '@modules/sd-request/interfaces/service.interface';
 import { ServiceDeskApi } from '@modules/sd-request/api/service-desk/service-desk.api';
 import { ITag } from '@shared/interfaces/tag.interface';
 import { SvtApi } from '@modules/sd-request/api/svt/svt.api';
+import { UserFacade } from '@modules/user/facades/user.facade';
+import { IUser } from '@modules/user/interfaces/user.interface';
+import { IGroup } from '@modules/user/interfaces/group.interface';
+import { AuthHelper } from '@iss/ng-auth-center';
 
 export interface EmployeeGroup {
   dept: number;
@@ -19,6 +24,11 @@ export interface EmployeeGroup {
 export interface FileGroup {
   file: File;
   data: string | ArrayBuffer;
+}
+
+export interface UserGroup {
+  group: IGroup;
+  users: IUser[];
 }
 
 @Injectable({
@@ -45,21 +55,27 @@ export class NewSdRequestFormService {
         svt_item: ['']
       }),
       attachments: [[]],
-      tags: [[{ name: 'свободная_заявка' }]]
+      tags: [[{ name: 'свободная_заявка' }]],
+      users: [[this.authHelper.getJwtPayload()]]
     })
   );
   sdRequestForm$: Observable<FormGroup> = this.sdRequestForm.asObservable();
+
   selectedEmployee: IBaseEmployee;
   searchEmployee: FormControl = new FormControl();
+  isUserInfoManually: FormControl = new FormControl(false);
+
   selectedService: IService;
   searchService: FormControl = new FormControl();
-  isUserInfoManually: FormControl = new FormControl(false);
   isNoService: FormControl = new FormControl(false);
-  isNoSvtItem: FormControl = new FormControl(false);
   avaliableServices$: Observable<IService[]> = of([]);
-  searchSvtItem: FormControl = new FormControl();
+
   selectedSvtItem: ISvtItem;
+  searchSvtItem: FormControl = new FormControl();
+  isNoSvtItem: FormControl = new FormControl(false);
   svtItemList: FormControl = new FormControl();
+
+  searchUser: FormControl = new FormControl();
 
   /**
    * Записывает данные выбранного работника в атрибуты формы.
@@ -186,6 +202,9 @@ export class NewSdRequestFormService {
     );
   }
 
+  /**
+   * Подписывается на поле id_tn и по его данным ищет связанную ВТ.
+   */
   get userSvtItems$(): Observable<ISvtItem[]> {
     return this.form.get('source_snapshot').get('id_tn').valueChanges.pipe(
       debounceTime(300),
@@ -200,11 +219,42 @@ export class NewSdRequestFormService {
     return of([]);
   }
 
+  /**
+   * Возвращает список пользователей, сгруппированный по группам.
+   */
+  get userGroups$(): Observable<UserGroup[]> {
+    const filterObs = this.searchUser.valueChanges.pipe(startWith(''));
+
+    return combineLatest([filterObs, this.userFacade.users$]).pipe(
+      map(data => data[1].filter(user => user.fio.toLowerCase().includes(data[0].toLowerCase()))),
+      map(users => {
+        return users.reduce((acc, user) => {
+          const accEl = acc.find((el: UserGroup) => el.group && el.group.id === user.group_id);
+
+          if (accEl) {
+            accEl.users.push(user);
+          } else {
+            const res: UserGroup = {
+              group: user.group,
+              users: [user]
+            };
+
+            acc.push(res);
+          }
+
+          return acc;
+        }, []);
+      })
+    );
+  }
+
   constructor(
     private formBuilder: FormBuilder,
     private employeeApi: EmployeeApi,
     private sdApi: ServiceDeskApi,
-    private svtApi: SvtApi
+    private svtApi: SvtApi,
+    private userFacade: UserFacade,
+    private authHelper: AuthHelper
   ) {
     this.processingIsUserInfoManually();
     this.processingIsNoService();
@@ -244,6 +294,13 @@ export class NewSdRequestFormService {
   }
 
   /**
+   * Очищает поле поиска исполнителя.
+   */
+  clearSearchUser(): void {
+    this.searchUser.setValue('');
+  }
+
+  /**
    * Добавляет указанные файлы к форме.
    *
    * @param files - массив файлов
@@ -266,12 +323,44 @@ export class NewSdRequestFormService {
     attachments.setValue([...currentArr, ...newArr]);
   }
 
+  /**
+   * Удаляет указанный файл из формы.
+   *
+   * @param file - файл
+   */
   removeAttachment(file: File): void {
     const attachments = this.form.get('attachments') as FormControl;
     const currentArr = attachments.value.slice();
     const newArr = currentArr.filter((el: FileGroup) => el.file !== file);
 
     attachments.setValue(newArr);
+  }
+
+  /**
+   * Обрабатывает событие выбора/удаленеия исполнителя в заявке.
+   *
+   * @param event - объект события
+   */
+  selectUserEvent(event: MatListOption): void {
+    const currentArr = this.form.get('users').value.slice();
+
+    if (event.selected) {
+      currentArr.push(event.value)
+      this.form.get('users').setValue(currentArr);
+    } else {
+      const newArr = currentArr.filter((el: IUser) => el.id !== event.value.id);
+
+      this.form.get('users').setValue(newArr);
+    }
+  }
+
+  /**
+   * Проверяет, является ли указанный пользователь текущим пользователем системы.
+   *
+   * @param user - пользователь
+   */
+  isCurrentUser(user: IUser): boolean {
+    return this.authHelper.getJwtPayload().id === user.id;
   }
 
   /**
@@ -354,18 +443,23 @@ export class NewSdRequestFormService {
   }
 
   /**
-   * Обновляет поля формы, связанной с выбранной услугой.
+   * Обновляет поля формы, связанные с выбранной услугой.
    *
    * @param service - услуга
    */
-  private updateServiceForm(service: IService) {
+  private updateServiceForm(service: IService): void {
     this.form.patchValue({
       service_id: service?.id || null,
       service_name: service?.name || null
     });
   }
 
-  private updateSvtItem(svtItem: ISvtItem) {
+  /**
+   * Обновить поля формы, связанные с выбранной ВТ.
+   *
+   * @param svtItem - ВТ.
+   */
+  private updateSvtItem(svtItem: ISvtItem): void {
     const sourceSnapshotForm = this.form.get('source_snapshot') as FormGroup;
 
     sourceSnapshotForm.patchValue({

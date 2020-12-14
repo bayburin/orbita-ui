@@ -2,6 +2,8 @@ import * as faker from 'faker';
 
 import { ModelBuilder } from '@shared/builders/model.builder';
 import { IUser } from '@modules/user/interfaces/user.interface';
+import { IRole } from '@modules/user/interfaces/role.interface';
+import { IGroupBuilder } from '@modules/user/builders/i-group.builder';
 
 export class IUserBuilder extends ModelBuilder<IUser> {
   constructor() {
@@ -17,7 +19,9 @@ export class IUserBuilder extends ModelBuilder<IUser> {
       work_tel: '',
       mobile_tel: '',
       email: '',
-      is_vacation: false
+      is_vacation: false,
+      role: { } as IRole,
+      group: new IGroupBuilder().build()
     };
   }
 
@@ -31,12 +35,19 @@ export class IUserBuilder extends ModelBuilder<IUser> {
     this.model.work_tel = this.model.work_tel || '12-34';
     this.model.mobile_tel = this.model.mobile_tel || '1-222-333-44-55';
     this.model.email = this.model.email || faker.internet.email();
+    this.model.group = this.model.group.id ? this.model.group : new IGroupBuilder().testBuild();
 
     return this.model;
   }
 
   id(id: number): IUserBuilder {
     this.model.id = id;
+
+    return this;
+  }
+
+  fio(fio: string): IUserBuilder {
+    this.model.fio = fio;
 
     return this;
   }

@@ -3,9 +3,10 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 
 import { IService } from '@modules/sd-request/interfaces/service.interface';
 import { IBaseEmployee } from '@modules/employee/interfaces/employee.interface';
-import { EmployeeGroup } from '@modules/sd-request/services/new-sd-request-form/new-sd-request-form.service';
+import { EmployeeGroup, UserGroup } from '@modules/sd-request/services/new-sd-request-form/new-sd-request-form.service';
 import { ISvtItem } from '@modules/sd-request/interfaces/svt-item.interface';
 import { ITag } from '@shared/interfaces/tag.interface';
+import { IUser } from '@modules/user/interfaces/user.interface';
 
 export class NewSdRequestFormServiceStub {
   private sdRequestForm: BehaviorSubject<FormGroup> = new BehaviorSubject(
@@ -15,7 +16,6 @@ export class NewSdRequestFormServiceStub {
       attrs: new FormGroup({
         description: new FormControl('', [Validators.required]),
       }),
-      attachments: new FormControl([]),
       source_snapshot: new FormGroup({
         id_tn: new FormControl(''),
         tn: new FormControl('', [Validators.required]),
@@ -24,21 +24,29 @@ export class NewSdRequestFormServiceStub {
         email: new FormControl(''),
         tel: new FormControl(''),
         mobile: new FormControl('')
-      })
+      }),
+      attachments: new FormControl([]),
+      tags: new FormControl([]),
+      users: new FormControl([])
     })
   );
   sdRequestForm$: Observable<FormGroup> = this.sdRequestForm.asObservable();
+
   selectedEmployee: IBaseEmployee;
   searchEmployee: FormControl = new FormControl();
+  isUserInfoManually: FormControl = new FormControl(false);
+
   selectedService: IService;
   searchService: FormControl = new FormControl();
-  isUserInfoManually: FormControl = new FormControl(false);
   isNoService: FormControl = new FormControl(false);
-  isNoSvtItem: FormControl = new FormControl(false);
   avaliableServices$: Observable<IService[]> = of([]);
-  searchSvtItem: FormControl = new FormControl();
+
   selectedSvtItem: ISvtItem;
+  searchSvtItem: FormControl = new FormControl();
+  isNoSvtItem: FormControl = new FormControl(false);
   svtItemList: FormControl = new FormControl();
+
+  searchUser: FormControl = new FormControl();
 
   set employee(employee: IBaseEmployee) { }
   set service(service: IService) { }
@@ -49,11 +57,15 @@ export class NewSdRequestFormServiceStub {
   get anySvtItems$(): Observable<ISvtItem[]> { return of([]); }
   get userSvtItems$(): Observable<ISvtItem[]> { return of([]); }
   get tags$(): Observable<ITag[]> { return of([]); }
+  get userGroups$(): Observable<UserGroup[]> { return of([]) }
 
   save(): void { }
   clearSearchEmployee(): void { }
   clearSearchService(): void { }
   clearSearchSvtItem(): void { }
+  clearSearchUser(): void { }
   addAttachments(files: FileList): void { }
   removeAttachment(): void { }
+  selectUserEvent(event: any): void { }
+  isCurrentUser(user: IUser) {  }
 }

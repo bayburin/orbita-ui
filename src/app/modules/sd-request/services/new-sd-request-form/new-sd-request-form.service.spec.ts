@@ -1,7 +1,8 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { of } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, skip } from 'rxjs/operators';
+import { AuthHelper, AuthHelperStub } from '@iss/ng-auth-center';
 
 import { NewSdRequestFormService, EmployeeGroup } from './new-sd-request-form.service';
 import { EmployeeApi } from '@modules/employee/api/employee.api';
@@ -16,12 +17,17 @@ import { SvtApi } from '@modules/sd-request/api/svt/svt.api';
 import { SvtApiStub } from '@modules/sd-request/api/svt/svt.api.stub';
 import { ISvtItem } from '@modules/sd-request/interfaces/svt-item.interface';
 import { ISvtItemBuilder } from '@modules/sd-request/builders/i-svt-item.builder';
-
+import { UserFacade } from '@modules/user/facades/user.facade';
+import { UserFacadeStub } from '@modules/user/facades/user.facade.stub';
+import { IUserBuilder } from '@modules/user/builders/i-user.builder';
+import { UserGroup } from '@modules/sd-request/services/new-sd-request-form/new-sd-request-form.service';
 
 describe('NewSdRequestFormService', () => {
   let service: NewSdRequestFormService;
   let employeeApi: EmployeeApi;
   let svtItemApi: SvtApi;
+  let userFacade: UserFacade;
+  let authHelper: AuthHelper;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -30,13 +36,17 @@ describe('NewSdRequestFormService', () => {
         FormBuilder,
         { provide: EmployeeApi, useClass: EmployeeApiStub },
         { provide: ServiceDeskApi, useClass: ServiceDeskApiStub },
-        { provide: SvtApi, useClass: SvtApiStub }
+        { provide: SvtApi, useClass: SvtApiStub },
+        { provide: UserFacade, useClass: UserFacadeStub },
+        { provide: AuthHelper, useClass: AuthHelperStub }
       ]
     });
 
     service = TestBed.inject(NewSdRequestFormService);
     employeeApi = TestBed.inject(EmployeeApi);
     svtItemApi = TestBed.inject(SvtApi);
+    userFacade = TestBed.inject(UserFacade);
+    authHelper = TestBed.inject(AuthHelper);
   });
 
   it('should be created', () => {
@@ -283,6 +293,39 @@ describe('NewSdRequestFormService', () => {
     });
   });
 
+  describe('"userGroups$" getter', () => {
+    it('should return array of UserGroup', (done) => {
+      const user = new IUserBuilder().testBuild();
+      const resultGroup: UserGroup = {
+        group: user.group,
+        users: [user]
+      };
+
+      userFacade.users$ = of([user]);
+      service.userGroups$.subscribe(result => {
+        expect(result).toEqual([resultGroup]);
+        done();
+      });
+    });
+
+    it('should filter array if "searchUser" field receviving any data', (done) => {
+      const fio = 'test';
+      const user = new IUserBuilder().fio(fio).testBuild();
+      const resultGroup: UserGroup = {
+        group: user.group,
+        users: [user]
+      };
+
+      userFacade.users$ = of([new IUserBuilder().testBuild(), user]);
+      service.userGroups$.pipe(skip(1)).subscribe(result => {
+        expect(result).toEqual([resultGroup]);
+        done();
+      });
+
+      service.searchUser.setValue(fio);
+    });
+  });
+
   describe('#clearSearchEmployee', () => {
     let spy: jasmine.Spy;
 
@@ -331,6 +374,15 @@ describe('NewSdRequestFormService', () => {
 
     it('should call "stvItem" setter with empty object', () => {
       expect(spy).toHaveBeenCalledWith({ });
+    });
+  });
+
+  describe('#clearSearchUser', () => {
+    it('should set empty string to "searchUser" field', () => {
+      service.searchUser.setValue('test');
+      service.clearSearchUser();
+
+      expect(service.searchUser.value).toEqual('');
     });
   });
 
@@ -388,6 +440,22 @@ describe('NewSdRequestFormService', () => {
       service.sdRequestForm$.subscribe(form => {
         expect(form.get('attachments').value.slice().length).toEqual(0);
       });
+    });
+  });
+
+  describe('#isCurrentUser', () => {
+    it('should return true if received user is current user', () => {
+      const user = new IUserBuilder().testBuild();
+
+      spyOn(authHelper, 'getJwtPayload').and.returnValue(user);
+
+      expect(service.isCurrentUser(user)).toBeTrue();
+    });
+
+    it('should return false if received user is not current user', () => {
+      const user = new IUserBuilder().testBuild();
+
+      expect(service.isCurrentUser(user)).toBeFalse();
     });
   });
 });

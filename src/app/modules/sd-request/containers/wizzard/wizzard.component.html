@@ -12,7 +12,7 @@
           </div>
         </mat-step>
         <mat-step label="Описание проблемы">
-          <app-wizzard-description class="step-block" [sdRequestForm]="sdRequestForm" ></app-wizzard-description>
+          <app-wizzard-description class="step-block" [sdRequestForm]="sdRequestForm"></app-wizzard-description>
           <div class="step-actions">
             <button mat-raised-button matStepperNext>Далее</button>
           </div>
@@ -24,14 +24,14 @@
           </div>
         </mat-step>
         <mat-step label="Выбор исполнителя">
-          Выбор исполнителя
-          <div>
+          <app-wizzard-workers class="step-block" [sdRequestForm]="sdRequestForm"></app-wizzard-workers>
+          <div class="step-actions">
             <button mat-raised-button matStepperNext>Далее</button>
           </div>
         </mat-step>
         <mat-step label="Доп. данные">
           Доп. данные
-          <div>
+          <div class="step-actions">
             <button mat-raised-button matStepperNext>Далее</button>
           </div>
         </mat-step>
