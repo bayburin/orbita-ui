@@ -1,0 +1,27 @@
+@import '~assets/scss/variables';
+
+.additional-step {
+  display: flex;
+  flex-direction: column;
+  gap: 2 * $spacer;
+
+  & > .block {
+    width: 100%;
+  }
+}
+
+.comment {
+  width: 100%;
+  width: 600px;
+  max-width: 600px;
+}
+
+.priority-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.priority-button {
+  margin: 5px;
+}

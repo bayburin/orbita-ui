@@ -1,0 +1,24 @@
+<div [formGroup]="sdRequestForm" class="additional-step">
+  <div class="block">
+    <mat-form-field>
+      <mat-label>Срок выполнения заявки</mat-label>
+      <input matInput name="finished_at_plan" [matDatepicker]="finishedAtPlanPicker" formControlName="finished_at_plan">
+      <mat-datepicker-toggle matSuffix [for]="finishedAtPlanPicker"></mat-datepicker-toggle>
+      <mat-datepicker #finishedAtPlanPicker color="primary"></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div class="block">
+    <label id="priority">Приоритет заявки</label>
+    <mat-radio-group aria-labelledby="priority" formControlName="priority" class="priority-group">
+      <mat-radio-button class="priority-button" *ngFor="let priority of priorities | keyvalue" [value]="priority.key">
+        {{ priority.value.title }}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="block">
+    <mat-form-field class="comment">
+      <mat-label>Комментарий к заявке</mat-label>
+      <textarea matInput name="description" rows="5" placeholder="Неофициальные комментарии к заявке" formControlName="comment"></textarea>
+    </mat-form-field>
+  </div>
+</div>

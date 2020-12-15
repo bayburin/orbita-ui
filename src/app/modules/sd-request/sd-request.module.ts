@@ -8,6 +8,7 @@ import { WizzardUserInfoComponent } from './components/wizzard-user-info/wizzard
 import { WizzardDescriptionComponent } from './components/wizzard-description/wizzard-description.component';
 import { WizzardSvtComponent } from './components/wizzard-svt/wizzard-svt.component';
 import { WizzardWorkersComponent } from './components/wizzard-workers/wizzard-workers.component';
+import { WizzardAdditionalComponent } from './components/wizzard-additional/wizzard-additional.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { WizzardWorkersComponent } from './components/wizzard-workers/wizzard-wo
     WizzardUserInfoComponent,
     WizzardDescriptionComponent,
     WizzardSvtComponent,
-    WizzardWorkersComponent
+    WizzardWorkersComponent,
+    WizzardAdditionalComponent
   ]
 })
 export class SdRequestModule { }

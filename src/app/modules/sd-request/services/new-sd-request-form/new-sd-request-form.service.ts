@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { BehaviorSubject, Observable, of, combineLatest } from 'rxjs';
 import { mergeMap, map, startWith, debounceTime, filter, catchError } from 'rxjs/operators';
 import { MatListOption } from '@angular/material/list';
+import * as moment from 'moment';
 
 import { EmployeeApi } from '@modules/employee/api/employee.api';
 import { IBaseEmployee } from '@modules/employee/interfaces/employee.interface';
@@ -15,6 +16,7 @@ import { UserFacade } from '@modules/user/facades/user.facade';
 import { IUser } from '@modules/user/interfaces/user.interface';
 import { IGroup } from '@modules/user/interfaces/group.interface';
 import { AuthHelper } from '@iss/ng-auth-center';
+import { ClaimPriorities } from '@modules/claim/enums/claim-priorities.enum';
 
 export interface EmployeeGroup {
   dept: number;
@@ -39,6 +41,9 @@ export class NewSdRequestFormService {
     this.formBuilder.group({
       service_id: [''],
       service_name: [''],
+      priority: [ClaimPriorities.DEFAULT, Validators.required],
+      finished_at_plan: [moment(), Validators.required],
+      comment: [''],
       attrs: this.formBuilder.group({
         description: ['', Validators.required]
       }),
@@ -56,7 +61,7 @@ export class NewSdRequestFormService {
       }),
       attachments: [[]],
       tags: [[{ name: 'свободная_заявка' }]],
-      users: [[this.authHelper.getJwtPayload()]]
+      users: [[this.authHelper.getJwtPayload()]],
     })
   );
   sdRequestForm$: Observable<FormGroup> = this.sdRequestForm.asObservable();

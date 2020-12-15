@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
 /**
  * Navigation
@@ -15,6 +16,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTooltipModule, MAT_TOOLTIP_DEFAULT_OPTIONS } from '@angular/material/tooltip';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+
 
 /**
  * Layout
@@ -22,7 +25,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
-import { MatRippleModule } from '@angular/material/core';
+import { DateAdapter, MatNativeDateModule, MatRippleModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatStepperModule } from '@angular/material/stepper';
 
 //
@@ -46,6 +49,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
 
 const modules: any[] = [
   MatToolbarModule,
@@ -71,7 +75,9 @@ const modules: any[] = [
   MatSliderModule,
   MatSlideToggleModule,
   MatStepperModule,
-  MatChipsModule
+  MatChipsModule,
+  MatNativeDateModule,
+  MatButtonToggleModule
 ];
 
 @NgModule({
@@ -79,7 +85,22 @@ const modules: any[] = [
   exports: [...modules],
   providers: [
     { provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: { position: 'above', showDelay: 50 } },
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } },
+    { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    { provide: MAT_DATE_FORMATS, useValue:
+      {
+        parse: {
+          dateInput: 'LL',
+        },
+        display: {
+          dateInput: 'DD.MM.YY',
+          monthYearLabel: 'YYYY',
+          dateA11yLabel: 'LL',
+          monthYearA11yLabel: 'YYYY'
+        }
+      }
+    }
   ]
 })
 export class MaterialModule {

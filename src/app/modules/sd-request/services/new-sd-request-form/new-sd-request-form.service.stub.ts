@@ -1,5 +1,6 @@
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import * as moment from 'moment';
 
 import { IService } from '@modules/sd-request/interfaces/service.interface';
 import { IBaseEmployee } from '@modules/employee/interfaces/employee.interface';
@@ -7,12 +8,16 @@ import { EmployeeGroup, UserGroup } from '@modules/sd-request/services/new-sd-re
 import { ISvtItem } from '@modules/sd-request/interfaces/svt-item.interface';
 import { ITag } from '@shared/interfaces/tag.interface';
 import { IUser } from '@modules/user/interfaces/user.interface';
+import { ClaimPriorities } from '@modules/claim/enums/claim-priorities.enum';
 
 export class NewSdRequestFormServiceStub {
   private sdRequestForm: BehaviorSubject<FormGroup> = new BehaviorSubject(
     new FormGroup({
       service_id: new FormControl(''),
       service_name: new FormControl(''),
+      priority: new FormControl(ClaimPriorities.DEFAULT, [Validators.required]),
+      finished_at_plan: new FormControl(moment(), [Validators.required]),
+      comment: new FormControl(''),
       attrs: new FormGroup({
         description: new FormControl('', [Validators.required]),
       }),
