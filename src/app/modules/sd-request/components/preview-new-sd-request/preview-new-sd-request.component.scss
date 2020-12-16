@@ -1,0 +1,70 @@
+@import '~assets/scss/variables';
+
+.title {
+  display: block;
+
+  .labels {
+    display: inline-block;
+    margin-left: $spacer;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+
+  & > div:first-child {
+    width: 200px;
+    border-right: 1px solid $default-background-color;
+    padding: $spacer;
+  }
+
+  & > div:last-child {
+    width: 100%;
+    padding: $spacer $spacer 0 $spacer;
+  }
+
+  .divider {
+    position: static;
+    margin-top: $spacer;
+  }
+}
+
+
+.employee-card-wrapper {
+  display: flex;
+  align-self: center;
+  min-width: 500px;
+  max-width: 600px;
+  padding: 1.5 * $spacer;
+}
+
+.employee-card {
+  width: 100%;
+}
+
+.employee-card-content {
+  .column {
+    float: left;
+    width: 50%;
+
+    .content-table {
+      width: 100%;
+
+      .header {
+        color: $subtitle-color;
+      }
+    }
+  }
+}
+
+.small .mat-standard-chip {
+  font-size: 0.8rem;
+  padding: 5px 8px;
+  min-height: 24px;
+}

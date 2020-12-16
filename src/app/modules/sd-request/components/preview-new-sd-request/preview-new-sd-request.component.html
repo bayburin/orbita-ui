@@ -1,0 +1,111 @@
+<div mat-dialog-title class="title">
+  <span>Заявка по услуге SmarTeam</span>
+  <mat-chip-list class="labels">
+    <mat-chip>Низкий приоритет</mat-chip>
+    <mat-chip matTooltip="Срок контроля">
+      <mat-icon class="mat-18px mr-2" svgIcon="alarm"></mat-icon>
+      17.03.20
+    </mat-chip>
+  </mat-chip-list>
+</div>
+<mat-dialog-content class="mat-typography">
+  <div class="content">
+    <div class="row">
+      <div>Описание</div>
+      <div>
+        <p>Ошибка во время запуска программы</p>
+        <mat-list>
+          <div mat-subheader>Файлы</div>
+          <mat-list-item>
+            <mat-icon mat-list-icon svgIcon="file-outline"></mat-icon>
+            <div mat-line>скриншот_1.png</div>
+            <div mat-line>25 Кб</div>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon mat-list-icon svgIcon="file-outline"></mat-icon>
+            <div mat-line>скриншот_2.png</div>
+            <div mat-line>25 Кб</div>
+          </mat-list-item>
+        </mat-list>
+        <mat-divider class="divider"></mat-divider>
+      </div>
+    </div>
+    <div class="row">
+      <div>Заказчик</div>
+      <div>
+        <div class="block employee-card-wrapper">
+          <mat-card class="employee-card mat-elevation-z2" matRipple>
+            <mat-card-header>
+              <img mat-card-avatar src="assets/images/man.png">
+              <mat-card-title>Байбурин Р.Ф.</mat-card-title>
+              <mat-card-subtitle>инженер-программист 2 категории</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="employee-card-content">
+                <div class="column">
+                  <table class="content-table">
+                    <tr>
+                      <td class="header" width="25%">таб. №</td>
+                      <td>17664</td>
+                    </tr>
+                    <tr>
+                      <td class="header">отдел</td>
+                      <td>714</td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="column">
+                  <table class="content-table">
+                    <tr>
+                      <td class="header" width="25%">email</td>
+                      <td>bayburinrf@iss-reshetnev.ru</td>
+                    </tr>
+                    <tr>
+                      <td class="header">тел.</td>
+                      <td>84-29</td>
+                    </tr>
+                    <tr>
+                      <td class="header">сот.</td>
+                      <td></td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <mat-divider class="divider"></mat-divider>
+      </div>
+    </div>
+    <div class="row">
+      <div>Исполнители</div>
+      <div>
+        <div fxLayout="row" fxLayoutGap="20px">
+          <mat-list>
+            <div mat-subheader>Сектор ИТ</div>
+            <mat-list-item>Байбурин Р.Ф.</mat-list-item>
+            <mat-list-item>Сильченко Д.М.</mat-list-item>
+          </mat-list>
+          <mat-list>
+            <div mat-subheader>Сектор ремонта ВТ</div>
+            <mat-list-item>Дрянных А.Г.</mat-list-item>
+          </mat-list>
+        </div>
+        <mat-divider class="divider"></mat-divider>
+      </div>
+    </div>
+    <div class="row">
+      <div>Теги</div>
+      <div>
+        <mat-chip-list class="small">
+          <mat-chip>свободная_заявка</mat-chip>
+          <mat-chip>SmarTeam</mat-chip>
+        </mat-chip-list>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>Отменить</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>Создать заявку</button>
+</mat-dialog-actions>

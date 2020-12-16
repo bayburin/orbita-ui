@@ -24,9 +24,9 @@ export class WizzardComponent implements OnInit {
   }
 
   /**
-   * Сохраняет форму
+   * Открыть окно предпросмотра заявки.
    */
   onSubmit(): void {
-    this.formService.save();
+    this.formService.openPreview();
   }
 }

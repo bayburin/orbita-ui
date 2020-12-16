@@ -28,18 +28,16 @@ import { MatCardModule } from '@angular/material/card';
 import { DateAdapter, MatNativeDateModule, MatRippleModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatStepperModule } from '@angular/material/stepper';
 
-//
-// Data Table
-//
-
+/**
+ * Data Table
+ */
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
-//
-// Form Controls
-//
-
+/**
+ * Form Controls
+ */
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -49,6 +47,11 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
+/**
+ * Popups & Modals
+ */
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 const modules: any[] = [
@@ -77,7 +80,8 @@ const modules: any[] = [
   MatStepperModule,
   MatChipsModule,
   MatNativeDateModule,
-  MatButtonToggleModule
+  MatButtonToggleModule,
+  MatDialogModule
 ];
 
 @NgModule({

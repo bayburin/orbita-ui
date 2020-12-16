@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { BehaviorSubject, Observable, of, combineLatest } from 'rxjs';
 import { mergeMap, map, startWith, debounceTime, filter, catchError } from 'rxjs/operators';
 import { MatListOption } from '@angular/material/list';
+import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 
 import { EmployeeApi } from '@modules/employee/api/employee.api';
@@ -17,6 +18,7 @@ import { IUser } from '@modules/user/interfaces/user.interface';
 import { IGroup } from '@modules/user/interfaces/group.interface';
 import { AuthHelper } from '@iss/ng-auth-center';
 import { ClaimPriorities } from '@modules/claim/enums/claim-priorities.enum';
+import { PreviewNewSdRequestComponent } from '@modules/sd-request/components/preview-new-sd-request/preview-new-sd-request.component';
 
 export interface EmployeeGroup {
   dept: number;
@@ -259,7 +261,8 @@ export class NewSdRequestFormService {
     private sdApi: ServiceDeskApi,
     private svtApi: SvtApi,
     private userFacade: UserFacade,
-    private authHelper: AuthHelper
+    private authHelper: AuthHelper,
+    public dialog: MatDialog
   ) {
     this.processingIsUserInfoManually();
     this.processingIsNoService();
@@ -272,6 +275,21 @@ export class NewSdRequestFormService {
    */
   save(): void {
     console.log(this.form.getRawValue());
+  }
+
+  /**
+   * Открывает окно предпросмотра заявки.
+   */
+  openPreview(): void {
+    const dialogRef = this.dialog.open(PreviewNewSdRequestComponent, {
+      data: {
+        form: this.form.getRawValue()
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   /**
