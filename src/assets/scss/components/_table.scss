@@ -2,15 +2,17 @@
   width: 100%;
 }
 
-tr.claim-detail-row {
-  height: 0 !important;
-}
+table.expand-rows {
+  tr.parent-row > td {
+    border-bottom-width: 0 !important;
+  }
 
-.claim-element-detail {
-  overflow: hidden;
-  display: flex;
-}
+  tr.expand-row {
+    height: 0 !important;
+  }
 
-.claim-element-row td {
-  border-bottom-width: 0 !important;
+  .expand-row-detail {
+    display: flex;
+    overflow: hidden;
+  }
 }

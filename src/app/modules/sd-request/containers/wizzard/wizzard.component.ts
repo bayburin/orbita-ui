@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 import { NewSdRequestFormService } from '@modules/sd-request/services/new-sd-request-form/new-sd-request-form.service';
 
 @Component({
   selector: 'app-wizzard',
   templateUrl: './wizzard.component.html',
-  styleUrls: ['./wizzard.component.scss']
+  styleUrls: ['./wizzard.component.scss'],
+  providers: [{
+    provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true }
+  }]
 })
 export class WizzardComponent implements OnInit {
   sdRequestForm: FormGroup;
@@ -26,7 +30,7 @@ export class WizzardComponent implements OnInit {
   /**
    * Открыть окно предпросмотра заявки.
    */
-  onSubmit(): void {
+  submit(): void {
     this.formService.openPreview();
   }
 }

@@ -1,0 +1,18 @@
+.stepper {
+  .step-content {
+    display: block;
+    margin-top: 1.5 * $spacer;
+  }
+
+  .step-actions {
+    display: flex;
+    justify-content: space-between;
+    padding-top: $spacer;
+  }
+}
+
+.new-sd-request-wizzard {
+  .step-content {
+    height: 600px;
+  }
+}

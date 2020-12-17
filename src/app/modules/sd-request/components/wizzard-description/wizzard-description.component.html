@@ -43,11 +43,11 @@
       <mat-card class="mat-elevation-z2 dropzone" appDndFiles (fileDropped)="onFileDropped($event)">
         <input #filesRef type="file" multiple id="fileDrop" name="files" (change)="fileHandler($event)" multiple="true">
         <mat-icon class="mat-72px" svgIcon="upload"></mat-icon>
-        <h3>Перетащите файлы сюда</h3>
+        <h3>Переместите файлы сюда</h3>
         <h3>или</h3>
-        <button mat-raised-button (click)="filesRef.click()">
+        <button mat-stroked-button (click)="filesRef.click()">
           <mat-icon class="mat-18px" svgIcon="file-document-multiple-outline"></mat-icon>
-          Выберите файл
+          Выберите файлы
         </button>
       </mat-card>
       <div class="file-list" *ngIf="files.length">
