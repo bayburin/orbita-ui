@@ -6,7 +6,7 @@
     <form [formGroup]="sdRequestForm">
       <mat-horizontal-stepper class="stepper new-sd-request-wizzard">
         <mat-step label="Данные о работнике" [stepControl]="sourceSnapshotForm" errorMessage="Укажите работника">
-          <app-wizzard-user-info class="step-content" [sourceSnapshotForm]="sourceSnapshotForm"></app-wizzard-user-info>
+          <app-wizzard-user-info class="step-content-wrapper" [sourceSnapshotForm]="sourceSnapshotForm"></app-wizzard-user-info>
           <div class="step-actions">
             <span></span>
             <button type="submit" color="primary" *ngIf="sdRequestForm.valid" mat-raised-button (click)="submit()">Предпросмотр и создание</button>
@@ -14,7 +14,7 @@
           </div>
         </mat-step>
         <mat-step label="Описание проблемы" [stepControl]="sdRequestForm.get('attrs').get('description')" errorMessage="Укажите проблему">
-          <app-wizzard-description class="step-content" [sdRequestForm]="sdRequestForm"></app-wizzard-description>
+          <app-wizzard-description class="step-content-wrapper" [sdRequestForm]="sdRequestForm"></app-wizzard-description>
           <div class="step-actions">
             <button mat-raised-button matStepperPrevious>Назад</button>
             <button type="submit" color="primary" *ngIf="sdRequestForm.valid" mat-raised-button (click)="submit()">Предпросмотр и создание</button>
@@ -22,7 +22,7 @@
           </div>
         </mat-step>
         <mat-step label="Данные о ВТ">
-          <app-wizzard-svt class="step-content" [sourceSnapshotForm]="sourceSnapshotForm"></app-wizzard-svt>
+          <app-wizzard-svt class="step-content-wrapper" [sourceSnapshotForm]="sourceSnapshotForm"></app-wizzard-svt>
           <div class="step-actions">
             <button mat-raised-button matStepperPrevious>Назад</button>
             <button type="submit" color="primary" *ngIf="sdRequestForm.valid" mat-raised-button (click)="submit()">Предпросмотр и создание</button>
@@ -30,7 +30,7 @@
           </div>
         </mat-step>
         <mat-step label="Выбор исполнителя">
-          <app-wizzard-workers class="step-content" [sdRequestForm]="sdRequestForm"></app-wizzard-workers>
+          <app-wizzard-workers class="step-content-wrapper" [sdRequestForm]="sdRequestForm"></app-wizzard-workers>
           <div class="step-actions">
             <button mat-raised-button matStepperPrevious>Назад</button>
             <button type="submit" color="primary" *ngIf="sdRequestForm.valid" mat-raised-button (click)="submit()">Предпросмотр и создание</button>
@@ -38,7 +38,7 @@
           </div>
         </mat-step>
         <mat-step label="Доп. данные">
-          <app-wizzard-additional class="step-content" [sdRequestForm]="sdRequestForm"></app-wizzard-additional>
+          <app-wizzard-additional class="step-content-wrapper" [sdRequestForm]="sdRequestForm"></app-wizzard-additional>
           <div class="step-actions">
             <button mat-raised-button matStepperPrevious>Назад</button>
             <button type="submit" color="primary" *ngIf="sdRequestForm.valid" mat-raised-button (click)="submit()">Предпросмотр и создание</button>

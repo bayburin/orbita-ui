@@ -1,5 +1,5 @@
 .stepper {
-  .step-content {
+  .step-content-wrapper {
     display: block;
     margin-top: 1.5 * $spacer;
   }
@@ -12,7 +12,29 @@
 }
 
 .new-sd-request-wizzard {
-  .step-content {
+  .step-content-wrapper {
     height: 600px;
+  }
+
+  .step-content-block + .step-content-block {
+    margin-top: 2 * $spacer;
+  }
+
+  .small-input-block {
+    mat-form-field {
+      width: 100%;
+      min-width: 150px;
+      max-width: 300px;
+    }
+
+    mat-form-field + mat-form-field {
+      margin-left: 1.5 * $spacer;
+    }
+  }
+
+  .step-form-group {
+    display: block;
+    width: 100%;
+    max-width: 600px;
   }
 }

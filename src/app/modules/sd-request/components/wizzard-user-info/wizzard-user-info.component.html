@@ -1,6 +1,6 @@
-<div [formGroup]="sourceSnapshotForm" class="search-employee-step">
-  <div class="block">
-    <mat-form-field class="d-block search-employee">
+<div [formGroup]="sourceSnapshotForm" class="step-content">
+  <div class="step-content-block">
+    <mat-form-field class="step-form-group">
       <mat-label>Поиск работника</mat-label>
       <input matInput name="searchEmployee" placeholder="ФИО или табельный номер" [formControl]="searchEmployee"
         [matAutocomplete]="autoEmployee" [errorStateMatcher]="dynamicMatcher">
@@ -20,8 +20,8 @@
     <mat-slide-toggle [formControl]="isManually">Ввести данные о пользователе вручную</mat-slide-toggle>
   </div>
 
-  <div class="block" fxLayout.lt-md="column">
-    <div *ngIf="isManually.value" class="input-block">
+  <div class="step-content-block">
+    <div *ngIf="isManually.value" class="small-input-block">
       <mat-form-field>
         <mat-label>Табельный номер</mat-label>
         <input matInput name="tn" placeholder="Табельный номер" formControlName="tn" required>
@@ -39,7 +39,7 @@
       </mat-form-field>
     </div>
 
-    <div class="input-block">
+    <div class="small-input-block">
       <mat-form-field>
         <mat-label>Электронная почта</mat-label>
         <input matInput name="email" placeholder="Электронная почта" formControlName="email">
@@ -56,8 +56,8 @@
   </div>
 
   <ng-container *ngIf="searchEmployee.value && tn">
-    <mat-divider class="block position-static"></mat-divider>
-    <div class="block employee-card-wrapper">
+    <mat-divider class="step-content-block position-static"></mat-divider>
+    <div class="step-content-block employee-card-wrapper ml-auto mr-auto">
       <mat-card class="employee-card mat-elevation-z2" matRipple>
         <mat-card-header>
           <img mat-card-avatar [src]="genders[gender]?.image">
