@@ -8,6 +8,7 @@ import { DatetimePipe } from './pipes/datetime/datetime.pipe';
 import { MiddleNamePipe } from './pipes/middle-name/middle-name.pipe';
 import { FormatBytesPipe } from './pipes/format-bytes/format-bytes.pipe';
 import { DndFilesDirective } from './directives/dnd-files/dnd-files.directive';
+import { EmployeeMiniCardComponent } from './components/employee-mini-card/employee-mini-card.component';
 
 const modules: any[] = [
   CommonModule,
@@ -21,7 +22,8 @@ const declarations: any[] = [
   DatetimePipe,
   MiddleNamePipe,
   FormatBytesPipe,
-  DndFilesDirective
+  DndFilesDirective,
+  EmployeeMiniCardComponent
 ];
 
 @NgModule({
