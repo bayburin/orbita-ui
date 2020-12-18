@@ -6,6 +6,11 @@
   min-width: 500px;
   max-width: 600px;
   padding: 1.5 * $spacer;
+
+  & > * {
+    display: block;
+    width: 100%;
+  }
 }
 
 .employee-card {

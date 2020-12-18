@@ -58,6 +58,9 @@
   <ng-container *ngIf="searchEmployee.value && tn">
     <mat-divider class="step-content-block position-static"></mat-divider>
     <div class="step-content-block employee-card-wrapper ml-auto mr-auto">
+      <app-employee-mini-card [employee]="selectedEmployee"></app-employee-mini-card>
+    </div>
+    <!-- <div class="step-content-block employee-card-wrapper ml-auto mr-auto">
       <mat-card class="employee-card mat-elevation-z2" matRipple>
         <mat-card-header>
           <img mat-card-avatar [src]="genders[gender]?.image">
@@ -97,6 +100,6 @@
           </div>
         </mat-card-content>
       </mat-card>
-    </div>
+    </div> -->
   </ng-container>
 </div>

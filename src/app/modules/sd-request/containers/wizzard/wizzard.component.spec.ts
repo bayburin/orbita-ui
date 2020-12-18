@@ -36,7 +36,7 @@ describe('WizzardComponent', () => {
     it('should call "save" method of NewSdRequestFormService service', () => {
       const spy = spyOn(formService, 'save');
 
-      component.onSubmit();
+      component.submit();
 
       expect(spy).toHaveBeenCalled();
     });

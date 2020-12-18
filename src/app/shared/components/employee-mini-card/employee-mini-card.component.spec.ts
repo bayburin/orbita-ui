@@ -4,7 +4,7 @@ import { MaterialModule } from '@shared/material.module';
 import { EmployeeMiniCardComponent } from './employee-mini-card.component';
 import { IBaseEmployeeBuilder } from '@modules/employee/builders/i-base-employee.builder';
 
-fdescribe('EmployeeMiniCardComponent', () => {
+describe('EmployeeMiniCardComponent', () => {
   let component: EmployeeMiniCardComponent;
   let fixture: ComponentFixture<EmployeeMiniCardComponent>;
 

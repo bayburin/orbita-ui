@@ -16,9 +16,11 @@ import { EmployeeGroup } from '@modules/sd-request/services/new-sd-request-form/
 })
 export class WizzardUserInfoComponent implements OnInit {
   searchEmployee: FormControl;
+  selectedEmployee: IBaseEmployee;
   employeeGroups$: Observable<EmployeeGroup[]>;
   isManually: FormControl;
   dynamicMatcher = new DynamicErrorStateMatcher();
+  // TODO: удалить
   genders = gendersMap;
   @Input() sourceSnapshotForm: FormGroup;
 
@@ -26,6 +28,7 @@ export class WizzardUserInfoComponent implements OnInit {
     return this.sourceSnapshotForm.get('tn').value;
   }
 
+  // TODO: Удалить геттеры
   get fio(): string {
     return this.sourceSnapshotForm.get('fio').value;
   }
@@ -69,6 +72,8 @@ export class WizzardUserInfoComponent implements OnInit {
    */
   selectEmployee(employee: IBaseEmployee): void {
     this.formService.employee = employee;
+    // TODO: Это присваивание сейчас дублируется в сервисе.
+    this.selectedEmployee = employee;
   }
 
   /**
