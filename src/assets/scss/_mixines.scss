@@ -1,0 +1,33 @@
+@mixin material-bootstrap-utilities($primary, $success, $warn) {
+  .bg-primary {
+    background-color: $primary !important;
+    color: $light-text-color !important;
+  }
+
+  .bg-success {
+    background-color: $success !important;
+  }
+
+  .bg-danger {
+    background-color: $warn !important;
+    color: $light-text-color !important;
+  }
+
+  .text-primary {
+    color: $primary !important;
+  }
+
+  .text-success {
+    color: $success !important;
+  }
+
+  .text-danger {
+    color: $warn !important;
+  }
+}
+
+@mixin form-border-color($color) {
+  .mat-form-field-appearance-outline .mat-form-field-outline-thick {
+    color: $color;
+  }
+}

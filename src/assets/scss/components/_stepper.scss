@@ -20,6 +20,12 @@
     margin-top: 2 * $spacer;
   }
 
+  .step-form-group {
+    display: block;
+    width: 100%;
+    max-width: 600px;
+  }
+
   .small-input-block {
     mat-form-field {
       width: 100%;
@@ -30,11 +36,5 @@
     mat-form-field + mat-form-field {
       margin-left: 1.5 * $spacer;
     }
-  }
-
-  .step-form-group {
-    display: block;
-    width: 100%;
-    max-width: 600px;
   }
 }

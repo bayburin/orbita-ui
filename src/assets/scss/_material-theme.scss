@@ -1,13 +1,6 @@
 @import "~@angular/material/theming";
 @include mat-core();
 
-$orbita-theme-primary: mat-palette($mat-main-primary);
-$orbita-theme-accent: mat-palette($mat-green);
-// , 400, 300, 600
-$orbita-theme-warn: mat-palette($mat-red);
-
-$orbita-theme: mat-light-theme($orbita-theme-primary, $orbita-theme-accent, $orbita-theme-warn);
-
 @function orbita-mat-light-theme-foreground($color) {
   @return (
       base:              $color,
@@ -26,12 +19,40 @@ $orbita-theme: mat-light-theme($orbita-theme-primary, $orbita-theme-accent, $orb
       slider-off-active: rgba($color, 0.38),
   );
 };
-
 $orbita-foreground: orbita-mat-light-theme-foreground($gray-black);
-$orbita-app-theme: map-merge($orbita-theme, (foreground: $orbita-foreground));
 
-@include angular-material-theme($orbita-app-theme);
+/**
+ *
+ * Default Theme
+ *
+ */
+$default-palette-primary: mat-palette($mat-iss-default-primary);
+$default-palette-accent: mat-palette($mat-green);
+$default-palette-warn: mat-palette($mat-red);
 
-.mat-h1 {
-  color: $primary;
+$default-theme: mat-light-theme($default-palette-primary, $default-palette-accent, $default-palette-warn);
+$default-app-theme: map-merge($default-theme, (foreground: $orbita-foreground));
+
+.iss-default-theme {
+  @include angular-material-theme($default-app-theme);
+  @include material-bootstrap-utilities(mat-color($default-palette-primary), mat-color($default-palette-accent), mat-color($default-palette-warn));
+  @include form-border-color(map-get($mat-iss-default-primary, 300));
+}
+
+/**
+ *
+ * Blue Gray Theme
+ *
+ */
+$blue-gray-palette-primary: mat-palette($mat-blue-gray);
+$blue-gray-palette-accent: mat-palette($mat-green);
+$blue-gray-palette-warn: mat-palette($mat-red);
+
+$blue-gray-theme: mat-light-theme($blue-gray-palette-primary, $blue-gray-palette-accent, $blue-gray-palette-warn);
+$blue-gray-app-theme: map-merge($blue-gray-theme, (foreground: $orbita-foreground));
+
+.blue-gray-theme {
+  @include angular-material-theme($blue-gray-app-theme);
+  @include material-bootstrap-utilities(mat-color($blue-gray-palette-primary), mat-color($blue-gray-palette-accent), mat-color($blue-gray-palette-warn));
+  @include form-border-color(map-get($blue-gray-palette-primary, 300));
 }

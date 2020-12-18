@@ -9,7 +9,7 @@ $gray-light: #e0e0e0; // Рамки компонентов
 $gray-light-dark: #c8c8c8; // Стандартные рамки элементов
 $gray-dark: #6c757d;
 $gray-black: #2c2c2c;
-$mat-main-primary: (
+$mat-iss-default-primary: (
   50: #e6eaf5,
   100: #c2cbe7,
   200: #99a8d7,
@@ -42,9 +42,9 @@ $mat-main-primary: (
   )
 );
 
-$primary: map-get($mat-main-primary, 500);
-$accent: map-get($mat-green, 500);
-$warn: map-get($mat-red, 500);
+// $iss-default-primary: map-get($mat-iss-default-primary, 500);
+// $iss-default-accent: map-get($mat-green, 500);
+// $iss-default-warn: map-get($mat-red, 500);
 
 // Body
 $body-bg-color: $gray-light-white;
@@ -54,8 +54,8 @@ $body-color: $gray-black;
 $spacer: 1rem;
 
 // Links
-$link-color: $primary;
-$link-hover-color: map-get($mat-main-primary, 800);
+$link-color: map-get($mat-iss-default-primary, 500);
+$link-hover-color: map-get($mat-iss-default-primary, 800);
 $link-hover-decoration: none;
 
 // Text

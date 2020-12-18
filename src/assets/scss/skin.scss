@@ -4,11 +4,11 @@
 // Импорт шрифтов и иконок
 @import "font";
 
+// Импорт миксин
+@import "mixines";
+
 // Импорт переменных
 @import "variables";
-
-// Импорт стилей для утилит bootstrap
-@import "material-bootstrap-utilities";
 
 // Импорт material темы
 @import "material-theme";
@@ -19,6 +19,7 @@
 @import "components/table";
 @import "components/icon";
 @import "components/stepper";
+@import "components/headers";
 
 
 body { background-color: $body-bg-color; }
