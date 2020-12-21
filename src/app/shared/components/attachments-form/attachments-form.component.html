@@ -1,0 +1,23 @@
+<mat-card class="mat-elevation-z2 dropzone-file" appDndFiles (fileDropped)="onFileDropped($event)">
+  <input #filesRef type="file" multiple id="fileDrop" name="files" (change)="fileHandler($event)" multiple="true">
+  <mat-icon class="mat-72px" svgIcon="upload"></mat-icon>
+  <h3>Переместите файлы сюда</h3>
+  <h3>или</h3>
+  <button mat-stroked-button (click)="filesRef.click()">
+    <mat-icon class="mat-18px" svgIcon="file-document-multiple-outline"></mat-icon>
+    Выберите файлы
+  </button>
+</mat-card>
+<div *ngIf="attachmentsFormArray.length">
+  <mat-list>
+    <div mat-subheader>Выбранные файлы:</div>
+    <mat-list-item *ngFor="let file of attachmentsFormArray.value">
+      <mat-icon mat-list-icon svgIcon="file-outline"></mat-icon>
+      <div mat-line>{{ file.file.name }}</div>
+      <div mat-line>{{ file.file.size | formatBytes }}</div>
+      <button mat-icon-button (click)="deleteFile(file.file)">
+        <mat-icon svgIcon="trash-can-outline" matTooltip="Удалить файл"></mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
+</div>

@@ -39,8 +39,9 @@
     </div>
   </div>
   <div class="column">
-    <div class="block" formGroupName="attrs">
-      <mat-card class="mat-elevation-z2 dropzone" appDndFiles (fileDropped)="onFileDropped($event)">
+    <div class="block drop-files" formGroupName="attrs">
+      <app-attachments-form></app-attachments-form>
+      <!-- <mat-card class="mat-elevation-z2 dropzone" appDndFiles (fileDropped)="onFileDropped($event)">
         <input #filesRef type="file" multiple id="fileDrop" name="files" (change)="fileHandler($event)" multiple="true">
         <mat-icon class="mat-72px" svgIcon="upload"></mat-icon>
         <h3>Переместите файлы сюда</h3>
@@ -50,7 +51,7 @@
           Выберите файлы
         </button>
       </mat-card>
-      <div class="file-list" *ngIf="files.length">
+      <div *ngIf="files.length">
         <mat-list>
           <div mat-subheader>Выбранные файлы:</div>
           <mat-list-item *ngFor="let file of files; let i = index">
@@ -62,7 +63,7 @@
             </button>
           </mat-list-item>
         </mat-list>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
