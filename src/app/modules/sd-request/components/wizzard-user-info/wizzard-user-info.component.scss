@@ -12,22 +12,3 @@
     width: 100%;
   }
 }
-
-.employee-card {
-  width: 100%;
-}
-
-.employee-card-content {
-  .column {
-    float: left;
-    width: 50%;
-
-    .content-table {
-      width: 100%;
-
-      .header {
-        color: $text-muted;
-      }
-    }
-  }
-}

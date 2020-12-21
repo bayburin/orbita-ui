@@ -19,7 +19,7 @@ export class EmployeeApi {
    * @param key - имя фильтра
    * @param value - начение фильтра
    */
-  getEmployees(key?: string, value?: string): Observable<IBaseEmployee[]> {
+  getEmployees(key?: 'phoneText' | 'personnelNo' | 'fullName', value?: string): Observable<IBaseEmployee[]> {
     let params = {};
 
     if (key) {

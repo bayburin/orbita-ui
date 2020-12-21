@@ -2,9 +2,12 @@
   <div class="step-content-block">
     <mat-form-field class="step-form-group">
       <mat-label>Поиск работника</mat-label>
-      <input matInput name="searchEmployee" placeholder="ФИО или табельный номер" [formControl]="searchEmployee"
-        [matAutocomplete]="autoEmployee" [errorStateMatcher]="dynamicMatcher">
-      <mat-hint align="end">Для ФИО минимум 3 символа</mat-hint>
+      <input matInput name="searchEmployee" placeholder="ФИО, табельный номер или номер телефона" [formControl]="searchEmployee"
+        [matAutocomplete]="autoEmployee" [errorStateMatcher]="dynamicErrorMatcher">
+      <mat-hint align="end">
+        <div>Для телефона номер в виде XX-XX</div>
+        <div>Для ФИО минимум 3 символа</div>
+      </mat-hint>
       <mat-error *ngIf="searchEmployee.hasError('serverError')">Ошибка поиска. Введите данные вручную.</mat-error>
       <button *ngIf="searchEmployee.value" mat-icon-button matSuffix (click)="clearSearchEmployee()" [disabled]="isManually.value">
         <mat-icon svgIcon="close"></mat-icon>
@@ -60,46 +63,5 @@
     <div class="step-content-block employee-card-wrapper ml-auto mr-auto">
       <app-employee-mini-card [employee]="selectedEmployee"></app-employee-mini-card>
     </div>
-    <!-- <div class="step-content-block employee-card-wrapper ml-auto mr-auto">
-      <mat-card class="employee-card mat-elevation-z2" matRipple>
-        <mat-card-header>
-          <img mat-card-avatar [src]="genders[gender]?.image">
-          <mat-card-title>{{ fio }}</mat-card-title>
-          <mat-card-subtitle>{{ profession | lowercase }}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="employee-card-content">
-            <div class="column">
-              <table class="content-table">
-                <tr>
-                  <td class="header" width="25%">таб. №</td>
-                  <td>{{ tn }}</td>
-                </tr>
-                <tr>
-                  <td class="header">отдел</td>
-                  <td>{{ dept }}</td>
-                </tr>
-              </table>
-            </div>
-            <div class="column">
-              <table class="content-table">
-                <tr>
-                  <td class="header" width="25%">email</td>
-                  <td>{{ email }}</td>
-                </tr>
-                <tr>
-                  <td class="header">тел.</td>
-                  <td>{{ tel }}</td>
-                </tr>
-                <tr>
-                  <td class="header">сот.</td>
-                  <td>{{ mobile }}</td>
-                </tr>
-              </table>
-            </div>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </div> -->
   </ng-container>
 </div>

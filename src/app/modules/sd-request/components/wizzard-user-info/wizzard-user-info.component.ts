@@ -1,13 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { startWith, filter, debounceTime, mergeMap, catchError } from 'rxjs/operators';
 
 import { DynamicErrorStateMatcher } from '@shared/material/dynamic-error-state-matcher';
 import { IBaseEmployee } from '@modules/employee/interfaces/employee.interface';
-import { gendersMap } from '@modules/employee/enums/gender.enum';
-import { Genders } from '@modules/employee/enums/gender.enum';
 import { NewSdRequestFormService } from '@modules/sd-request/services/new-sd-request-form/new-sd-request-form.service';
-import { EmployeeGroup } from '@modules/sd-request/services/new-sd-request-form/new-sd-request-form.service';
+import { IBaseEmployeeGroup } from '@modules/employee/interfaces/base-employee-group.interface';
 
 @Component({
   selector: 'app-wizzard-user-info',
@@ -15,54 +14,22 @@ import { EmployeeGroup } from '@modules/sd-request/services/new-sd-request-form/
   styleUrls: ['./wizzard-user-info.component.scss']
 })
 export class WizzardUserInfoComponent implements OnInit {
-  searchEmployee: FormControl;
+  searchEmployee: FormControl = new FormControl();
+  isManually: FormControl = new FormControl(false);
+  employeeGroups$: Observable<IBaseEmployeeGroup[]>;
   selectedEmployee: IBaseEmployee;
-  employeeGroups$: Observable<EmployeeGroup[]>;
-  isManually: FormControl;
-  dynamicMatcher = new DynamicErrorStateMatcher();
-  // TODO: удалить
-  genders = gendersMap;
+  dynamicErrorMatcher = new DynamicErrorStateMatcher();
   @Input() sourceSnapshotForm: FormGroup;
 
   get tn(): number {
     return this.sourceSnapshotForm.get('tn').value;
   }
 
-  // TODO: Удалить геттеры
-  get fio(): string {
-    return this.sourceSnapshotForm.get('fio').value;
-  }
-
-  get dept(): number {
-    return this.sourceSnapshotForm.get('dept').value;
-  }
-
-  get email(): string {
-    return this.sourceSnapshotForm.get('email').value;
-  }
-
-  get tel(): string {
-    return this.sourceSnapshotForm.get('tel').value;
-  }
-
-  get mobile(): string {
-    return this.sourceSnapshotForm.get('mobile').value;
-  }
-
-  get profession(): string {
-    return this.formService.selectedEmployee.professionForAccounting;
-  }
-
-  get gender(): Genders {
-    return this.formService.selectedEmployee.sex;
-  }
-
   constructor(private formService: NewSdRequestFormService) { }
 
   ngOnInit(): void {
-    this.searchEmployee = this.formService.searchEmployee;
-    this.isManually = this.formService.isUserInfoManually;
-    this.employeeGroups$ = this.formService.employeeGroups$;
+    this.searchEmployeeGroups();
+    this.processingIsEmployeeManually();
   }
 
   /**
@@ -71,9 +38,15 @@ export class WizzardUserInfoComponent implements OnInit {
    * @param employee - выбранный работник
    */
   selectEmployee(employee: IBaseEmployee): void {
-    this.formService.employee = employee;
-    // TODO: Это присваивание сейчас дублируется в сервисе.
     this.selectedEmployee = employee;
+    this.sourceSnapshotForm.patchValue({
+      id_tn: employee.id,
+      tn: employee.personnelNo,
+      fio: employee.fullName,
+      dept: employee.departmentForAccounting,
+      email: employee.emailText,
+      tel: employee.phoneText
+    });
   }
 
   /**
@@ -89,7 +62,45 @@ export class WizzardUserInfoComponent implements OnInit {
    * Очищает компонент autocomplete, указывающее выбранного работника.
    */
   clearSearchEmployee(): void {
-    this.formService.clearSearchEmployee();
+    this.searchEmployee.setValue(null);
+    this.selectEmployee({ } as IBaseEmployee);
+  }
+
+  private searchEmployeeGroups(): void {
+    this.employeeGroups$ = this.searchEmployee.valueChanges.pipe(
+      startWith(''),
+      filter(term => this.isNumber(term) ? true : term && term.length >= 2),
+      debounceTime(300),
+      mergeMap(term => {
+        return this.formService.searchEmployees(term)
+          .pipe(catchError(error => {
+            console.log(error);
+            this.searchEmployee.setErrors({ serverError: true});
+
+            return of([]);
+          }));
+      })
+    );
+  }
+
+  /**
+   * Проверяет, содержит ли полученная строка только числа.
+   */
+  private isNumber(str: string): boolean {
+    return !isNaN(parseFloat(str));
+  }
+
+  /**
+   * Подписывается на поле "isManually" и по результатам активирует/отключает поле "searchEmployee".
+   */
+  private processingIsEmployeeManually(): void {
+    this.isManually.valueChanges.subscribe(isActive => {
+      if (isActive) {
+        this.searchEmployee.disable();
+      } else {
+        this.searchEmployee.enable();
+      }
+    });
   }
 }
 

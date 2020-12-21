@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { BehaviorSubject, Observable, of, combineLatest } from 'rxjs';
 import { mergeMap, map, startWith, debounceTime, filter, catchError } from 'rxjs/operators';
 import { MatListOption } from '@angular/material/list';
-import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 
 import { EmployeeApi } from '@modules/employee/api/employee.api';
@@ -18,12 +17,8 @@ import { IUser } from '@modules/user/interfaces/user.interface';
 import { IGroup } from '@modules/user/interfaces/group.interface';
 import { AuthHelper } from '@iss/ng-auth-center';
 import { ClaimPriorities } from '@modules/claim/enums/claim-priorities.enum';
-import { PreviewNewSdRequestComponent } from '@modules/sd-request/components/preview-new-sd-request/preview-new-sd-request.component';
-
-export interface EmployeeGroup {
-  dept: number;
-  employees: IBaseEmployee[];
-}
+import { IBaseEmployeeGroupBuilder } from '@modules/employee/builders/base-employee-group.builder';
+import { IBaseEmployeeGroup } from '@modules/employee/interfaces/base-employee-group.interface';
 
 export interface FileGroup {
   file: File;
@@ -68,10 +63,6 @@ export class NewSdRequestFormService {
   );
   sdRequestForm$: Observable<FormGroup> = this.sdRequestForm.asObservable();
 
-  selectedEmployee: IBaseEmployee;
-  searchEmployee: FormControl = new FormControl();
-  isUserInfoManually: FormControl = new FormControl(false);
-
   selectedService: IService;
   searchService: FormControl = new FormControl();
   isNoService: FormControl = new FormControl(false);
@@ -83,25 +74,6 @@ export class NewSdRequestFormService {
   svtItemList: FormControl = new FormControl();
 
   searchUser: FormControl = new FormControl();
-
-  /**
-   * Записывает данные выбранного работника в атрибуты формы.
-   *
-   * @employee - работник
-   */
-  set employee(employee: IBaseEmployee) {
-    const sourceSnapshotForm = this.form.get('source_snapshot') as FormGroup;
-
-    this.selectedEmployee = employee;
-    sourceSnapshotForm.patchValue({
-      id_tn: employee.id,
-      tn: employee.personnelNo,
-      fio: employee.fullName,
-      dept: employee.departmentForAccounting,
-      email: employee.emailText,
-      tel: employee.phoneText
-    });
-  }
 
   /**
    * Записывает данные выбранной услуги в атрибуты формы.
@@ -124,51 +96,6 @@ export class NewSdRequestFormService {
    */
   get form(): FormGroup {
     return this.sdRequestForm.getValue();
-  }
-
-  /**
-   * Подписывается на поле поиска работника и возвращает массив работников, сгруппированный по отделам.
-   */
-  get employeeGroups$(): Observable<EmployeeGroup[]> {
-    return this.searchEmployee.valueChanges.pipe(
-      startWith(''),
-      filter(term => this.isNumber(term) ? true : term && term.length >= 2),
-      debounceTime(300),
-      mergeMap(term => {
-        return this.employeeApi.getEmployees(this.isNumber(term) ? 'personnelNo' : 'fullName', term)
-          .pipe(catchError(error => {
-            // TODO: Добавить вывод ошибки через всплывающее окно.
-            this.searchEmployee.setErrors({ serverError: true});
-
-            return of([]);
-          }));
-      }),
-      map((employees: IBaseEmployee[]) => {
-        return employees.reduce((acc, employee) => {
-          const accEl = acc.find((el: EmployeeGroup) => el.dept === employee.departmentForAccounting);
-
-          if (accEl) {
-            accEl.employees.push(employee);
-          } else {
-            const res: EmployeeGroup = {
-              dept: employee.departmentForAccounting,
-              employees: [employee]
-            };
-
-            acc.push(res);
-          }
-
-          return acc.sort((a, b) => {
-            if (a.dept > b.dept) {
-              return 1;
-            }
-            if (a.dept < b.dept) {
-              return -1;
-            }
-          });
-        }, []);
-      })
-    );
   }
 
   /**
@@ -262,9 +189,7 @@ export class NewSdRequestFormService {
     private svtApi: SvtApi,
     private userFacade: UserFacade,
     private authHelper: AuthHelper,
-    public dialog: MatDialog
   ) {
-    this.processingIsUserInfoManually();
     this.processingIsNoService();
     this.processingIsNoSvtItem();
     this.loadServices();
@@ -278,26 +203,48 @@ export class NewSdRequestFormService {
   }
 
   /**
-   * Открывает окно предпросмотра заявки.
+   * Поиск работников по параметру, зависящему от полученных данных.
+   *
+   * @param term - данные для поиска.
    */
-  openPreview(): void {
-    const dialogRef = this.dialog.open(PreviewNewSdRequestComponent, {
-      data: {
-        form: this.form.getRawValue()
-      }
-    });
+  searchEmployees(term: string): Observable<IBaseEmployeeGroup[]> {
+    let key: 'phoneText' | 'personnelNo' | 'fullName';
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
+    if (term.search(/\d*\-\d*/) !== -1) {
+      key = 'phoneText'; // Если номер телефона
+    } else if (!isNaN(parseFloat(term))) {
+      key = 'personnelNo'; // Если число
+    } else {
+      key = 'fullName'; // Если строка
+    }
 
-  /**
-   * Очищает поле поиска работника и соответствующие поля формы, которая отправится на сервер.
-   */
-  clearSearchEmployee(): void {
-    this.searchEmployee.setValue(null);
-    this.employee = { } as IBaseEmployee;
+    return this.employeeApi.getEmployees(key, term).pipe(
+      map((employees: IBaseEmployee[]) => {
+        return employees.reduce((acc, employee) => {
+          const accEl = acc.find((el: IBaseEmployeeGroup) => el.dept === employee.departmentForAccounting);
+
+          if (accEl) {
+            accEl.employees.push(employee);
+          } else {
+            const res = new IBaseEmployeeGroupBuilder()
+                          .dept(employee.departmentForAccounting)
+                          .employees([employee])
+                          .build();
+
+            acc.push(res);
+          }
+
+          return acc.sort((a, b) => {
+            if (a.dept > b.dept) {
+              return 1;
+            }
+            if (a.dept < b.dept) {
+              return -1;
+            }
+          });
+        }, []);
+      })
+    );
   }
 
   /**
@@ -324,42 +271,6 @@ export class NewSdRequestFormService {
   }
 
   /**
-   * Добавляет указанные файлы к форме.
-   *
-   * @param files - массив файлов
-   */
-  addAttachments(files: FileList): void {
-    const attachments = this.form.get('attachments') as FormControl;
-    const currentArr = attachments.value.slice();
-    const newArr: FileGroup[] = [];
-
-    for (const file of Array.from(files)) {
-      const fileObj: FileGroup = {
-        file,
-        data: null
-      };
-
-      this.convertToBase64(file).subscribe(data => fileObj.data = data);
-      newArr.push(fileObj);
-    }
-
-    attachments.setValue([...currentArr, ...newArr]);
-  }
-
-  /**
-   * Удаляет указанный файл из формы.
-   *
-   * @param file - файл
-   */
-  removeAttachment(file: File): void {
-    const attachments = this.form.get('attachments') as FormControl;
-    const currentArr = attachments.value.slice();
-    const newArr = currentArr.filter((el: FileGroup) => el.file !== file);
-
-    attachments.setValue(newArr);
-  }
-
-  /**
    * Обрабатывает событие выбора/удаленеия исполнителя в заявке.
    *
    * @param event - объект события
@@ -368,7 +279,7 @@ export class NewSdRequestFormService {
     const currentArr = this.form.get('users').value.slice();
 
     if (event.selected) {
-      currentArr.push(event.value)
+      currentArr.push(event.value);
       this.form.get('users').setValue(currentArr);
     } else {
       const newArr = currentArr.filter((el: IUser) => el.id !== event.value.id);
@@ -384,26 +295,6 @@ export class NewSdRequestFormService {
    */
   isCurrentUser(user: IUser): boolean {
     return this.authHelper.getJwtPayload().id === user.id;
-  }
-
-  /**
-   * Проверяет, содержит ли полученная строка только числа.
-   */
-  private isNumber(str: string): boolean {
-    return !isNaN(parseFloat(str));
-  }
-
-  /**
-   * Подписывается на поле "isUserInfoManually" и по результатам активирует/отключает поле "searchEmployee".
-   */
-  private processingIsUserInfoManually(): void {
-    this.isUserInfoManually.valueChanges.subscribe(isActive => {
-      if (isActive) {
-        this.searchEmployee.disable();
-      } else {
-        this.searchEmployee.enable();
-      }
-    });
   }
 
   /**
@@ -446,23 +337,6 @@ export class NewSdRequestFormService {
 
       return of([]);
     }));
-  }
-
-  /**
-   * Конвертирует файл в base64.
-   *
-   * @param file - преоразуемый файл.
-   */
-  private convertToBase64(file: File): Observable<string | ArrayBuffer> {
-    return new Observable(subscriber => {
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        subscriber.next(reader.result);
-        subscriber.complete();
-      };
-      reader.readAsDataURL(file);
-    });
   }
 
   /**

@@ -6,8 +6,8 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { DynamicErrorStateMatcher } from '@shared/material/dynamic-error-state-matcher';
 import { IService } from '@modules/sd-request/interfaces/service.interface';
 import { NewSdRequestFormService } from '@modules/sd-request/services/new-sd-request-form/new-sd-request-form.service';
-import { FileGroup } from '@modules/sd-request/services/new-sd-request-form/new-sd-request-form.service';
 import { ITag } from '@shared/interfaces/tag.interface';
+import { AttachmentsFormComponent } from '@shared/components/attachments-form/attachments-form.component';
 
 @Component({
   selector: 'app-wizzard-description',
@@ -23,10 +23,7 @@ export class WizzardDescriptionComponent implements OnInit {
   tags$: Observable<ITag[]>;
   @Input() sdRequestForm: FormGroup;
   @ViewChild('tagInput', { static: true }) tagInput: ElementRef;
-
-  get files(): FileGroup[] {
-    return this.sdRequestForm.get('attachments').value;
-  }
+  @ViewChild(AttachmentsFormComponent, { static: true }) attachmentsFormEl: AttachmentsFormComponent;
 
   get tags(): any[] {
     return this.sdRequestForm.get('tags').value;
@@ -64,33 +61,6 @@ export class WizzardDescriptionComponent implements OnInit {
    */
   clearSearchService(): void {
     this.formService.clearSearchService();
-  }
-
-  /**
-   * Обрабатывает загруженные файлы.
-   *
-   * @param fileInput - событие выбора файла.
-   */
-  fileHandler(event: Event): void {
-    this.formService.addAttachments((event.target as HTMLInputElement).files);
-  }
-
-  /**
-   * Обрабатывает файлы, полученные через механизм Drag & Drop.
-   *
-   * @param files - список полученных файлов.
-   */
-  onFileDropped(files: FileList): void {
-    this.formService.addAttachments(files);
-  }
-
-  /**
-   * Удаляет файл из списка.
-   *
-   * @param file - удаляемый файл
-   */
-  deleteFile(file: File): void {
-    this.formService.removeAttachment(file);
   }
 
   // /**

@@ -72,43 +72,4 @@ describe('WizzardDescriptionComponent', () => {
       expect(spy).toHaveBeenCalled();
     });
   });
-
-  describe('#fileHandler', () => {
-    it('should call "addAttachments" method for NewSdRequestFormService service', () => {
-      const spy = spyOn(formService, 'addAttachments');
-      const event = new Event('change');
-
-      Object.defineProperty(event, 'target', { value: '' });
-      component.fileHandler(event);
-
-      expect(spy).toHaveBeenCalled();
-    });
-  });
-
-  describe('#onFileDropped', () => {
-    it('should call "addAttachments" method for NewSdRequestFormService service', () => {
-      const file = new File([new Blob()], 'image.png');
-      const fileList = {
-        0: file,
-        length: 1,
-        item: (index: number) => file
-      };
-      const spy = spyOn(formService, 'addAttachments');
-
-      component.onFileDropped(fileList);
-
-      expect(spy).toHaveBeenCalledWith(fileList);
-    });
-  });
-
-  describe('#deleteFile', () => {
-    it('should call "removeAttachment" method for NewSdRequestFormService service', () => {
-      const file = new File([new Blob()], 'test.png');
-      const spy = spyOn(formService, 'removeAttachment');
-
-      component.deleteFile(file);
-
-      expect(spy).toHaveBeenCalledWith(file);
-    });
-  });
 });

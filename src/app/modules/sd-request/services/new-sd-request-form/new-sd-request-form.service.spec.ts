@@ -4,13 +4,11 @@ import { of } from 'rxjs';
 import { debounceTime, skip } from 'rxjs/operators';
 import { AuthHelper, AuthHelperStub } from '@iss/ng-auth-center';
 
-import { NewSdRequestFormService, EmployeeGroup } from './new-sd-request-form.service';
+import { NewSdRequestFormService } from './new-sd-request-form.service';
 import { EmployeeApi } from '@modules/employee/api/employee.api';
 import { EmployeeApiStub } from '@modules/employee/api/employee.api.stub';
 import { ServiceDeskApi } from '@modules/sd-request/api/service-desk/service-desk.api';
 import { ServiceDeskApiStub } from '@modules/sd-request/api/service-desk/service-desk.api.stub';
-import { IBaseEmployee } from '@modules/employee/interfaces/employee.interface';
-import { IBaseEmployeeBuilder } from '@modules/employee/builders/i-base-employee.builder';
 import { IService } from '@modules/sd-request/interfaces/service.interface';
 import { IServiceBuilder } from '@modules/sd-request/builders/i-service.builder';
 import { SvtApi } from '@modules/sd-request/api/svt/svt.api';
@@ -53,20 +51,6 @@ describe('NewSdRequestFormService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('"searchEmployee" input', () => {
-    it('should disable "input" if "isUserInfoManually" enabled', () => {
-      service.isUserInfoManually.setValue(true);
-
-      expect(service.searchEmployee.disabled).toBeTrue();
-    });
-
-    it('should enable "input" if "isUserInfoManually" disabled', () => {
-      service.isUserInfoManually.setValue(false);
-
-      expect(service.searchEmployee.disabled).toBeFalse();
-    });
-  });
-
   describe('"searchService" input', () => {
     beforeEach(() => {
       service.isNoService.setValue(true);
@@ -89,7 +73,7 @@ describe('NewSdRequestFormService', () => {
       let sdService: IService;
 
       beforeEach(() => {
-        sdService = new IServiceBuilder().testBuild();
+        sdService = new IServiceBuilder().testBuild()
         service.service = sdService;
         service.isNoService.setValue(false);
       });
@@ -139,32 +123,6 @@ describe('NewSdRequestFormService', () => {
     });
   });
 
-  describe('"employee" setter', () => {
-    let employee: IBaseEmployee;
-
-    beforeEach(() => {
-      employee = new IBaseEmployeeBuilder().build();
-      service.employee = employee;
-    });
-
-    it('should set "selectedEmployee" attribute', () => {
-      expect(service.selectedEmployee).toEqual(employee);
-    });
-
-    it('should set form attributes from selected employee', () => {
-      service.sdRequestForm$.subscribe(form => {
-        const ssForm = form.get('source_snapshot') as FormGroup;
-
-        expect(ssForm.get('id_tn').value).toEqual(employee.id);
-        expect(ssForm.get('tn').value).toEqual(employee.personnelNo);
-        expect(ssForm.get('fio').value).toEqual(employee.fullName);
-        expect(ssForm.get('dept').value).toEqual(employee.departmentForAccounting);
-        expect(ssForm.get('email').value).toEqual(employee.emailText);
-        expect(ssForm.get('tel').value).toEqual(employee.phoneText);
-      });
-    });
-  });
-
   describe('"service" setter', () => {
     let sdService: IService;
 
@@ -208,24 +166,6 @@ describe('NewSdRequestFormService', () => {
     });
   });
 
-  describe('"employeeGroups$" getter', () => {
-    it('should return array of EmployeeGroup', (done) => {
-      const employee = new IBaseEmployeeBuilder().build();
-      const resultGroup: EmployeeGroup = {
-        dept: employee.departmentForAccounting,
-        employees: [employee]
-      };
-      spyOn(employeeApi, 'getEmployees').and.returnValue(of([employee]));
-
-      service.employeeGroups$.subscribe(result => {
-        expect(result).toEqual([resultGroup]);
-        done();
-      });
-
-      service.searchEmployee.setValue('test');
-    });
-  });
-
   describe('"services$" getter', () => {
     it('should return list of services which includes term', fakeAsync(() => {
       const services = [new IServiceBuilder().name('First').testBuild(), new IServiceBuilder().name('Second').testBuild()];
@@ -248,7 +188,10 @@ describe('NewSdRequestFormService', () => {
     });
 
     it('should return list of svt items which includes term', (done) => {
-      const svtItems = [new ISvtItemBuilder().short_item_model('First').testBuild(), new ISvtItemBuilder().short_item_model('Second').testBuild()];
+      const svtItems = [
+        new ISvtItemBuilder().short_item_model('First').testBuild(),
+        new ISvtItemBuilder().short_item_model('Second').testBuild()
+      ];
       spy.and.returnValue(of(svtItems));
 
       service.anySvtItems$.subscribe(result => {
@@ -274,7 +217,10 @@ describe('NewSdRequestFormService', () => {
 
   describe('"userSvtItems$" getter', () => {
     it('should reutrn list of svt items which belongs to user', (done) => {
-      const svtItems = [new ISvtItemBuilder().short_item_model('First').testBuild(), new ISvtItemBuilder().short_item_model('Second').testBuild()];
+      const svtItems = [
+        new ISvtItemBuilder().short_item_model('First').testBuild(),
+        new ISvtItemBuilder().short_item_model('Second').testBuild()
+      ];
       spyOn(svtItemApi, 'getUserItems').and.returnValue(of(svtItems));
 
       service.userSvtItems$.subscribe(result => {
@@ -326,23 +272,6 @@ describe('NewSdRequestFormService', () => {
     });
   });
 
-  describe('#clearSearchEmployee', () => {
-    let spy: jasmine.Spy;
-
-    beforeEach(() => {
-      spy = spyOnProperty(service, 'employee', 'set');
-      service.clearSearchEmployee();
-    });
-
-    it('should set empty array to "searchEmployee" attribute', () => {
-      expect(service.searchEmployee.value).toEqual(null);
-    });
-
-    it('should call "employee" setter with empty object', () => {
-      expect(spy).toHaveBeenCalledWith({ });
-    });
-  });
-
   describe('#clearSearchService', () => {
     let spy: jasmine.Spy;
 
@@ -383,63 +312,6 @@ describe('NewSdRequestFormService', () => {
       service.clearSearchUser();
 
       expect(service.searchUser.value).toEqual('');
-    });
-  });
-
-  describe('#addAttachments', () => {
-    let file: File;
-    let fileList: FileList;
-
-    beforeEach(() => {
-      file = new File([new Blob()], 'image.png');
-      fileList = {
-        0: file,
-        length: 1,
-        item: (index: number) => file
-      };
-    });
-
-    it('should add FileGroup object to form', () => {
-      const resultData = 'resultData';
-
-      spyOn((service as any), 'convertToBase64').and.returnValue(of(resultData));
-      service.addAttachments(fileList);
-
-      service.sdRequestForm$.subscribe(form => {
-        expect(form.get('attachments').value).toEqual([{ file, data: resultData }]);
-      });
-    });
-
-    it('should not remove old files', () => {
-      service.addAttachments(fileList);
-      service.addAttachments(fileList);
-
-      service.sdRequestForm$.subscribe(form => {
-        expect(form.get('attachments').value.slice().length).toEqual(2);
-      });
-    });
-  });
-
-  describe('#removeAttachment', () => {
-    let file: File;
-    let fileList: FileList;
-
-    beforeEach(() => {
-      file = new File([new Blob()], 'image.png');
-      fileList = {
-        0: file,
-        length: 1,
-        item: (index: number) => file
-      };
-      service.addAttachments(fileList);
-    });
-
-    it('should remove file from form', () => {
-      service.removeAttachment(file);
-
-      service.sdRequestForm$.subscribe(form => {
-        expect(form.get('attachments').value.slice().length).toEqual(0);
-      });
     });
   });
 

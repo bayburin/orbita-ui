@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { PreviewNewSdRequestComponent } from './preview-new-sd-request.component';
+import { MaterialModule } from '@shared/material.module';
 
 describe('PreviewNewSdRequestComponent', () => {
   let component: PreviewNewSdRequestComponent;
@@ -8,7 +11,12 @@ describe('PreviewNewSdRequestComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PreviewNewSdRequestComponent ]
+      imports: [
+        MaterialModule,
+        HttpClientTestingModule
+      ],
+      providers: [{ provide: MAT_DIALOG_DATA, useValue: {} }],
+      declarations: [PreviewNewSdRequestComponent]
     })
     .compileComponents();
   }));
