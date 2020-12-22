@@ -29,7 +29,10 @@ export class NewSdRequestFormServiceStub {
         dept: new FormControl('', [Validators.required]),
         email: new FormControl(''),
         tel: new FormControl(''),
-        mobile: new FormControl('')
+        mobile: new FormControl(''),
+        invent_num: new FormControl(''),
+        svt_item_id: new FormControl(null),
+        svt_item: new FormControl('')
       }),
       attachments: new FormControl([]),
       tags: new FormControl([]),
@@ -43,27 +46,19 @@ export class NewSdRequestFormServiceStub {
   isNoService: FormControl = new FormControl(false);
   avaliableServices$: Observable<IService[]> = of([]);
 
-  selectedSvtItem: ISvtItem;
-  searchSvtItem: FormControl = new FormControl();
-  isNoSvtItem: FormControl = new FormControl(false);
-  svtItemList: FormControl = new FormControl();
-
   searchUser: FormControl = new FormControl();
 
-  set employee(employee: IBaseEmployee) { }
   set service(service: IService) { }
-  set svtItem(svtItem: ISvtItem) { }
   get form(): FormGroup { return this.sdRequestForm.getValue(); }
   get services$(): Observable<IService[]> { return of([]); }
-  get anySvtItems$(): Observable<ISvtItem[]> { return of([]); }
-  get userSvtItems$(): Observable<ISvtItem[]> { return of([]); }
   get tags$(): Observable<ITag[]> { return of([]); }
   get userGroups$(): Observable<UserGroup[]> { return of([]); }
 
   save(): void { }
   searchEmployees(): Observable<IBaseEmployeeGroup[]> { return of([]); }
   clearSearchService(): void { }
-  clearSearchSvtItem(): void { }
+  searchSvtItems(): Observable<ISvtItem[]> { return of([]); }
+  loadUserSvtItems(): Observable<ISvtItem[]> { return of([]); }
   clearSearchUser(): void { }
   selectUserEvent(event: any): void { }
   isCurrentUser(user: IUser) {  }

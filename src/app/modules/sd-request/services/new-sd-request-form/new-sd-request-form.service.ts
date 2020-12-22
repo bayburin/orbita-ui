@@ -2,7 +2,7 @@ import { ISvtItem } from '@modules/sd-request/interfaces/svt-item.interface';
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { BehaviorSubject, Observable, of, combineLatest } from 'rxjs';
-import { mergeMap, map, startWith, debounceTime, filter, catchError } from 'rxjs/operators';
+import { mergeMap, map, startWith, filter, catchError } from 'rxjs/operators';
 import { MatListOption } from '@angular/material/list';
 import * as moment from 'moment';
 
@@ -68,11 +68,6 @@ export class NewSdRequestFormService {
   isNoService: FormControl = new FormControl(false);
   avaliableServices$: Observable<IService[]> = of([]);
 
-  selectedSvtItem: ISvtItem;
-  searchSvtItem: FormControl = new FormControl();
-  isNoSvtItem: FormControl = new FormControl(false);
-  svtItemList: FormControl = new FormControl();
-
   searchUser: FormControl = new FormControl();
 
   /**
@@ -81,14 +76,6 @@ export class NewSdRequestFormService {
   set service(service: IService) {
     this.selectedService = service;
     this.updateServiceForm(service);
-  }
-
-  /**
-   * Записывает данные выбранной ВТ в атрибуты формы.
-   */
-  set svtItem(svtItem: ISvtItem) {
-    this.selectedSvtItem = svtItem;
-    this.updateSvtItem(svtItem);
   }
 
   /**
@@ -114,35 +101,6 @@ export class NewSdRequestFormService {
           return services.filter(service => service.name.toLowerCase().includes(term.toLowerCase()));
         }));
       })
-    );
-  }
-
-  /**
-   * Подписывается на поле поиска ВТ и возвращает массив найденной техники.
-   */
-  get anySvtItems$(): Observable<ISvtItem[]> {
-    return this.searchSvtItem.valueChanges.pipe(
-      startWith(''),
-      debounceTime(300),
-      mergeMap(term => {
-        return this.svtApi.getAnyItems(term)
-          .pipe(catchError(error => {
-            // TODO: Добавить вывод ошибки через всплывающее окно.
-            this.searchSvtItem.setErrors({ serverError: true});
-
-            return of([]);
-          }));
-      })
-    );
-  }
-
-  /**
-   * Подписывается на поле id_tn и по его данным ищет связанную ВТ.
-   */
-  get userSvtItems$(): Observable<ISvtItem[]> {
-    return this.form.get('source_snapshot').get('id_tn').valueChanges.pipe(
-      debounceTime(300),
-      mergeMap(idTn => this.svtApi.getUserItems(idTn))
     );
   }
 
@@ -191,7 +149,6 @@ export class NewSdRequestFormService {
     private authHelper: AuthHelper,
   ) {
     this.processingIsNoService();
-    this.processingIsNoSvtItem();
     this.loadServices();
   }
 
@@ -203,7 +160,7 @@ export class NewSdRequestFormService {
   }
 
   /**
-   * Поиск работников по параметру, зависящему от полученных данных.
+   * Ищет работников по параметру, зависящему от полученных данных.
    *
    * @param term - данные для поиска.
    */
@@ -248,19 +205,29 @@ export class NewSdRequestFormService {
   }
 
   /**
+   * Ищет технику по инвентарному номеру.
+   *
+   * @param inventNum - инвентарный номер.
+   */
+  searchSvtItems(inventNum: string): Observable<ISvtItem[]> {
+    return this.svtApi.getAnyItems(inventNum);
+  }
+
+  /**
+   * Загружает технику, прикрепленную за пользователем.
+   *
+   * @param idTn - параметр id_tn пользователя.
+   */
+  loadUserSvtItems(idTn: number): Observable<ISvtItem[]> {
+    return this.svtApi.getUserItems(idTn);
+  }
+
+  /**
    * Очищает поле поиска услуги и соответствующие поля формы, которая отправится на сервер.
    */
   clearSearchService(): void {
     this.searchService.setValue(null);
     this.service = { } as IService;
-  }
-
-  /**
-   * Очищает поле поиска ВТ и соответствующие поля формы, которая отправится на сервер.
-   */
-  clearSearchSvtItem(): void {
-    this.searchSvtItem.setValue(null);
-    this.svtItem = { } as ISvtItem;
   }
 
   /**
@@ -312,23 +279,6 @@ export class NewSdRequestFormService {
     });
   }
 
-  /**
-   * Подписывается на поле "isNoSvtItem" и по результатам активирует/отключает поле "userSvtItems".
-   */
-  private processingIsNoSvtItem(): void {
-    this.isNoSvtItem.valueChanges.subscribe(isNoSvtItem => {
-      if (isNoSvtItem) {
-        this.searchSvtItem.disable();
-        this.svtItemList.disable();
-        this.svtItem = { } as ISvtItem;
-      } else {
-        this.searchSvtItem.enable();
-        this.svtItemList.enable();
-        this.svtItem = this.selectedSvtItem;
-      }
-    });
-  }
-
   // TODO: Перенести данные в стор.
   private loadServices(): void {
     this.avaliableServices$ = this.sdApi.getServices().pipe(catchError(error => {
@@ -348,21 +298,6 @@ export class NewSdRequestFormService {
     this.form.patchValue({
       service_id: service?.id || null,
       service_name: service?.name || null
-    });
-  }
-
-  /**
-   * Обновить поля формы, связанные с выбранной ВТ.
-   *
-   * @param svtItem - ВТ.
-   */
-  private updateSvtItem(svtItem: ISvtItem): void {
-    const sourceSnapshotForm = this.form.get('source_snapshot') as FormGroup;
-
-    sourceSnapshotForm.patchValue({
-      invent_num: svtItem.invent_num,
-      svt_item_id: svtItem.item_id,
-      svt_item: svtItem.type ? `${svtItem.type.short_description} ${svtItem.item_model}` : ''
     });
   }
 }

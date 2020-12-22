@@ -19,7 +19,7 @@ export class ISvtItemBuilder extends ModelBuilder<ISvtItem> {
       status: '',
       short_item_model: '',
       type: new ISvtTypeBuilder().build()
-    }
+    };
   }
 
   testBuild(): ISvtItem {
@@ -28,7 +28,7 @@ export class ISvtItemBuilder extends ModelBuilder<ISvtItem> {
     this.model.workplace_id = this.model.workplace_id || faker.random.number();
     this.model.model_id = this.model.model_id || faker.random.number();
     this.model.item_model = this.model.item_model || faker.random.word();
-    this.model.invent_num = this.model.invent_num || faker.random.word();
+    this.model.invent_num = this.model.invent_num || faker.random.number();
     this.model.serial_num = this.model.serial_num || faker.random.word();
     this.model.status = this.model.status || faker.random.word();
     this.model.short_item_model = this.model.short_item_model || faker.random.word();

@@ -33,7 +33,7 @@ export class WizzardUserInfoComponent implements OnInit {
   }
 
   /**
-   * Событие выбора работника у компонента autocomplete
+   * Записывает данные выбранной ВТ в атрибуты формы и запоминает выбранную технику.
    *
    * @param employee - выбранный работник
    */
@@ -66,6 +66,9 @@ export class WizzardUserInfoComponent implements OnInit {
     this.selectEmployee({ } as IBaseEmployee);
   }
 
+  /**
+   * Подписывается на поле поиска работников и производит поиск.
+   */
   private searchEmployeeGroups(): void {
     this.employeeGroups$ = this.searchEmployee.valueChanges.pipe(
       startWith(''),
@@ -103,4 +106,3 @@ export class WizzardUserInfoComponent implements OnInit {
     });
   }
 }
-

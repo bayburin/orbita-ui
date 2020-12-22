@@ -44,9 +44,15 @@ describe('WizzardUserInfoComponent', () => {
   });
 
   describe('On changes "searchEmployee" values', () => {
+    let spy: jasmine.Spy;
+
+    beforeEach(() => {
+      spy = spyOn(formService, 'searchEmployees');
+    });
+
     it('should return array of loaded data', (done) => {
       const result = new IBaseEmployeeGroupBuilder().testBuild();
-      spyOn(formService, 'searchEmployees').and.returnValue(of([result]));
+      spy.and.returnValue(of([result]));
 
       component.employeeGroups$.subscribe(data => {
         expect(data[0].dept).toEqual(result.dept);
@@ -58,7 +64,7 @@ describe('WizzardUserInfoComponent', () => {
     });
 
     it('should return empty error if raised any error', (done) => {
-      spyOn(formService, 'searchEmployees').and.callFake(() => throwError({ error: 'Error message' }));
+      spy.and.callFake(() => throwError({ error: 'Error message' }));
 
       component.employeeGroups$.subscribe(data => {
         expect(data.length).toEqual(0);
@@ -70,13 +76,13 @@ describe('WizzardUserInfoComponent', () => {
   });
 
   describe('On changes "isManually" values', () => {
-    it('should disable "input" if "isManually" enabled', () => {
+    it('should disable "searchEmployee" input if "isManually" enabled', () => {
       component.isManually.setValue(true);
 
       expect(component.searchEmployee.disabled).toBeTrue();
     });
 
-    it('should enable "input" if "isManually" disabled', () => {
+    it('should enable "searchEmployee" input if "isManually" disabled', () => {
       component.isManually.setValue(false);
 
       expect(component.searchEmployee.disabled).toBeFalse();
