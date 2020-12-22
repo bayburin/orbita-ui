@@ -6,6 +6,7 @@ import { Work } from '@modules/claim/models/work/work.model';
 import { IClaim } from '@modules/claim/interfaces/claim.interface';
 import { Runtime } from '@modules/claim/models/runtime/runtime.model';
 import { IUser } from '@modules/user/interfaces/user.interface';
+import { oFlatMap } from '@shared/functions/flat-map';
 
 export abstract class Claim {
   id: number;
@@ -38,7 +39,7 @@ export abstract class Claim {
   }
 
   get workers(): IUser[] {
-    return this.works.flatMap((work: Work) => work.workers);
+    return oFlatMap((work: Work) => work.workers, this.works);
   }
 
   constructor(claim: IClaim) {
