@@ -1,8 +1,8 @@
 import { ISvtItem } from '@modules/sd-request/interfaces/svt-item.interface';
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { BehaviorSubject, Observable, of, combineLatest } from 'rxjs';
-import { mergeMap, map, startWith, filter, catchError } from 'rxjs/operators';
+import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { MatListOption } from '@angular/material/list';
 import * as moment from 'moment';
 
@@ -10,7 +10,6 @@ import { EmployeeApi } from '@modules/employee/api/employee.api';
 import { IBaseEmployee } from '@modules/employee/interfaces/employee.interface';
 import { IService } from '@modules/sd-request/interfaces/service.interface';
 import { ServiceDeskApi } from '@modules/sd-request/api/service-desk/service-desk.api';
-import { ITag } from '@shared/interfaces/tag.interface';
 import { SvtApi } from '@modules/sd-request/api/svt/svt.api';
 import { UserFacade } from '@modules/user/facades/user.facade';
 import { IUser } from '@modules/user/interfaces/user.interface';
@@ -62,53 +61,13 @@ export class NewSdRequestFormService {
     })
   );
   sdRequestForm$: Observable<FormGroup> = this.sdRequestForm.asObservable();
-
-  selectedService: IService;
-  searchService: FormControl = new FormControl();
-  isNoService: FormControl = new FormControl(false);
-  avaliableServices$: Observable<IService[]> = of([]);
-
   searchUser: FormControl = new FormControl();
-
-  /**
-   * Записывает данные выбранной услуги в атрибуты формы.
-   */
-  set service(service: IService) {
-    this.selectedService = service;
-    this.updateServiceForm(service);
-  }
 
   /**
    * Возвращает экземпляр формы
    */
   get form(): FormGroup {
     return this.sdRequestForm.getValue();
-  }
-
-  /**
-   * Подписывается на поле поиска услуги и возвращает отфильтрованный список услуг.
-   */
-  get services$(): Observable<IService[]> {
-    return this.searchService.valueChanges.pipe(
-      startWith(''),
-      filter(term => typeof term === 'string'),
-      mergeMap(term => {
-        return this.avaliableServices$.pipe(map(services => {
-          if (!term) {
-            return services;
-          }
-
-          return services.filter(service => service.name.toLowerCase().includes(term.toLowerCase()));
-        }));
-      })
-    );
-  }
-
-  /**
-   * Возвращает доступный список тегов.
-   */
-  get tags$(): Observable<ITag[]> {
-    return of([]);
   }
 
   /**
@@ -148,7 +107,6 @@ export class NewSdRequestFormService {
     private userFacade: UserFacade,
     private authHelper: AuthHelper,
   ) {
-    this.processingIsNoService();
     this.loadServices();
   }
 
@@ -223,14 +181,6 @@ export class NewSdRequestFormService {
   }
 
   /**
-   * Очищает поле поиска услуги и соответствующие поля формы, которая отправится на сервер.
-   */
-  clearSearchService(): void {
-    this.searchService.setValue(null);
-    this.service = { } as IService;
-  }
-
-  /**
    * Очищает поле поиска исполнителя.
    */
   clearSearchUser(): void {
@@ -264,40 +214,8 @@ export class NewSdRequestFormService {
     return this.authHelper.getJwtPayload().id === user.id;
   }
 
-  /**
-   * Подписывается на поле "isNoService" и по результатам активирует/отключает поле "searchService".
-   */
-  private processingIsNoService(): void {
-    this.isNoService.valueChanges.subscribe(isNoService => {
-      if (isNoService) {
-        this.searchService.disable();
-        this.updateServiceForm(null);
-      } else {
-        this.searchService.enable();
-        this.service = this.selectedService;
-      }
-    });
-  }
-
   // TODO: Перенести данные в стор.
-  private loadServices(): void {
-    this.avaliableServices$ = this.sdApi.getServices().pipe(catchError(error => {
-      // TODO: Добавить вывод ошибки через всплывающее окно.
-      this.searchService.setErrors({ serverError: true});
-
-      return of([]);
-    }));
-  }
-
-  /**
-   * Обновляет поля формы, связанные с выбранной услугой.
-   *
-   * @param service - услуга
-   */
-  private updateServiceForm(service: IService): void {
-    this.form.patchValue({
-      service_id: service?.id || null,
-      service_name: service?.name || null
-    });
+  loadServices(): Observable<IService[]> {
+    return this.sdApi.getServices();
   }
 }

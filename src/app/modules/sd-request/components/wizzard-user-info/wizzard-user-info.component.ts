@@ -81,7 +81,8 @@ export class WizzardUserInfoComponent implements OnInit {
             this.searchEmployee.setErrors({ serverError: true});
 
             return of([]);
-          }));
+          })
+        );
       })
     );
   }

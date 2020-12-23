@@ -1,7 +1,7 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { of } from 'rxjs';
-import { debounceTime, skip } from 'rxjs/operators';
+import { skip } from 'rxjs/operators';
 import { AuthHelper, AuthHelperStub } from '@iss/ng-auth-center';
 
 import { NewSdRequestFormService } from './new-sd-request-form.service';
@@ -9,8 +9,6 @@ import { EmployeeApi } from '@modules/employee/api/employee.api';
 import { EmployeeApiStub } from '@modules/employee/api/employee.api.stub';
 import { ServiceDeskApi } from '@modules/sd-request/api/service-desk/service-desk.api';
 import { ServiceDeskApiStub } from '@modules/sd-request/api/service-desk/service-desk.api.stub';
-import { IService } from '@modules/sd-request/interfaces/service.interface';
-import { IServiceBuilder } from '@modules/sd-request/builders/i-service.builder';
 import { SvtApi } from '@modules/sd-request/api/svt/svt.api';
 import { SvtApiStub } from '@modules/sd-request/api/svt/svt.api.stub';
 import { UserFacade } from '@modules/user/facades/user.facade';
@@ -53,80 +51,6 @@ describe('NewSdRequestFormService', () => {
 
   it('should be created', () => {
     expect(service).toBeTruthy();
-  });
-
-  describe('"searchService" input', () => {
-    beforeEach(() => {
-      service.isNoService.setValue(true);
-    });
-
-    describe('when "isNoService" enabled', () => {
-      it('should disable "input"', () => {
-        expect(service.searchService.disabled).toBeTrue();
-      });
-
-      it('should set null to service fields of form', () => {
-        service.sdRequestForm$.subscribe(form => {
-          expect(form.get('service_id').value).toBeNull();
-          expect(form.get('service_name').value).toBeNull();
-        });
-      });
-    });
-
-    describe('when "isNoService" disabled', () => {
-      let sdService: IService;
-
-      beforeEach(() => {
-        sdService = new IServiceBuilder().testBuild();
-        service.service = sdService;
-        service.isNoService.setValue(false);
-      });
-
-      it('should enable "input" ', () => {
-        expect(service.searchService.disabled).toBeFalse();
-      });
-
-      it('should fill service fields with service data', () => {
-        service.sdRequestForm$.subscribe(form => {
-          expect(form.get('service_id').value).toEqual(sdService.id);
-          expect(form.get('service_name').value).toEqual(sdService.name);
-        });
-      });
-    });
-  });
-
-  describe('"service" setter', () => {
-    let sdService: IService;
-
-    beforeEach(() => {
-      sdService = new IServiceBuilder().testBuild();
-      service.service = sdService;
-    });
-
-    it('should set "selectedService" attribute', () => {
-      expect(service.selectedService).toEqual(sdService);
-    });
-
-    it('should set form attributes from selected service', () => {
-      service.sdRequestForm$.subscribe(form => {
-        expect(form.get('service_id').value).toEqual(sdService.id);
-        expect(form.get('service_name').value).toEqual(sdService.name);
-      });
-    });
-  });
-
-  describe('"services$" getter', () => {
-    it('should return list of services which includes term', fakeAsync(() => {
-      const services = [new IServiceBuilder().name('First').testBuild(), new IServiceBuilder().name('Second').testBuild()];
-      service.avaliableServices$ = of(services);
-
-      service.services$.pipe(debounceTime(300)).subscribe(result => {
-        expect(result).toEqual([services[0]]);
-      });
-
-      service.searchService.setValue('Firs');
-      tick(300);
-    }));
   });
 
   describe('"userGroups$" getter', () => {
@@ -245,21 +169,6 @@ describe('NewSdRequestFormService', () => {
       service.loadUserSvtItems(123).subscribe(data => {
         expect(data).toEqual([svtItem]);
       });
-    });
-  });
-
-  describe('#clearSearchService', () => {
-    beforeEach(() => {
-      spy = spyOnProperty(service, 'service', 'set');
-      service.clearSearchService();
-    });
-
-    it('should set empty array to "searchService" attribute', () => {
-      expect(service.searchService.value).toEqual(null);
-    });
-
-    it('should call "service" setter with empty object', () => {
-      expect(spy).toHaveBeenCalledWith({ });
     });
   });
 

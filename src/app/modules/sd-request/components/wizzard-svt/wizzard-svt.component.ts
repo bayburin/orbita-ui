@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable, of } from 'rxjs';
-import { startWith, debounceTime, mergeMap, catchError } from 'rxjs/operators';
+import { startWith, debounceTime, mergeMap, catchError, filter } from 'rxjs/operators';
 
 import { NewSdRequestFormService } from '@modules/sd-request/services/new-sd-request-form/new-sd-request-form.service';
 import { ISvtItem } from '@modules/sd-request/interfaces/svt-item.interface';
@@ -52,6 +52,7 @@ export class WizzardSvtComponent implements OnInit {
   private searchSvtItems(): void {
     this.anySvtItems$ = this.searchSvtItem.valueChanges.pipe(
       startWith(''),
+      filter(term => typeof term === 'string' && term.length >= 3),
       debounceTime(300),
       mergeMap(term => {
         return this.formService.searchSvtItems(term)

@@ -8,14 +8,14 @@
           <mat-list-option *ngFor="let item of userSvtItems" [value]="item">
             <mat-icon mat-list-icon svgIcon="desktop-classic"></mat-icon>
             <div mat-line>{{ item.type.short_description }} {{ item.short_item_model }}</div>
-            <div mat-line>Инвентарный: {{ item.invent_num }} </div>
+            <div mat-line>Инвентарный: {{ item.invent_num }}</div>
           </mat-list-option>
           <mat-divider class="position-static"></mat-divider>
         </div>
       </div>
       <mat-form-field class="search-svt-item">
         <mat-label>Поиск среди всей вычислительной техники</mat-label>
-        <input name="search_svt_item" matInput [formControl]="searchSvtItem" placeholder="Инвентарный номер или штрих-код">
+        <input name="search_svt_item" matInput [formControl]="searchSvtItem" placeholder="Инвентарный номер">
         <mat-error *ngIf="searchSvtItem.hasError('serverError')">Ошибка поиска. Введите данные вручную.</mat-error>
         <button *ngIf="searchSvtItem.value" matSuffix mat-icon-button (click)="clearSearchSvtItem()" [disabled]="isNoSvtItem.value">
           <mat-icon svgIcon="close"></mat-icon>

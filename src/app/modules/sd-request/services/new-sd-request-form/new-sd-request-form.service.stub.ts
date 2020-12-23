@@ -41,25 +41,17 @@ export class NewSdRequestFormServiceStub {
   );
   sdRequestForm$: Observable<FormGroup> = this.sdRequestForm.asObservable();
 
-  selectedService: IService;
-  searchService: FormControl = new FormControl();
-  isNoService: FormControl = new FormControl(false);
-  avaliableServices$: Observable<IService[]> = of([]);
-
   searchUser: FormControl = new FormControl();
 
-  set service(service: IService) { }
   get form(): FormGroup { return this.sdRequestForm.getValue(); }
-  get services$(): Observable<IService[]> { return of([]); }
-  get tags$(): Observable<ITag[]> { return of([]); }
   get userGroups$(): Observable<UserGroup[]> { return of([]); }
 
   save(): void { }
   searchEmployees(): Observable<IBaseEmployeeGroup[]> { return of([]); }
-  clearSearchService(): void { }
   searchSvtItems(): Observable<ISvtItem[]> { return of([]); }
   loadUserSvtItems(): Observable<ISvtItem[]> { return of([]); }
   clearSearchUser(): void { }
   selectUserEvent(event: any): void { }
   isCurrentUser(user: IUser) {  }
+  loadServices(): Observable<IService[]> { return of([]); }
 }

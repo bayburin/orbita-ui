@@ -46,7 +46,7 @@ describe('SvtApi', () => {
   describe('#getAnyItems', () => {
     const items = [new ISvtItemBuilder().testBuild()];
     const term = '12345';
-    const api = `${environment.svtApi}/api/v1/items`;
+    const api = `${environment.svtApi}/api/v1/invent/items`;
 
     it('should return Observable with array of equipments', () => {
       service.getAnyItems(term).subscribe(result => {
@@ -55,7 +55,7 @@ describe('SvtApi', () => {
 
       httpMock.expectOne({
         method: 'GET',
-        url: `${api}?filter=${term}`
+        url: `${api}?invent_num=${term}`
       }).flush(items);
     });
   });
