@@ -2,6 +2,7 @@
   .step-content-wrapper {
     display: block;
     margin-top: 1.5 * $spacer;
+    overflow-y: auto;
   }
 
   .step-actions {

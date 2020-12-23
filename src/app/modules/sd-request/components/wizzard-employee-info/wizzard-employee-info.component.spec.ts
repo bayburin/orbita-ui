@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of, throwError } from 'rxjs';
 
@@ -16,6 +16,7 @@ describe('WizzardEmployeeInfoComponent', () => {
   let component: WizzardEmployeeInfoComponent;
   let fixture: ComponentFixture<WizzardEmployeeInfoComponent>;
   let formService: NewSdRequestFormService;
+  let form: FormGroup;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -32,10 +33,19 @@ describe('WizzardEmployeeInfoComponent', () => {
   }));
 
   beforeEach(() => {
+    form = new FormGroup({
+      id_tn: new FormControl(null),
+      tn: new FormControl(null),
+      fio: new FormControl(''),
+      dept: new FormControl(null),
+      email: new FormControl(''),
+      tel: new FormControl(''),
+      mobile: new FormControl('')
+    });
     fixture = TestBed.createComponent(WizzardEmployeeInfoComponent);
     component = fixture.componentInstance;
+    component.sourceSnapshotForm = form;
     formService = TestBed.inject(NewSdRequestFormService);
-    component.sourceSnapshotForm = (formService as any).sdRequestForm.getValue().get('source_snapshot');
     fixture.detectChanges();
   });
 
@@ -102,14 +112,12 @@ describe('WizzardEmployeeInfoComponent', () => {
     });
 
     it('should set form attributes from selected employee', () => {
-      const ssForm = component.sourceSnapshotForm;
-
-      expect(ssForm.get('id_tn').value).toEqual(employee.id);
-      expect(ssForm.get('tn').value).toEqual(employee.personnelNo);
-      expect(ssForm.get('fio').value).toEqual(employee.fullName);
-      expect(ssForm.get('dept').value).toEqual(employee.departmentForAccounting);
-      expect(ssForm.get('email').value).toEqual(employee.emailText);
-      expect(ssForm.get('tel').value).toEqual(employee.phoneText);
+      expect(form.get('id_tn').value).toEqual(employee.id);
+      expect(form.get('tn').value).toEqual(employee.personnelNo);
+      expect(form.get('fio').value).toEqual(employee.fullName);
+      expect(form.get('dept').value).toEqual(employee.departmentForAccounting);
+      expect(form.get('email').value).toEqual(employee.emailText);
+      expect(form.get('tel').value).toEqual(employee.phoneText);
     });
   });
 

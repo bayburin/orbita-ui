@@ -192,7 +192,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       }
     ];
 
-    if(new RegExp('user_isses/\\d+/items$').test(req.url) && req.method === 'GET') {
+    if (new RegExp('user_isses/\\d+/items$').test(req.url) && req.method === 'GET') {
       return of(new HttpResponse({ body: svtItems, status: 200 }));
     }
 
@@ -222,7 +222,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         item_model: "Samsung S23UVG",
         invent_num: "675985",
         serial_num: "CN0GH85DTV20087H0BTL",
-        status:" in_workplace",
+        status: "in_workplace",
         short_item_model: "Samsung S23UVG",
         type: {
           type_id: 4,
@@ -233,7 +233,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       }
     ];
 
-    if (req.url.endsWith('api/v1/items') && req.method === 'GET') {
+    if (req.url.endsWith('api/v1/invent/items') && req.method === 'GET') {
       return of(new HttpResponse({ body: anyItems, status: 200 }));
     }
 

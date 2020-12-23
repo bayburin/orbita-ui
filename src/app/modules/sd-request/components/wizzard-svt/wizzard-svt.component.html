@@ -15,8 +15,8 @@
       </div>
       <mat-form-field class="search-svt-item">
         <mat-label>Поиск среди всей вычислительной техники</mat-label>
-        <input name="search_svt_item" matInput [formControl]="searchSvtItem" placeholder="Инвентарный номер">
-        <mat-error *ngIf="searchSvtItem.hasError('serverError')">Ошибка поиска. Введите данные вручную.</mat-error>
+        <input name="search_svt_item" matInput [formControl]="searchSvtItem" placeholder="Инвентарный номер" [errorStateMatcher]="dynamicMatcher">
+        <mat-error *ngIf="searchSvtItem.hasError('serverError')">Ошибка поиска</mat-error>
         <button *ngIf="searchSvtItem.value" matSuffix mat-icon-button (click)="clearSearchSvtItem()" [disabled]="isNoSvtItem.value">
           <mat-icon svgIcon="close"></mat-icon>
         </button>

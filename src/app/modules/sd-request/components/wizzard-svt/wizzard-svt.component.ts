@@ -5,6 +5,7 @@ import { startWith, debounceTime, mergeMap, catchError, filter } from 'rxjs/oper
 
 import { NewSdRequestFormService } from '@modules/sd-request/services/new-sd-request-form/new-sd-request-form.service';
 import { ISvtItem } from '@modules/sd-request/interfaces/svt-item.interface';
+import { DynamicErrorStateMatcher } from '@shared/material/dynamic-error-state-matcher';
 
 @Component({
   selector: 'app-wizzard-svt',
@@ -18,6 +19,7 @@ export class WizzardSvtComponent implements OnInit {
   isNoSvtItem: FormControl = new FormControl(false);
   selectedSvtItem: ISvtItem;
   svtItemList: FormControl = new FormControl();
+  dynamicMatcher = new DynamicErrorStateMatcher();
   @Input() sourceSnapshotForm: FormGroup;
 
   constructor(private formService: NewSdRequestFormService) { }

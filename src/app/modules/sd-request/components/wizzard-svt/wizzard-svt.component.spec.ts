@@ -40,7 +40,6 @@ describe('WizzardSvtComponent', () => {
       svt_item_id: new FormControl(null),
       svt_item: new FormControl('')
     });
-
     fixture = TestBed.createComponent(WizzardSvtComponent);
     component = fixture.componentInstance;
     formService = TestBed.inject(NewSdRequestFormService);
