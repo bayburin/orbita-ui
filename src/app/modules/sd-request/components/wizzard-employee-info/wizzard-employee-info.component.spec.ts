@@ -5,16 +5,16 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of, throwError } from 'rxjs';
 
 import { MaterialModule } from '@shared/material.module';
-import { WizzardUserInfoComponent } from './wizzard-user-info.component';
+import { WizzardEmployeeInfoComponent } from './wizzard-employee-info.component';
 import { IBaseEmployeeBuilder } from '@modules/employee/builders/i-base-employee.builder';
 import { NewSdRequestFormService } from '@modules/sd-request/services/new-sd-request-form/new-sd-request-form.service';
 import { NewSdRequestFormServiceStub } from '@modules/sd-request/services/new-sd-request-form/new-sd-request-form.service.stub';
 import { IBaseEmployee } from '@modules/employee/interfaces/employee.interface';
 import { IBaseEmployeeGroupBuilder } from '@modules/employee/builders/base-employee-group.builder';
 
-describe('WizzardUserInfoComponent', () => {
-  let component: WizzardUserInfoComponent;
-  let fixture: ComponentFixture<WizzardUserInfoComponent>;
+describe('WizzardEmployeeInfoComponent', () => {
+  let component: WizzardEmployeeInfoComponent;
+  let fixture: ComponentFixture<WizzardEmployeeInfoComponent>;
   let formService: NewSdRequestFormService;
 
   beforeEach(async(() => {
@@ -24,7 +24,7 @@ describe('WizzardUserInfoComponent', () => {
         MaterialModule,
         ReactiveFormsModule
       ],
-      declarations: [WizzardUserInfoComponent],
+      declarations: [WizzardEmployeeInfoComponent],
       providers: [{ provide: NewSdRequestFormService, useClass: NewSdRequestFormServiceStub }],
       schemas: [NO_ERRORS_SCHEMA]
     })
@@ -32,7 +32,7 @@ describe('WizzardUserInfoComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WizzardUserInfoComponent);
+    fixture = TestBed.createComponent(WizzardEmployeeInfoComponent);
     component = fixture.componentInstance;
     formService = TestBed.inject(NewSdRequestFormService);
     component.sourceSnapshotForm = (formService as any).sdRequestForm.getValue().get('source_snapshot');

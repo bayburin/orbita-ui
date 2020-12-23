@@ -9,11 +9,11 @@ import { NewSdRequestFormService } from '@modules/sd-request/services/new-sd-req
 import { IBaseEmployeeGroup } from '@modules/employee/interfaces/base-employee-group.interface';
 
 @Component({
-  selector: 'app-wizzard-user-info',
-  templateUrl: './wizzard-user-info.component.html',
-  styleUrls: ['./wizzard-user-info.component.scss']
+  selector: 'app-wizzard-employee-info',
+  templateUrl: './wizzard-employee-info.component.html',
+  styleUrls: ['./wizzard-employee-info.component.scss']
 })
-export class WizzardUserInfoComponent implements OnInit {
+export class WizzardEmployeeInfoComponent implements OnInit {
   searchEmployee: FormControl = new FormControl();
   isManually: FormControl = new FormControl(false);
   employeeGroups$: Observable<IBaseEmployeeGroup[]>;

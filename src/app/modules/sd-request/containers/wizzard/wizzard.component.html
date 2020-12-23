@@ -6,7 +6,7 @@
     <form [formGroup]="sdRequestForm">
       <mat-horizontal-stepper class="stepper new-sd-request-wizzard">
         <mat-step label="Данные о работнике" [stepControl]="sourceSnapshotForm" errorMessage="Укажите работника">
-          <app-wizzard-user-info class="step-content-wrapper" [sourceSnapshotForm]="sourceSnapshotForm"></app-wizzard-user-info>
+          <app-wizzard-employee-info class="step-content-wrapper" [sourceSnapshotForm]="sourceSnapshotForm"></app-wizzard-employee-info>
           <div class="step-actions">
             <span></span>
             <button type="submit" color="primary" *ngIf="sdRequestForm.valid" mat-raised-button (click)="submit()">Предпросмотр и создание</button>
