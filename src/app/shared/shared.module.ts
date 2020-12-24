@@ -10,6 +10,7 @@ import { FormatBytesPipe } from './pipes/format-bytes/format-bytes.pipe';
 import { DndFilesDirective } from './directives/dnd-files/dnd-files.directive';
 import { EmployeeMiniCardComponent } from './components/employee-mini-card/employee-mini-card.component';
 import { AttachmentsFormComponent } from './components/attachments-form/attachments-form.component';
+import { WorkersFormComponent } from './components/workers-form/workers-form.component';
 
 const modules: any[] = [
   CommonModule,
@@ -25,7 +26,8 @@ const declarations: any[] = [
   FormatBytesPipe,
   DndFilesDirective,
   EmployeeMiniCardComponent,
-  AttachmentsFormComponent
+  AttachmentsFormComponent,
+  WorkersFormComponent
 ];
 
 @NgModule({

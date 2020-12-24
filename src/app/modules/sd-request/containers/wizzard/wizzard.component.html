@@ -30,7 +30,7 @@
           </div>
         </mat-step>
         <mat-step label="Выбор исполнителя">
-          <app-wizzard-workers class="step-content-wrapper" [sdRequestForm]="sdRequestForm"></app-wizzard-workers>
+          <app-workers-form class="step-content-wrapper"></app-workers-form>
           <div class="step-actions">
             <button mat-raised-button matStepperPrevious>Назад</button>
             <button type="submit" color="primary" *ngIf="sdRequestForm.valid" mat-raised-button (click)="submit()">Предпросмотр и создание</button>

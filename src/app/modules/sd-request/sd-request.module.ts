@@ -7,7 +7,7 @@ import { WizzardComponent } from './containers/wizzard/wizzard.component';
 import { WizzardEmployeeInfoComponent } from './components/wizzard-employee-info/wizzard-employee-info.component';
 import { WizzardDescriptionComponent } from './components/wizzard-description/wizzard-description.component';
 import { WizzardSvtComponent } from './components/wizzard-svt/wizzard-svt.component';
-import { WizzardWorkersComponent } from './components/wizzard-workers/wizzard-workers.component';
+// import { WizzardWorkersComponent } from './components/wizzard-workers/wizzard-workers.component';
 import { WizzardAdditionalComponent } from './components/wizzard-additional/wizzard-additional.component';
 import { PreviewNewSdRequestComponent } from './components/preview-new-sd-request/preview-new-sd-request.component';
 
@@ -22,7 +22,7 @@ import { PreviewNewSdRequestComponent } from './components/preview-new-sd-reques
     WizzardEmployeeInfoComponent,
     WizzardDescriptionComponent,
     WizzardSvtComponent,
-    WizzardWorkersComponent,
+    // WizzardWorkersComponent,
     WizzardAdditionalComponent,
     PreviewNewSdRequestComponent
   ]

@@ -1,0 +1,26 @@
+@import '~assets/scss/variables';
+
+.worker-filter {
+  width: 100%;
+}
+
+.workers {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  .column {
+    display: block;
+    margin: $spacer;
+  }
+}
+
+@supports (gap: $spacer) {
+  .workers {
+    gap: 2 * $spacer;
+
+    .column {
+      margin: 0;
+    }
+  }
+}

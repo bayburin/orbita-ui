@@ -71,7 +71,7 @@ a {
 
 @supports (gap: $spacer) {
   .inline-list {
-     gap: 1rem;
+     gap: $spacer;
 
      .list-item {
        margin: 0;

@@ -1,0 +1,18 @@
+<mat-form-field class="worker-filter">
+  <mat-label>Поиск ответственных</mat-label>
+  <input matInput name="worker_filter" placeholder="Введите ФИО" [formControl]="searchWorker">
+  <button *ngIf="searchWorker.value" mat-icon-button matSuffix (click)="clearSearchWorker()">
+    <mat-icon svgIcon="close"></mat-icon>
+  </button>
+</mat-form-field>
+<mat-selection-list class="workers" (selectionChange)="selectWorkerEvent($event.option)">
+  <div class="column" *ngFor="let userGroup of userGroups$ | async">
+    <mat-card class="mat-elevation-z2">
+      <div mat-subheader>{{ userGroup.group.description }}</div>
+      <mat-list-option *ngFor="let user of userGroup.users" [value]="user" [selected]="isWorkerSelected(user)"
+        [disabled]="isCurrentUser(user)">
+        {{ user.fio }}
+      </mat-list-option>
+    </mat-card>
+  </div>
+</mat-selection-list>
