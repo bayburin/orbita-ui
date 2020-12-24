@@ -9,6 +9,7 @@ import * as UserSelectors from '@modules/user/store/selectors/user.selectors';
 import { USER_FEATURE_KEY, State } from '@modules/user/store/reducers/user.reducer';
 import { UserFacade } from '@modules/user/facades/user.facade';
 import { IUserBuilder } from '@modules/user/builders/i-user.builder';
+import { IUserGroup } from '@modules/user/interfaces/user-group.interface';
 
 describe('UserFacade', () => {
   let actions$: Observable<Action>;
@@ -34,15 +35,13 @@ describe('UserFacade', () => {
     facade = TestBed.inject(UserFacade);
   });
 
-  describe('#constructor', () => {
-    it('should call "UserSelectors.getAll" selector', () => {
-      const selectResult = [new IUserBuilder().testBuild()];
+  it('should call "UserSelectors.getAll" selector for users$ attribute', () => {
+    const users = [new IUserBuilder().testBuild()];
 
-      store.overrideSelector(UserSelectors.getAll, selectResult);
+    store.overrideSelector(UserSelectors.getAll, users);
 
-      facade.users$.subscribe(result => {
-        expect(result).toEqual(selectResult);
-      });
+    facade.users$.subscribe(data => {
+      expect(data).toEqual(users);
     });
   });
 
@@ -55,5 +54,19 @@ describe('UserFacade', () => {
       tick(100);
       expect(spy).toHaveBeenCalledWith(UserActions.loadAll());
     }));
+  });
+
+  describe('#createGroups', () => {
+    it('should return users groups by dept', () => {
+      const user = new IUserBuilder().testBuild();
+      const resultGroup: IUserGroup = {
+        group: user.group,
+        users: [user]
+      };
+
+      store.overrideSelector(UserSelectors.getAll, [user]);
+
+      expect(facade.createGroups([user])).toEqual([resultGroup]);
+    });
   });
 });
