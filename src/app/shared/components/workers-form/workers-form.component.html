@@ -1,4 +1,4 @@
-<mat-form-field class="worker-filter">
+<mat-form-field class="w-100">
   <mat-label>Поиск ответственных</mat-label>
   <input matInput name="worker_filter" placeholder="Введите ФИО" [formControl]="searchWorker">
   <button *ngIf="searchWorker.value" mat-icon-button matSuffix (click)="clearSearchWorker()">

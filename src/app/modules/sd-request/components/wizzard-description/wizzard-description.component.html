@@ -1,6 +1,6 @@
 <div [formGroup]="sdRequestForm" class="description-problem-step">
   <div class="column">
-    <div class="block">
+    <div class="step-content-block">
       <mat-form-field class="d-block search-service">
         <mat-label>Выбор услуги</mat-label>
         <input matInput placeholder="Название услуги" [formControl]="searchService" [matAutocomplete]="autoService"
@@ -16,13 +16,13 @@
       </mat-form-field>
       <mat-slide-toggle [formControl]="isNoService">Обращение работника не связано с перечисленными услугами</mat-slide-toggle>
     </div>
-    <div class="block" formGroupName="attrs">
+    <div class="step-content-block" formGroupName="attrs">
       <mat-form-field class="description">
         <mat-label>Описание проблемы</mat-label>
         <textarea matInput name="description" rows="5" placeholder="Что случилось у пользователя" formControlName="description"></textarea>
       </mat-form-field>
     </div>
-    <div class="block">
+    <div class="step-content-block">
       <!-- <mat-form-field class="tags">
         <mat-label>Теги</mat-label>
         <mat-chip-list #tagChipList formControlName="tags">
@@ -39,7 +39,7 @@
     </div>
   </div>
   <div class="column">
-    <div class="block drop-files" formGroupName="attrs">
+    <div class="step-content-block drop-files" formGroupName="attrs">
       <app-attachments-form></app-attachments-form>
     </div>
   </div>

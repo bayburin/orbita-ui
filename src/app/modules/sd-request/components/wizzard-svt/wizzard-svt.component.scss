@@ -1,24 +1,10 @@
 @import '~assets/scss/variables';
 
-.svt-step {
-  display: flex;
-  flex-direction: column;
-
-  & > .block {
-    width: 100%;
-  }
-
-  .block + .block {
-    margin-top: 2 * $spacer;
-  }
-}
-
 ::ng-deep .search-svt-item {
   width: 100%;
   max-width: 600px;
 
   .mat-form-field-wrapper {
-  //   padding-bottom: 0;
     padding-top: $spacer;
   }
 }

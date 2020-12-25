@@ -1,7 +1,7 @@
-<div [formGroup]="sourceSnapshotForm" class="svt-step">
-  <div class="block">
+<div [formGroup]="sourceSnapshotForm">
+  <div class="step-content-block">
     <mat-slide-toggle [formControl]="isNoSvtItem">Обращение работника не связано ни с одним из перечисленных устройств</mat-slide-toggle>
-    <mat-selection-list [multiple]="false" class="svt-step" [formControl]="svtItemList" (selectionChange)="selectSvtItem($event.option.value)">
+    <mat-selection-list [multiple]="false" [formControl]="svtItemList" (selectionChange)="selectSvtItem($event.option.value)">
       <div *ngIf="userSvtItems$ | async as userSvtItems">
         <div *ngIf="userSvtItems.length > 0">
           <div mat-subheader>Список устройств, закрепленных за работником</div>
