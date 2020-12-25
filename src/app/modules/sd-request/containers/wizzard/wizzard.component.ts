@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { AuthHelper } from '@iss/ng-auth-center';
 import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 
@@ -29,7 +28,6 @@ export class WizzardComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authHelper: AuthHelper,
     public dialog: MatDialog
   ) {}
 
@@ -58,11 +56,7 @@ export class WizzardComponent implements OnInit {
       attachments: this.descriptionEl.attachmentsFormEl.attachmentsFormArray,
       tags: [[{ name: 'свободная_заявка' }]],
       users: [this.workersEl.workers]
-      // users: [[this.authHelper.getJwtPayload()]],
     });
-
-    // TODO: Удалить
-    this.sdRequestForm.valueChanges.subscribe(data => console.log(data));
   }
 
   /**
