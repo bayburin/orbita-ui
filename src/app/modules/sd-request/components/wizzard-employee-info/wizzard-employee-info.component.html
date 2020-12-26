@@ -8,6 +8,7 @@
         <div>Для телефона номер в виде XX-XX</div>
         <div>Для ФИО минимум 3 символа</div>
       </mat-hint>
+      <mat-error>Выберите работника или введите данные вручную</mat-error>
       <mat-error *ngIf="searchEmployee.hasError('serverError')">Ошибка поиска. Введите данные вручную.</mat-error>
       <button *ngIf="searchEmployee.value" mat-icon-button matSuffix (click)="clearSearchEmployee()" [disabled]="isManually.value">
         <mat-icon svgIcon="close"></mat-icon>
@@ -27,17 +28,17 @@
     <div *ngIf="isManually.value" class="small-input-block">
       <mat-form-field>
         <mat-label>Табельный номер</mat-label>
-        <input matInput name="tn" placeholder="Табельный номер" formControlName="tn" required>
+        <input matInput name="tn" placeholder="Табельный номер" formControlName="tn">
         <mat-error>Не может быть пустым</mat-error>
       </mat-form-field>
       <mat-form-field>
         <mat-label>ФИО</mat-label>
-        <input matInput name="fio" placeholder="ФИО" formControlName="fio" required>
+        <input matInput name="fio" placeholder="ФИО" formControlName="fio">
         <mat-error>Не может быть пустым</mat-error>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Подразделение</mat-label>
-        <input matInput name="dept" placeholder="Подразделение" formControlName="dept" required>
+        <input matInput name="dept" placeholder="Подразделение" formControlName="dept">
         <mat-error>Не может быть пустым</mat-error>
       </mat-form-field>
     </div>

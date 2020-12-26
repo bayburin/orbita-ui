@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { startWith, filter, debounceTime, mergeMap, catchError } from 'rxjs/operators';
 
@@ -14,7 +14,7 @@ import { IBaseEmployeeGroup } from '@modules/employee/interfaces/base-employee-g
   styleUrls: ['./wizzard-employee-info.component.scss']
 })
 export class WizzardEmployeeInfoComponent implements OnInit {
-  searchEmployee: FormControl = new FormControl();
+  searchEmployee: FormControl = new FormControl(null, [Validators.required]);
   isManually: FormControl = new FormControl(false);
   employeeGroups$: Observable<IBaseEmployeeGroup[]>;
   selectedEmployee: IBaseEmployee;

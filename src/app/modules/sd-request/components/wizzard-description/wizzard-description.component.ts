@@ -1,6 +1,6 @@
 import { startWith, filter, mergeMap, map, catchError } from 'rxjs/operators';
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { MatChipInputEvent } from '@angular/material/chips';
 
@@ -16,7 +16,7 @@ import { AttachmentsFormComponent } from '@shared/components/attachments-form/at
   styleUrls: ['./wizzard-description.component.scss']
 })
 export class WizzardDescriptionComponent implements OnInit {
-  searchService: FormControl = new FormControl();
+  searchService: FormControl = new FormControl(null, [Validators.required]);
   services$: Observable<IService[]>;
   isNoService: FormControl = new FormControl(false);
   selectedService: IService;
@@ -29,6 +29,10 @@ export class WizzardDescriptionComponent implements OnInit {
 
   get tags(): any[] {
     return this.sdRequestForm.get('tags').value;
+  }
+
+  get description(): FormControl {
+    return this.sdRequestForm.get(['attrs', 'description']) as FormControl;
   }
 
   constructor(private formService: NewSdRequestFormService) { }
