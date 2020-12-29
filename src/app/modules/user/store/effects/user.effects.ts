@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { mergeMap, catchError, map, withLatestFrom, filter, tap } from 'rxjs/operators';
+import { mergeMap, catchError, map, withLatestFrom, filter } from 'rxjs/operators';
 
 import { UserApi } from '@modules/user/api/user.api';
 import { State } from '@modules/user/store/reducers/user.reducer';

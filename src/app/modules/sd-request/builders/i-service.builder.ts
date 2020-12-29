@@ -20,6 +20,12 @@ export class IServiceBuilder extends ModelBuilder<IService> {
     return this.model;
   }
 
+  id(id: number): IServiceBuilder {
+    this.model.id = id;
+
+    return this;
+  }
+
   name(name: string): IServiceBuilder {
     this.model.name = name;
 

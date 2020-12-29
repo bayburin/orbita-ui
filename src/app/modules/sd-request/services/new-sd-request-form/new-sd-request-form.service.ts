@@ -5,8 +5,6 @@ import { map } from 'rxjs/operators';
 
 import { EmployeeApi } from '@modules/employee/api/employee.api';
 import { IBaseEmployee } from '@modules/employee/interfaces/employee.interface';
-import { IService } from '@modules/sd-request/interfaces/service.interface';
-import { ServiceDeskApi } from '@modules/sd-request/api/service-desk/service-desk.api';
 import { SvtApi } from '@modules/sd-request/api/svt/svt.api';
 import { IBaseEmployeeGroupBuilder } from '@modules/employee/builders/base-employee-group.builder';
 import { IBaseEmployeeGroup } from '@modules/employee/interfaces/base-employee-group.interface';
@@ -17,11 +15,8 @@ import { IBaseEmployeeGroup } from '@modules/employee/interfaces/base-employee-g
 export class NewSdRequestFormService {
   constructor(
     private employeeApi: EmployeeApi,
-    private sdApi: ServiceDeskApi,
-    private svtApi: SvtApi,
-  ) {
-    this.loadServices();
-  }
+    private svtApi: SvtApi
+  ) { }
 
   /**
    * Сохраняет форму.
@@ -89,10 +84,5 @@ export class NewSdRequestFormService {
    */
   loadUserSvtItems(idTn: number): Observable<ISvtItem[]> {
     return this.svtApi.getUserItems(idTn);
-  }
-
-  // TODO: Перенести данные в стор.
-  loadServices(): Observable<IService[]> {
-    return this.sdApi.getServices();
   }
 }

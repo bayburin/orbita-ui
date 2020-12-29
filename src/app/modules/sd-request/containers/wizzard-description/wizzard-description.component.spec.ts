@@ -1,3 +1,4 @@
+
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormGroup, FormControl } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
@@ -8,15 +9,15 @@ import { skip } from 'rxjs/operators';
 
 import { MaterialModule } from '@shared/material.module';
 import { WizzardDescriptionComponent } from './wizzard-description.component';
-import { NewSdRequestFormService } from '@modules/sd-request/services/new-sd-request-form/new-sd-request-form.service';
-import { NewSdRequestFormServiceStub } from '@modules/sd-request/services/new-sd-request-form/new-sd-request-form.service.stub';
 import { IServiceBuilder } from '@modules/sd-request/builders/i-service.builder';
 import { IService } from '@modules/sd-request/interfaces/service.interface';
+import { ServiceFacade } from '@modules/sd-request/facades/service.facade';
+import { ServiceFacadeStub } from '@modules/sd-request/facades/service.facade.stub';
 
 describe('WizzardDescriptionComponent', () => {
   let component: WizzardDescriptionComponent;
   let fixture: ComponentFixture<WizzardDescriptionComponent>;
-  let formService: NewSdRequestFormService;
+  let serviceFacade: ServiceFacade;
   let form: FormGroup;
   let services: IService[];
 
@@ -28,7 +29,7 @@ describe('WizzardDescriptionComponent', () => {
         NoopAnimationsModule
       ],
       declarations: [WizzardDescriptionComponent],
-      providers: [{ provide: NewSdRequestFormService, useClass: NewSdRequestFormServiceStub }],
+      providers: [{ provide: ServiceFacade, useClass: ServiceFacadeStub }],
       schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
@@ -38,17 +39,17 @@ describe('WizzardDescriptionComponent', () => {
     form = new FormGroup({
       service_id: new FormControl(''),
       service_name: new FormControl(''),
+      attrs: new FormGroup({ description: new FormControl('') })
     });
-
     fixture = TestBed.createComponent(WizzardDescriptionComponent);
     component = fixture.componentInstance;
-    formService = TestBed.inject(NewSdRequestFormService);
+    serviceFacade = TestBed.inject(ServiceFacade);
     component.sdRequestForm = form;
     services = [
       new IServiceBuilder().name('First').testBuild(),
       new IServiceBuilder().name('Second').testBuild()
     ];
-    spyOn(formService, 'loadServices').and.returnValue(of(services));
+    serviceFacade.services$ = of(services);
     fixture.detectChanges();
   });
 

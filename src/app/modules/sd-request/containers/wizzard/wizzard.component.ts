@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 
 import { ClaimPriorities } from '@modules/claim/enums/claim-priorities.enum';
-import { WizzardDescriptionComponent } from '@modules/sd-request/components/wizzard-description/wizzard-description.component';
+import { WizzardDescriptionComponent } from '@modules/sd-request/containers/wizzard-description/wizzard-description.component';
 import { PreviewNewSdRequestComponent } from '@modules/sd-request/components/preview-new-sd-request/preview-new-sd-request.component';
 import { WorkersFormComponent } from '@shared/components/workers-form/workers-form.component';
 

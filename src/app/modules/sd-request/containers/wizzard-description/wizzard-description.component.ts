@@ -6,9 +6,9 @@ import { MatChipInputEvent } from '@angular/material/chips';
 
 import { DynamicErrorStateMatcher } from '@shared/material/dynamic-error-state-matcher';
 import { IService } from '@modules/sd-request/interfaces/service.interface';
-import { NewSdRequestFormService } from '@modules/sd-request/services/new-sd-request-form/new-sd-request-form.service';
 import { ITag } from '@shared/interfaces/tag.interface';
 import { AttachmentsFormComponent } from '@shared/components/attachments-form/attachments-form.component';
+import { ServiceFacade } from '@modules/sd-request/facades/service.facade';
 
 @Component({
   selector: 'app-wizzard-description',
@@ -35,10 +35,11 @@ export class WizzardDescriptionComponent implements OnInit {
     return this.sdRequestForm.get(['attrs', 'description']) as FormControl;
   }
 
-  constructor(private formService: NewSdRequestFormService) { }
+  constructor(private serviceFacade: ServiceFacade) { }
 
   ngOnInit(): void {
-    this.loadServices();
+    this.avaliableServices$ = this.serviceFacade.services$;
+    this.serviceFacade.loadServices();
     this.searchServices();
     this.processingIsNoService();
   }
@@ -68,17 +69,6 @@ export class WizzardDescriptionComponent implements OnInit {
   clearSearchService(): void {
     this.searchService.setValue(null);
     this.selectService(null);
-  }
-
-  private loadServices(): void {
-    this.avaliableServices$ = this.formService.loadServices()
-      .pipe((catchError(error => {
-        console.log(error);
-        this.searchService.setErrors({ serverError: true});
-
-        return of([]);
-      }))
-    );
   }
 
   /**

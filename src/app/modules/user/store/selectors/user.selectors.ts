@@ -2,29 +2,29 @@ import { createSelector, createFeatureSelector } from '@ngrx/store';
 
 import * as fromUsers from '@modules/user/store/reducers/user.reducer';
 
-export const selectClaims = createFeatureSelector<fromUsers.State>(fromUsers.USER_FEATURE_KEY);
+export const selectUsers = createFeatureSelector<fromUsers.State>(fromUsers.USER_FEATURE_KEY);
 
 export const getIds = createSelector(
-  selectClaims,
+  selectUsers,
   fromUsers.getIds
 );
 
 export const getEntities = createSelector(
-  selectClaims,
+  selectUsers,
   fromUsers.getEntities
 );
 
 export const getAll = createSelector(
-  selectClaims,
+  selectUsers,
   fromUsers.getAll
 );
 
 export const getTotalCount = createSelector(
-  selectClaims,
+  selectUsers,
   fromUsers.getTotalCount
 );
 
 export const getSelected = createSelector(
-  selectClaims,
+  selectUsers,
   fromUsers.getSelected
 );

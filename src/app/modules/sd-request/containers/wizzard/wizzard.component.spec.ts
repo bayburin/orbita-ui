@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, Component, Input } from '@angular/core';
 import { AuthHelper, AuthHelperStub } from '@iss/ng-auth-center';
 import { MaterialModule } from '@shared/material.module';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,7 +10,15 @@ import { of } from 'rxjs';
 import { WizzardComponent } from './wizzard.component';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PreviewNewSdRequestComponent } from '@modules/sd-request/components/preview-new-sd-request/preview-new-sd-request.component';
-import { WizzardDescriptionComponent } from '@modules/sd-request/components/wizzard-description/wizzard-description.component';
+import { WizzardDescriptionComponent } from '@modules/sd-request/containers/wizzard-description/wizzard-description.component';
+
+@Component({
+  selector: 'app-wizzard-description',
+  template: '<div></div>'
+})
+class WizzardDescriptionComponentStub {
+  @Input() sdRequestForm: FormGroup;
+}
 
 describe('WizzardComponent', () => {
   let component: WizzardComponent;
@@ -25,7 +33,7 @@ describe('WizzardComponent', () => {
         HttpClientTestingModule,
         NoopAnimationsModule
       ],
-      declarations: [WizzardComponent, WizzardDescriptionComponent, PreviewNewSdRequestComponent],
+      declarations: [WizzardComponent, WizzardDescriptionComponentStub, PreviewNewSdRequestComponent],
       providers: [{ provide: AuthHelper, useClass: AuthHelperStub }],
       schemas: [NO_ERRORS_SCHEMA]
     })
