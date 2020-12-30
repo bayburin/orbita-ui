@@ -1,10 +1,10 @@
 <div mat-dialog-title class="title">
-  <span>Заявка по услуге SmarTeam</span>
+  <span class="mat-h2">Заявка по услуге {{ form.service_name }}</span>
   <mat-chip-list class="labels">
-    <mat-chip>Низкий приоритет</mat-chip>
+    <mat-chip matTooltip="Приоритет">{{ priorities[form.priority]?.title | lowercase }}</mat-chip>
     <mat-chip matTooltip="Срок контроля">
       <mat-icon class="mat-18px mr-2" svgIcon="alarm"></mat-icon>
-      17.03.20
+      {{ form.finished_at_plan | datetime }}
     </mat-chip>
   </mat-chip-list>
 </div>
@@ -13,66 +13,27 @@
     <div class="row">
       <div>Описание</div>
       <div>
-        <p>Ошибка во время запуска программы</p>
-        <mat-list>
-          <div mat-subheader>Файлы</div>
-          <mat-list-item>
-            <mat-icon mat-list-icon svgIcon="file-outline"></mat-icon>
-            <div mat-line>скриншот_1.png</div>
-            <div mat-line>25 Кб</div>
-          </mat-list-item>
-          <mat-list-item>
-            <mat-icon mat-list-icon svgIcon="file-outline"></mat-icon>
-            <div mat-line>скриншот_2.png</div>
-            <div mat-line>25 Кб</div>
-          </mat-list-item>
-        </mat-list>
+        <p *ngIf="form.attrs.description; else noData">{{ form.attrs.description }}</p>
         <mat-divider class="divider"></mat-divider>
       </div>
     </div>
     <div class="row">
       <div>Заказчик</div>
       <div>
-        <div class="block employee-card-wrapper">
-          <mat-card class="employee-card mat-elevation-z2" matRipple>
-            <mat-card-header>
-              <img mat-card-avatar src="assets/images/man.png">
-              <mat-card-title>Байбурин Р.Ф.</mat-card-title>
-              <mat-card-subtitle>инженер-программист 2 категории</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-              <div class="employee-card-content">
-                <div class="column">
-                  <table class="content-table">
-                    <tr>
-                      <td class="header" width="25%">таб. №</td>
-                      <td>17664</td>
-                    </tr>
-                    <tr>
-                      <td class="header">отдел</td>
-                      <td>714</td>
-                    </tr>
-                  </table>
-                </div>
-                <div class="column">
-                  <table class="content-table">
-                    <tr>
-                      <td class="header" width="25%">email</td>
-                      <td>bayburinrf@iss-reshetnev.ru</td>
-                    </tr>
-                    <tr>
-                      <td class="header">тел.</td>
-                      <td>84-29</td>
-                    </tr>
-                    <tr>
-                      <td class="header">сот.</td>
-                      <td></td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            </mat-card-content>
-          </mat-card>
+        <div *ngIf="sourceSnapshot.tn; else noData">
+          <div>ФИО: {{ sourceSnapshot.fio }}</div>
+          <div>тел: {{ sourceSnapshot.tel }}</div>
+          <div>email: {{ sourceSnapshot.email }}</div>
+        </div>
+        <mat-divider class="divider"></mat-divider>
+      </div>
+    </div>
+    <div class="row">
+      <div>Устройство</div>
+      <div>
+        <div *ngIf="sourceSnapshot.svt_item; else noData">
+          <div>{{ sourceSnapshot.svt_item }}</div>
+          <div>инв. №: {{ sourceSnapshot.invent_num }}</div>
         </div>
         <mat-divider class="divider"></mat-divider>
       </div>
@@ -80,17 +41,25 @@
     <div class="row">
       <div>Исполнители</div>
       <div>
-        <div fxLayout="row" fxLayoutGap="20px">
-          <mat-list>
-            <div mat-subheader>Сектор ИТ</div>
-            <mat-list-item>Байбурин Р.Ф.</mat-list-item>
-            <mat-list-item>Сильченко Д.М.</mat-list-item>
-          </mat-list>
-          <mat-list>
-            <div mat-subheader>Сектор ремонта ВТ</div>
-            <mat-list-item>Дрянных А.Г.</mat-list-item>
+        <div fxLayout="row" fxLayoutGap="1rem">
+          <mat-list *ngFor="let userGroup of userGroups">
+            <div mat-subheader>{{ userGroup.group.description }}</div>
+            <mat-list-item *ngFor="let user of userGroup.users">{{ user.fio }}</mat-list-item>
           </mat-list>
         </div>
+        <mat-divider class="divider"></mat-divider>
+      </div>
+    </div>
+    <div class="row">
+      <div>Файлы</div>
+      <div>
+        <mat-list *ngIf="form.attachments.length; else noData">
+          <mat-list-item *ngFor="let file of form.attachments">
+            <mat-icon mat-list-icon svgIcon="file-outline"></mat-icon>
+            <div mat-line>{{ file.file.name }}</div>
+            <div mat-line>{{ file.file.size | formatBytes }}</div>
+          </mat-list-item>
+        </mat-list>
         <mat-divider class="divider"></mat-divider>
       </div>
     </div>
@@ -98,14 +67,23 @@
       <div>Теги</div>
       <div>
         <mat-chip-list class="small">
-          <mat-chip>свободная_заявка</mat-chip>
-          <mat-chip>SmarTeam</mat-chip>
+          <mat-chip *ngFor="let tag of form.tags">{{ tag.name }}</mat-chip>
         </mat-chip-list>
+        <mat-divider class="divider"></mat-divider>
+      </div>
+    </div>
+    <div class="row">
+      <div>Комментарий</div>
+      <div>
+        <p *ngIf="form.comment; else noData">{{ form.comment }}</p>
       </div>
     </div>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-raised-button mat-dialog-close>Отменить</button>
+  <button mat-raised-button mat-dialog-close>Вернуться к заявке</button>
   <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>Создать заявку</button>
 </mat-dialog-actions>
+<ng-template #noData>
+  <p class="text-secondary">пусто</p>
+</ng-template>

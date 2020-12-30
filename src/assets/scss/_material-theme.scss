@@ -35,7 +35,7 @@ $default-app-theme: map-merge($default-theme, (foreground: $orbita-foreground));
 
 .iss-default-theme {
   @include angular-material-theme($default-app-theme);
-  @include material-bootstrap-utilities(mat-color($default-palette-primary), mat-color($default-palette-accent), mat-color($default-palette-warn));
+  @include material-bootstrap-utilities(mat-color($default-palette-primary), mat-color($default-palette-accent), mat-color($default-palette-warn), rgba($gray-black, 0.54));
   @include form-border-color(map-get($mat-iss-default-primary, 300));
 }
 
@@ -53,6 +53,6 @@ $blue-gray-app-theme: map-merge($blue-gray-theme, (foreground: $orbita-foregroun
 
 .blue-gray-theme {
   @include angular-material-theme($blue-gray-app-theme);
-  @include material-bootstrap-utilities(mat-color($blue-gray-palette-primary), mat-color($blue-gray-palette-accent), mat-color($blue-gray-palette-warn));
+  @include material-bootstrap-utilities(mat-color($blue-gray-palette-primary), mat-color($blue-gray-palette-accent), mat-color($blue-gray-palette-warn), rgba($gray-black, 0.54));
   @include form-border-color(map-get($blue-gray-palette-primary, 300));
 }
