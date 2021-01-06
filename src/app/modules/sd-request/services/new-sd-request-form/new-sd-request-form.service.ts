@@ -8,6 +8,7 @@ import { IBaseEmployee } from '@modules/employee/interfaces/employee.interface';
 import { SvtApi } from '@modules/sd-request/api/svt/svt.api';
 import { IBaseEmployeeGroupBuilder } from '@modules/employee/builders/base-employee-group.builder';
 import { IBaseEmployeeGroup } from '@modules/employee/interfaces/base-employee-group.interface';
+import { SearchTypes } from '@modules/employee/enums/search-type.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -29,14 +30,14 @@ export class NewSdRequestFormService {
    * @param term - данные для поиска.
    */
   searchEmployees(term: string): Observable<IBaseEmployeeGroup[]> {
-    let key: 'phoneText' | 'personnelNo' | 'fullName';
+    let key: SearchTypes;
 
     if (term.search(/\d*\-\d*/) !== -1) {
-      key = 'phoneText'; // Если номер телефона
+      key = SearchTypes.PHONE; // Если номер телефона
     } else if (!isNaN(parseFloat(term))) {
-      key = 'personnelNo'; // Если число
+      key = SearchTypes.TN; // Если число
     } else {
-      key = 'fullName'; // Если строка
+      key = SearchTypes.FIO; // Если строка
     }
 
     return this.employeeApi.getEmployees(key, term).pipe(
