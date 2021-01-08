@@ -21,7 +21,8 @@ const employeeReducer = createReducer(
   initialState,
   on(EmployeeActions.loadAll, state => ({ ...state, error: null })),
   on(EmployeeActions.loadAllSuccess, (state, { employees }) => adapter.addMany(employees, state)),
-  on(EmployeeActions.loadAllFailure, (state, { error }) => ({ ...state, error }))
+  on(EmployeeActions.loadAllFailure, (state, { error }) => ({ ...state, error })),
+  on(EmployeeActions.searchByTerm, state => ({ ...state, error: null })),
 );
 
 export function reducer(state: State | undefined, action: Action): State {

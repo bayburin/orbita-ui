@@ -18,3 +18,8 @@ export const loadAllFailure = createAction(
   '[Employee] Load All Failure',
   props<{ error: HttpErrorResponse }>()
 );
+
+export const searchByTerm = createAction(
+  '[Employee] Search By Term',
+  props<{ term: string }>()
+);

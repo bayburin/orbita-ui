@@ -20,7 +20,7 @@ export class UserFacade {
   }
 
   /**
-   * Загрузить список пользователей.
+   * Загружает список пользователей.
    */
   loadUsers(): void {
     this.store.dispatch(UserActions.loadAll());
