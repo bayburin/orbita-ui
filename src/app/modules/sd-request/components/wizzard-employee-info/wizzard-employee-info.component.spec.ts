@@ -1,22 +1,23 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormGroup, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { of, throwError } from 'rxjs';
+import { of } from 'rxjs';
 
 import { MaterialModule } from '@shared/material.module';
 import { WizzardEmployeeInfoComponent } from './wizzard-employee-info.component';
 import { IBaseEmployeeBuilder } from '@modules/employee/builders/i-base-employee.builder';
-import { NewSdRequestFormService } from '@modules/sd-request/services/new-sd-request-form/new-sd-request-form.service';
-import { NewSdRequestFormServiceStub } from '@modules/sd-request/services/new-sd-request-form/new-sd-request-form.service.stub';
 import { IBaseEmployee } from '@modules/employee/interfaces/employee.interface';
 import { IBaseEmployeeGroupBuilder } from '@modules/employee/builders/base-employee-group.builder';
+import { EmployeeFacade } from '@modules/employee/facades/employee.facade';
+import { EmployeeFacadeStub } from '@modules/employee/facades/employee.facade.stub';
 
 describe('WizzardEmployeeInfoComponent', () => {
   let component: WizzardEmployeeInfoComponent;
   let fixture: ComponentFixture<WizzardEmployeeInfoComponent>;
-  let formService: NewSdRequestFormService;
+  let employeeFacade: EmployeeFacade;
   let form: FormGroup;
+  let employees: IBaseEmployee[];
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -26,7 +27,7 @@ describe('WizzardEmployeeInfoComponent', () => {
         ReactiveFormsModule
       ],
       declarations: [WizzardEmployeeInfoComponent],
-      providers: [{ provide: NewSdRequestFormService, useClass: NewSdRequestFormServiceStub }],
+      providers: [{ provide: EmployeeFacade, useClass: EmployeeFacadeStub }],
       schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
@@ -45,7 +46,9 @@ describe('WizzardEmployeeInfoComponent', () => {
     fixture = TestBed.createComponent(WizzardEmployeeInfoComponent);
     component = fixture.componentInstance;
     component.sourceSnapshotForm = form;
-    formService = TestBed.inject(NewSdRequestFormService);
+    employeeFacade = TestBed.inject(EmployeeFacade);
+    employees = [new IBaseEmployeeBuilder().testBuild()];
+    employeeFacade.employees$ = of(employees);
     fixture.detectChanges();
   });
 
@@ -57,31 +60,33 @@ describe('WizzardEmployeeInfoComponent', () => {
     let spy: jasmine.Spy;
 
     beforeEach(() => {
-      spy = spyOn(formService, 'searchEmployees');
+      spy = spyOn(employeeFacade, 'searchEmployees');
     });
 
-    it('should return array of loaded data', (done) => {
+    it('should call "EmployeeFacade.searchEmployees" method', fakeAsync(() => {
+      const term = 'test';
+
+      component.searchEmployee.setValue(term);
+      tick(400);
+
+      expect(spy).toHaveBeenCalledWith(term);
+    }));
+
+    it('should call "EmployeeFacade.createGroups" method', () => {
+      spyOn(employeeFacade, 'createGroups');
+
+      component.employeeGroups$.subscribe(() => {
+        expect(employeeFacade.createGroups).toHaveBeenCalledWith(employees);
+      });
+    });
+
+    it('should save employee groups into "employeeGroups$" attribute', () => {
       const result = new IBaseEmployeeGroupBuilder().testBuild();
-      spy.and.returnValue(of([result]));
+      spyOn(employeeFacade, 'createGroups').and.returnValue([result]);
 
       component.employeeGroups$.subscribe(data => {
-        expect(data[0].dept).toEqual(result.dept);
-        expect(data[0].employees).toEqual(result.employees);
-        done();
+        expect(data).toEqual([result]);
       });
-
-      component.searchEmployee.setValue('test value');
-    });
-
-    it('should return empty error if raised any error', (done) => {
-      spy.and.callFake(() => throwError({ error: 'Error message' }));
-
-      component.employeeGroups$.subscribe(data => {
-        expect(data.length).toEqual(0);
-        done();
-      });
-
-      component.searchEmployee.setValue('test value');
     });
   });
 

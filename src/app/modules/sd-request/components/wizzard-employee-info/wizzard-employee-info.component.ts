@@ -1,35 +1,40 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Observable, of } from 'rxjs';
-import { startWith, filter, debounceTime, mergeMap, catchError } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { startWith, filter, debounceTime, map } from 'rxjs/operators';
 
 import { DynamicErrorStateMatcher } from '@shared/material/dynamic-error-state-matcher';
 import { IBaseEmployee } from '@modules/employee/interfaces/employee.interface';
-import { NewSdRequestFormService } from '@modules/sd-request/services/new-sd-request-form/new-sd-request-form.service';
 import { IBaseEmployeeGroup } from '@modules/employee/interfaces/base-employee-group.interface';
+import { EmployeeFacade } from '@modules/employee/facades/employee.facade';
 
 @Component({
   selector: 'app-wizzard-employee-info',
   templateUrl: './wizzard-employee-info.component.html',
   styleUrls: ['./wizzard-employee-info.component.scss']
 })
-export class WizzardEmployeeInfoComponent implements OnInit {
+export class WizzardEmployeeInfoComponent implements OnInit, OnDestroy {
   searchEmployee: FormControl = new FormControl(null, [Validators.required]);
   isManually: FormControl = new FormControl(false);
   employeeGroups$: Observable<IBaseEmployeeGroup[]>;
   selectedEmployee: IBaseEmployee;
   dynamicErrorMatcher = new DynamicErrorStateMatcher();
+  searchEmployeeSub: Subscription;
   @Input() sourceSnapshotForm: FormGroup;
 
   get tn(): number {
     return this.sourceSnapshotForm.get('tn').value;
   }
 
-  constructor(private formService: NewSdRequestFormService) { }
+  constructor(private employeeFacade: EmployeeFacade) { }
 
   ngOnInit(): void {
-    this.searchEmployeeGroups();
+    this.searchEmployees();
     this.processingIsEmployeeManually();
+  }
+
+  ngOnDestroy(): void {
+    this.searchEmployeeSub.unsubscribe();
   }
 
   /**
@@ -66,24 +71,15 @@ export class WizzardEmployeeInfoComponent implements OnInit {
     this.selectEmployee({ } as IBaseEmployee);
   }
 
-  /**
-   * Подписывается на поле поиска работников и производит поиск.
-   */
-  private searchEmployeeGroups(): void {
-    this.employeeGroups$ = this.searchEmployee.valueChanges.pipe(
+  private searchEmployees(): void {
+    this.searchEmployeeSub = this.searchEmployee.valueChanges.pipe(
       startWith(''),
       filter(term => this.isNumber(term) ? true : term && term.length >= 2),
       debounceTime(300),
-      mergeMap(term => {
-        return this.formService.searchEmployees(term)
-          .pipe(catchError(error => {
-            console.log(error);
-            this.searchEmployee.setErrors({ serverError: true});
+    ).subscribe(term => this.employeeFacade.searchEmployees(term));
 
-            return of([]);
-          })
-        );
-      })
+    this.employeeGroups$ = this.employeeFacade.employees$.pipe(
+      map(employees => this.employeeFacade.createGroups(employees))
     );
   }
 
