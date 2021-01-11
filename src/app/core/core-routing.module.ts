@@ -26,6 +26,10 @@ const routes: Routes = [
       {
         path: 'sd-requests',
         loadChildren: () => import('../modules/sd-request/sd-request.module').then(m => m.SdRequestModule)
+      },
+      {
+        path: 'employees',
+        loadChildren: () => import('../modules/employee/employee.module').then(m => m.EmployeeModule)
       }
     ]
   }
