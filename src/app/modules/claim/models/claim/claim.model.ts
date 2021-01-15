@@ -38,6 +38,9 @@ export abstract class Claim {
     return last;
   }
 
+  /**
+   * Возвращает список всех исполнителей.
+   */
   get workers(): IUser[] {
     return oFlatMap((work: Work) => work.workers, this.works);
   }
