@@ -19,7 +19,7 @@ describe('UserFacade', () => {
     [USER_FEATURE_KEY]: {
       ids: [],
       entities: { },
-      selected: null,
+      selected: null
     }
   };
 

@@ -4,6 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { environment } from '@env/environment';
 import { IBaseEmployee } from '@modules/employee/interfaces/employee.interface';
+import { SearchTypes } from '@modules/employee/enums/search-type.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -16,10 +17,10 @@ export class EmployeeApi {
   /**
    * Получает список работников.
    *
-   * @param key - имя фильтра
-   * @param value - начение фильтра
+   * @param key - имя поля
+   * @param value - значение
    */
-  getEmployees(key?: 'phoneText' | 'personnelNo' | 'fullName', value?: string): Observable<IBaseEmployee[]> {
+  getEmployees(key?: SearchTypes, value?: string): Observable<IBaseEmployee[]> {
     let params = {};
 
     if (key) {

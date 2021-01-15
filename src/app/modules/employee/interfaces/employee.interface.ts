@@ -24,11 +24,11 @@ export interface IBaseEmployee {
   position: string;
 }
 
-export interface IExtendEmployeee {
-
+export interface IExtendEmployee {
+  id: number;
 }
 
 export interface IEmployee {
   baseInfo: IBaseEmployee;
-  extendInfo: IExtendEmployeee;
+  extendInfo: IExtendEmployee;
 }

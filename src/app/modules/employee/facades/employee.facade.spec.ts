@@ -1,40 +1,73 @@
-import { TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { provideMockActions } from '@ngrx/effects/testing';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { Observable, of } from 'rxjs';
+import { Action } from '@ngrx/store';
 
+import * as EmployeeActions from '@modules/employee/store/employee.actions';
+import * as EmployeeSelectors from '@modules/employee/store/employee.selectors';
 import { EmployeeFacade } from './employee.facade';
-import { EmployeeApi } from '@modules/employee/api/employee.api';
-import { EmployeeApiStub } from '@modules/employee/api/employee.api.stub';
+import { IBaseEmployeeBuilder } from '@modules/employee/builders/i-base-employee.builder';
+import { EMPLOYEE_FEATURE_KEY, State } from '@modules/employee/store/employee.reducer';
+import { IBaseEmployeeGroup } from '@modules/employee/interfaces/base-employee-group.interface';
 
 describe('EmployeeFacade', () => {
+  let actions$: Observable<Action>;
   let facade: EmployeeFacade;
-  let employeeApi: EmployeeApi;
+  let store: MockStore<State>;
+  const initialState = {
+    [EMPLOYEE_FEATURE_KEY]: {
+      ids: [],
+      entities: { },
+      selected: null
+    }
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [{ provide: EmployeeApi, useClass: EmployeeApiStub }]
+      providers: [
+        provideMockActions(() => actions$),
+        provideMockStore({ initialState }),
+      ]
     });
 
+    store = TestBed.inject(MockStore);
     facade = TestBed.inject(EmployeeFacade);
-    employeeApi = TestBed.inject(EmployeeApi);
   });
 
-  describe('#loadEmployees', () => {
-    it('should call "getEmployees" method with "personnelNo" attribute', () => {
-      const spy = spyOn(employeeApi, 'getEmployees').and.returnValue(of([]));
-      const term = 'test';
+  it('should call "EmployeeSelectors.getAll" selector for employees$ attribute', () => {
+    const employees = [new IBaseEmployeeBuilder().testBuild()];
 
-      facade.loadEmployees(term).subscribe(() => {
-        expect(spy).toHaveBeenCalledWith('fullName', term);
-      });
+    store.overrideSelector(EmployeeSelectors.getAll, employees);
+
+    facade.employees$.subscribe(data => {
+      expect(data).toEqual(employees);
     });
+  });
 
-    it('should call "getEmployees" method with "fullName" attribute', () => {
-      const spy = spyOn(employeeApi, 'getEmployees').and.returnValue(of([]));
-      const term = '123';
+  describe('#searchEmployees', () => {
+    it('should dispatch "EmployeeActions.searchByTerm" action', fakeAsync(() => {
+      actions$ = of(EmployeeActions.searchByTerm);
+      const spy = spyOn(store, 'dispatch');
+      const term = 'test term';
 
-      facade.loadEmployees(term).subscribe(() => {
-        expect(spy).toHaveBeenCalledWith('personnelNo', term);
-      });
+      facade.searchEmployees(term);
+      tick(100);
+      expect(spy).toHaveBeenCalledWith(EmployeeActions.searchByTerm({ term }));
+    }));
+  });
+
+  describe('#createGroups', () => {
+    it('should return employees groups by dept', () => {
+      const employee = new IBaseEmployeeBuilder().testBuild();
+      const resultGroup: IBaseEmployeeGroup = {
+        dept: employee.departmentForAccounting,
+        employees: [employee]
+      };
+
+      store.overrideSelector(EmployeeSelectors.getAll, [employee]);
+
+      expect(facade.createGroups([employee])).toEqual([resultGroup]);
     });
   });
 });

@@ -1,8 +1,10 @@
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
-import { IBaseEmployeeBuilder } from '@modules/employee/builders/i-base-employee.builder';
 import { IBaseEmployee } from '@modules/employee/interfaces/employee.interface';
+import { IBaseEmployeeGroup } from '@modules/employee/interfaces/base-employee-group.interface';
 
 export class EmployeeFacadeStub {
-  loadEmployees(): Observable<IBaseEmployee[]> { return of([new IBaseEmployeeBuilder().build()]); }
+  employees$ = new BehaviorSubject<IBaseEmployee[]>([]);
+  searchEmployees(): void { }
+  createGroups(employees: IBaseEmployee[]): IBaseEmployeeGroup[] { return []; }
 }
