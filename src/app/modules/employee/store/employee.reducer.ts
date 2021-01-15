@@ -20,7 +20,7 @@ export const initialState: State = adapter.getInitialState({ selected: null });
 const employeeReducer = createReducer(
   initialState,
   on(EmployeeActions.loadAll, state => ({ ...state, error: null })),
-  on(EmployeeActions.loadAllSuccess, (state, { employees }) => adapter.addMany(employees, state)),
+  on(EmployeeActions.loadAllSuccess, (state, { employees }) => adapter.setAll(employees, state)),
   on(EmployeeActions.loadAllFailure, (state, { error }) => ({ ...state, error })),
   on(EmployeeActions.searchByTerm, state => ({ ...state, error: null })),
 );
