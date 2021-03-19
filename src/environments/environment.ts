@@ -4,19 +4,18 @@
 
 export const environment = {
   production: false,
-  serverApi: 'https://orbita-dev.iss-reshetnev.ru/api',
+  serverApi: 'https://localhost.iss-reshetnev.ru:9443/api',
   serviceDeskApi: 'https://inv-dev.iss-reshetnev.ru/api',
   svtApi: 'https://svt.iss-reshetnev.ru',
   auth: {
-    clientId: '86',
-    // redirectUrl: 'https://localhost.iss-reshetnev.ru:4200/oauth2/callback',
+    clientId: '83',
+    redirectUrl: 'https://localhost.iss-reshetnev.ru:4200/oauth2/callback',
     // redirectUrl: 'https://orbita-dev.iss-reshetnev.ru/oauth2/callback',
+    serverUrl: 'https://localhost.iss-reshetnev.ru:9443/api/v1/auth/token',
     // serverUrl: 'https://orbita-dev.iss-reshetnev.ru/api/v1/auth/token',
-    redirectUrl: 'https://orbita-dev.iss-reshetnev.ru/oauth2/callback',
-    serverUrl: 'https://orbita-dev.iss-reshetnev.ru/api/v1/auth/token',
     appName: 'Орбита (dev)',
     jwtOptions: {
-      allowedDomains: ['https://orbita-dev.iss-reshetnev.ru'],
+      allowedDomains: ['localhost.iss-reshetnev.ru:9443'],
       disallowedRoutes: []
     }
   }

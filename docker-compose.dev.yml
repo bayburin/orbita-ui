@@ -1,0 +1,44 @@
+version: "3.9"
+
+x-ui: &app
+  volumes:
+    - .:/app
+    - node_modules:/app/node_modules
+  stdin_open: true
+  tty: true
+  networks:
+    - frontend
+
+x-frontend: &frontend
+  <<: *app
+  build:
+    context: .
+    dockerfile: .docker/app/app.dev.Dockerfile
+
+services:
+  runner:
+    <<: *frontend
+    command: /bin/bash
+
+  app:
+    <<: *frontend
+    restart: unless-stopped
+    ports:
+      - "4200:4200"
+    command: ng serve --host 0.0.0.0 --disable-host-check --ssl=true --ssl-cert=/tls/iss_reshetnev_ru.crt --ssl-key=/tls/iss-reshetnev.ru.key
+
+  karma:
+    <<: *app
+    image: trion/ng-cli-karma:11.1.1
+    restart: unless-stopped
+    ports:
+      - "9876:9876"
+    expose:
+      - "9876"
+    command: ng test
+
+volumes:
+  node_modules:
+
+networks:
+  frontend:
